@@ -2,17 +2,91 @@
 
 use Illuminate\Http\Request;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
+/* =====================  fields for forms  =============================== */
+Route::group(['namespace' => 'APIs', 'prefix' => 'fields'], function () {
+    // Controllers Within The "App\Http\Controllers\APIs" Namespace
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+    /* genders list */
+    Route::get('/genders', function (Request $request) {
+        return 'genders list';
+    });
+
+    Route::get('/genders/{id}', function (Request $request, $id) {
+        return "gender {id}";
+    });
+
+    /* age bounds list */
+    Route::get('/ages', function (Request $request) {
+        return 'ages list';
+    });
+
+    Route::get('/age/{id}', function (Request $request, $id) {
+        return "age $id";
+    });
+
+    /* certificate types list */
+    Route::get('/certificates', function (Request $request) {
+        return 'certificates list for admin';
+    });
+
+    Route::get('/certificate/{id}', function (Request $request, $id) {
+        return "certificate $id";
+    });
+
+    /* cities list */
+    Route::get('/cities', function (Request $request) {
+        return 'cities list for admin';
+    });
+
+    Route::get('/city/{id}', function (Request $request, $id) {
+        return "city $id";
+    });
+
+    /* degrees list */
+    Route::get('/degrees', function (Request $request) {
+        return 'degrees list for admin';
+    });
+
+    Route::get('/degree/{id}', function (Request $request, $id) {
+        return "degree $id";
+    });
+
+    /* job fields list */
+    Route::get('/jobs', function (Request $request) {
+        return 'job fields list for admin';
+    });
+
+    Route::get('/job/{id}', function (Request $request, $id) {
+        return "job $id";
+    });
+
+    /* marrige list */
+    Route::get('/marrige', function (Request $request) {
+        return 'marrige type list for admin';
+    });
+
+    Route::get('/marrige/{id}', function (Request $request, $id) {
+        return "marrige {id}";
+    });
+
+    /* study fields list */
+    Route::get('/fields', function (Request $request) {
+        return 'study fields list for admin';
+    });
+
+    Route::get('/field/{id}', function (Request $request, $id) {
+        return "field $id";
+    });
+
+
+});
+
+/* =======================  data reterivision ============================= */
+Route::group(['namespace' => 'APIs', 'prefix' => 'fields'], function () {
+    // Controllers Within The "App\Http\Controllers\APIs" Namespace
+    
+    /* users */
+    Route::get('/genders', function (Request $request) {
+        return 'genders list';
+    });
 });
