@@ -5,9 +5,7 @@ Route::get('/', function () {
 });
 
 /* self pages */
-Route::get('/dashboard', function () {
-    return view('welcome');
-});
+Route::get('/dashboard', 'HomeController@dashboard')->name('dashboard')->middleware('auth');
 
 Route::get('/profile', function () {
     return view('welcome');
@@ -19,13 +17,13 @@ Route::get('/profile', function () {
 
 /* ====================  admin panels  =============================*/
 
-Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
+Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['auth', 'check-admin']], function () {
     // Controllers Within The "App\Http\Controllers\Admin" Namespace
     
         /* users list */
     Route::get('/users', function () {
         return 'users list for admin';
-    });
+    })->middleware('check-admin');
     /* single user page for editing or viewing */
     Route::get('/user/{userId}', function ($userId) {
         return "user page id: $userId for admin";
@@ -71,7 +69,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 
 /* ====================  regular panels  =============================*/
 
-Route::group(['namespace' => 'RegularMember'], function () {
+Route::group(['namespace' => 'RegularMember', 'middleware' => 'auth'], function () {
     // Controllers Within The "App\Http\Controllers\RegularMember" Namespace
 
     /* units list */
@@ -102,4 +100,4 @@ Route::group(['namespace' => 'RegularMember'], function () {
     });
 
 });
-
+Auth::routes();
