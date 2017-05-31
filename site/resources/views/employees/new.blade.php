@@ -1,0 +1,393 @@
+@extends('layouts.app')
+
+@section('title')
+داشبورد
+@endsection
+@section('header')
+<div class="container-fluid">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">سامانه مدیریت اشتغال سازمان منطقه آزاد انزلی</a>
+    </div>
+    <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
+                    <i class="material-icons">person</i>
+                    <p class="hidden-lg hidden-md">Profile</p>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+@endsection
+
+@section('content')
+@if (count($errors) > 0)
+    <div class="alert alert-danger rtl">
+        <ul>
+        @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+        @endforeach
+        </ul>
+    </div>
+@endif
+<div class="row">
+    <div class="col-lg-12 col-md-12">
+        <div class="card">
+            <div class="card-header rtl" data-background-color="purple">
+                <h4 class="title">شاغل جدید</h4>
+            </div>
+            <div class="card-content">
+                <div class="row">
+                    <div class="col-md-4 pull-right">
+                        <div class="form-group label-floating rtl col-lg-12 col-md-12">
+                            <label class="control-label">نام</label>
+                            <input type="text" name="first_name" value="{{isset($oldInputs)? $oldInputs['first_name']: ''}}" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-4 pull-right">
+                        <div class="form-group label-floating rtl col-lg-12 col-md-12">
+                            <label class="control-label">نام خانوادگی</label>
+                            <input type="text" name="last_name" value="{{isset($oldInputs)? $oldInputs['last_name']: ''}}" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-4 pull-right">
+                        <div class="form-group rtl col-lg-12 col-md-12">
+                            <div class="form-group" style="margin-top: 0px">
+                                <select class="form-control" name="gender" style="padding-top: 0px">
+                                    @foreach ($genders->all() as $gender)
+                                            <option value="{{$gender->id}}" {{isset($oldInputs)?($gender->id==$oldInputs['gender']?'selected':''):''}}>{{$gender->title}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 pull-right">
+                        <div class="form-group label-floating rtl col-lg-12 col-md-12">
+                            <label class="control-label">کد ملی</label>
+                            <input type="text" name="id_number" value="{{isset($oldInputs)? $oldInputs['id_number']: ''}}" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-4 pull-right">
+                        <div class="form-group label-floating rtl col-lg-12 col-md-12">
+                            <label class="control-label">نام پدر</label>
+                            <input type="text" name="father_name" value="{{isset($oldInputs)? $oldInputs['father_name']: ''}}" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-4 pull-right">
+                        <div class="form-group label-floating rtl col-lg-12 col-md-12">
+                            <label class="control-label">تاریخ تولد</label>
+                            <input type="text" value="1365/12/12" class="form-control">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 pull-right">
+                        <div class="form-group label-floating rtl col-lg-12 col-md-12">
+                            <label class="control-label">محل تولد</label>
+                            <input type="text" value="لاهیجان" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-4 pull-right">
+                        <div class="form-group rtl col-lg-12 col-md-12">
+                            <div class="form-group" style="margin-top: 0px">
+                                <select class="form-control" style="padding-top: 0px">
+                                    <option>محل سکونت - انتخاب نشده</option>
+                                    <option>رشت</option>
+                                    <option>انزلی</option>
+                                    <option>آستانه</option>
+                                    <option>لاهیجان</option>
+                                    <option>غیره</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 pull-right">
+                        <div class="form-group label-floating rtl col-lg-12 col-md-12">
+                            <label class="control-label">سال های سکونت</label>
+                            <input type="text" value="6" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 pull-right">
+                        <div class="form-group rtl col-lg-12 col-md-12">
+                            <div class="form-group" style="margin-top: 0px">
+                                <select class="form-control" style="padding-top: 0px">
+                                    <option>مدرک تحصیلی - انتخاب نشده</option>
+                                    <option>دکتری</option>
+                                    <option>فوق لیسانس</option>
+                                    <option>لیسانس</option>
+                                    <option>کاردانی</option>
+                                    <option>دیپلم</option>
+                                    <option>سیکل</option>
+                                    <option>غیره</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 pull-right">
+                        <div class="form-group label-floating rtl col-lg-12 col-md-12">
+                            <label class="control-label">رشته تحصیلی</label>
+                            <input type="text" value="حسابداری" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 pull-right">
+                        <div class="form-group rtl col-lg-12 col-md-12">
+                            <div class="form-group" style="margin-top: 0px">
+                                <select class="form-control" style="padding-top: 0px">
+                                    <option>وضعیت تاهل - انتخاب نشده</option>
+                                    <option>مجرد</option>
+                                    <option>متاهل</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 pull-right">
+                        <div class="form-group label-floating rtl col-lg-12 col-md-12">
+                            <label class="control-label">تعداد افراد تحت تکفل</label>
+                            <input type="text" value="0" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-4 pull-right">
+                        <div class="form-group label-floating rtl col-lg-12 col-md-12">
+                            <label class="control-label">مدت سابقه کار</label>
+                            <input type="text" value="3 سال و 4 ماه" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 pull-right">
+                        <div class="form-group label-floating rtl col-lg-12 col-md-12">
+                            <label class="control-label">آدرس دقیق محل سکونت</label>
+                            <input type="text" value="لاهیجان - خیابان شهید امیری - کوی سوستان - کوچه مریم 2 - پلاک 12" class="form-control">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header rtl" data-background-color="purple">
+                <h4 class="title">کارگاه جدید</h4>
+            </div>
+            <div class="card-content">
+                <form action="{{url('admin/unit-new')}}" method="post">
+                    {{ csrf_field() }}
+                    <div class="row">
+                        <div class="col-md-6 pull-right">
+                            <div class="form-group label-floating rtl col-lg-12 col-md-12">
+                                <label class="control-label">نام واحد</label>
+                                <input type="text" value="{{isset($oldInputs)? $oldInputs['title']: ''}}" name="title" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6 pull-right">
+                            <div class="form-group label-floating rtl col-lg-12 col-md-12">
+                                <label class="control-label">نوع فعالیت(محصول)</label>
+                                <input type="text" value="{{isset($oldInputs)? $oldInputs['product']: ''}}" name="product" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 pull-right">
+                            <div class="form-group label-floating rtl col-lg-12 col-md-12">
+                                <label class="control-label">نام مدیر</label>
+                                <input type="text" value="{{isset($oldInputs)? $oldInputs['manager_title']: ''}}" name="manager_title" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-4 pull-right">
+                            <div class="form-group rtl col-lg-12 col-md-12">
+                                <div class="form-group" style="margin-top: 0px">
+                                    <select class="form-control" name="manager_gender" style="padding-top: 0px">
+                                        @foreach ($genders->all() as $gender)
+                                                <option value="{{$gender->id}}" {{isset($oldInputs)?($gender->id==$oldInputs['manager_gender']?'selected':''):''}}>{{$gender->title}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 pull-right">
+                            <div class="form-group label-floating rtl col-lg-12 col-md-12">
+                                <label class="control-label">کد ملی</label>
+                                <input type="text" value="{{isset($oldInputs)? $oldInputs['manager_id_number']: ''}}" name="manager_id_number" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-9 col-lg-9 col-sm-12 pull-right">
+                            <div class="form-group label-floating rtl col-lg-12 col-md-12">
+                                <label class="control-label">نشانی</label>
+                                <input type="text" value="{{isset($oldInputs)? $oldInputs['address']: ''}}" name="address" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-lg-3 col-sm-12 pull-right">
+                            <div class="form-group label-floating rtl col-lg-12 col-md-12">
+                                <label class="control-label">کد پستی</label>
+                                <input type="text" value="{{isset($oldInputs)? $oldInputs['zip_code']: ''}}" name="zip_code" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 pull-right">
+                            <div class="form-group label-floating rtl col-lg-12 col-md-12">
+                                <label class="control-label">تلفن تماس ثابت</label>
+                                <input type="text" value="{{isset($oldInputs)? $oldInputs['phone']: ''}}" name="phone" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6 pull-right">
+                            <div class="form-group label-floating rtl col-lg-12 col-md-12">
+                                <label class="control-label">تلفن همراه</label>
+                                <input type="text" value="{{isset($oldInputs)? $oldInputs['cell_phone']: ''}}" name="cell_phone" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="checkbox pull-right">
+                                مجوز فعالیت دارد
+                                <label>
+                                    <input type="checkbox" name="has_certificate" {{isset($oldInputs['has_certificate'])?'checked': ''}}>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2 pull-right">
+                            <div class="form-group label-floating rtl col-lg-12 col-md-12">
+                                <label class="control-label">شماره مجوز</label>
+                                <input type="text" value="{{isset($oldInputs['certificate_id'])? $oldInputs['certificate_id']: ''}}" name="certificate_id" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6 pull-right">
+                            <div class="col-md-3">
+                                <select class="form-control" name="certificate_date_day" style="padding-top: 0px">
+                                    @for ($i=1; $i<=30; $i++)
+                                        <option value="{{$i}}">{{$i}}</option>
+                                    @endfor
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <select class="form-control" name="certificate_date_month" style="padding-top: 0px">
+                                    <option value="1">فروردین</option>
+                                    <option value="2">اردیبهشت</option>
+                                    <option value="3">خرداد</option>
+                                    <option value="4">تیر</option>
+                                    <option value="5">مرداد</option>
+                                    <option value="6">شهریور</option>
+                                    <option value="7">مهر</option>
+                                    <option value="8">آبان</option>
+                                    <option value="9">آذر</option>
+                                    <option value="10">دی</option>
+                                    <option value="11">بهمن</option>
+                                    <option value="12">اسفند</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <select class="form-control" name="certificate_date_year" style="padding-top: 0px">
+                                    @for ($i=1390; $i<1400; $i++)
+                                        <option value="{{$i}}">{{$i}}</option>
+                                    @endfor
+                                </select>
+                            </div>
+                            <div class="col-md-3" style="margin-top: 30px;">
+                                <span>تاریخ صدور</span>
+                            </div>
+                        </div>
+                        <div class="col-md-4 pull-right">
+                            <div class="form-group rtl col-lg-12 col-md-12">
+                                <div class="form-group" style="margin-top: 0px">
+                                    <select class="form-control" name="certificate_type" style="padding-top: 0px">
+                                        @foreach ($certificateTypes->all() as $certificateType)
+                                                <option value="{{$certificateType->id}}" {{isset($oldInputs)?($certificateType->id==$oldInputs['certificate_type']?'selected':''):''}}>{{$certificateType->title}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="checkbox pull-right">
+                                پروانه کسب دارد
+                                <label>
+                                    <input type="checkbox" name="has_licence" {{isset($oldInputs['has_licence'])?'checked': ''}}>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2 pull-right">
+                            <div class="form-group label-floating rtl col-lg-12 col-md-12">
+                                <label class="control-label">شماره پروانه</label>
+                                <input type="text" value="{{isset($oldInputs['licence_id'])? $oldInputs['licence_id']: ''}}" name="licence_id" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6 pull-right">
+                            <div class="col-md-3">
+                                <select class="form-control" name="licence_date_day" style="padding-top: 0px">
+                                    @for ($i=1; $i<=30; $i++)
+                                        <option value="{{$i}}">{{$i}}</option>
+                                    @endfor
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <select class="form-control" name="licence_date_month" style="padding-top: 0px">
+                                    <option value="1">فروردین</option>
+                                    <option value="2">اردیبهشت</option>
+                                    <option value="3">خرداد</option>
+                                    <option value="4">تیر</option>
+                                    <option value="5">مرداد</option>
+                                    <option value="6">شهریور</option>
+                                    <option value="7">مهر</option>
+                                    <option value="8">آبان</option>
+                                    <option value="9">آذر</option>
+                                    <option value="10">دی</option>
+                                    <option value="11">بهمن</option>
+                                    <option value="12">اسفند</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <select class="form-control" name="licence_date_year" style="padding-top: 0px">
+                                    @for ($i=1390; $i<1400; $i++)
+                                        <option value="{{$i}}">{{$i}}</option>
+                                    @endfor
+                                </select>
+                            </div>
+                            <div class="col-md-3" style="margin-top: 30px;">
+                                <span>تاریخ مجوز</span>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4 pull-right">
+                            <div class="form-group rtl col-lg-12 col-md-12">
+                                <div class="form-group" style="margin-top: 0px">
+                                    <select class="form-control" name="licence_source" style="padding-top: 0px">
+                                        @foreach ($business_license_sources->all() as $business_license_source)
+                                                <option value="{{$business_license_source->id}}" {{isset($oldInputs)?($business_license_source->id==$oldInputs['certificate_type']?'selected':''):''}}>{{$business_license_source->title}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button type="submit" class="btn btn-primary pull-right">ثبت کارگاه</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection

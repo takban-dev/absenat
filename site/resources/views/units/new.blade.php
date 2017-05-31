@@ -134,7 +134,7 @@
                             <div class="col-md-3">
                                 <select class="form-control" name="certificate_date_day" style="padding-top: 0px">
                                     @for ($i=1; $i<=30; $i++)
-                                        <option value="{{$i}}">{{$i}}</option>
+                                        <option value="{{$i}}" >{{$i}}</option>
                                     @endfor
                                 </select>
                             </div>

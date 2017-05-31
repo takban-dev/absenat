@@ -43,17 +43,12 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => [/*'a
     Route::get('/unit-remove/{id}', 'AdminUnitsController@remove');
 
     /* employees list */
-    Route::get('/employees', function () {
-        return 'employees list for admin';
-    });
+    Route::get('/employees/{page?}/{size?}', 'AdminEmployeesController@list');
     /* single employees page for editing or viewing */
-    Route::get('/employee/{employeeId}', function ($employeeId) {
-        return "employee page id: $employeeId for admin";
-    })->where('employeeId', '[0-9]+');
+    Route::get('/employee/{employeeId}', 'AdminEmployeesController@editGet')->where('employeeId', '[0-9]+');
+    Route::post('/employee/{employeeId}', 'AdminEmployeesController@editPost')->where('employeeId', '[0-9]+');
     /* new employee page */
-    Route::get('/employee-new', function () {
-        return 'new employee page for admin';
-    });
+    Route::get('/employee-new', 'AdminEmployeesController@new');
 
     /* reporets page */
     Route::get('/reports', function () {

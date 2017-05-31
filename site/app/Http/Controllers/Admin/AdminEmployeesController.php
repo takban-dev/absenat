@@ -7,18 +7,18 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
-class AdminUnitsController extends Controller
+class AdminEmployeesController extends Controller
 {
     public function list(Request $request, $page=0, $size=2)
     {
         $group_code = 1;
-        $units = DB::table('units')->skip($page*$size)->limit($size)->get();
-        $unitCount = DB::table('units')->count();
+        $employees = DB::table('employees')->skip($page*$size)->limit($size)->get();
+        $employeeCount = DB::table('employees')->count();
 
-        $pageCount = ceil($unitCount / $size);
+        $pageCount = ceil($employeeCount / $size);
 
-        return view('units.list', [
-            'units'         => $units, 
+        return view('employees.list', [
+            'employees'         => $employees, 
             'pageCount'     => $pageCount,
             'currentPage'   => $page,
             'group_code'    => $group_code,
@@ -40,7 +40,7 @@ class AdminUnitsController extends Controller
             if( isset($oldInputs['has_licence']))
                 $oldInputs['has_licence'] = 1;
 
-            return view('units.edit', [
+            return view('employees.edit', [
                 'group_code'                => $group_code,
                 'oldInputs'                 => $oldInputs,
 
@@ -55,7 +55,7 @@ class AdminUnitsController extends Controller
             $has_certificate = $request->input('has_certificate');
             $has_licence = $request->input('has_licence');
 
-            DB::table('units')->where(['id' => $id])->update(
+            DB::table('employees')->where(['id' => $id])->update(
                 [
                     'user'                  => $username,
                     'title'                 => $request->input('title'),
@@ -80,50 +80,24 @@ class AdminUnitsController extends Controller
                 ]
             );
 
-            return redirect('admin/unit/' . $id);
+            return redirect('admin/employee/' . $id);
         }
     }
     public function editGet(Request $request, $id){
         $group_code = 1;
-        $unit = get_object_vars(DB::table('units')->where('id', '=', $id)->first());
-
-        $certificate_date = explode('-', $unit['certificate_date']);
-        $unit['certificate_date_day']   = $certificate_date[2];
-        $unit['certificate_date_month'] = $certificate_date[1];
-        $unit['certificate_date_year']  = $certificate_date[0];
-
-        $licence_date = explode('-', $unit['licence_date']);
-        $unit['licence_date_day']   = $licence_date[2];
-        $unit['licence_date_month'] = $licence_date[1];
-        $unit['licence_date_year']  = $licence_date[0];
-        
-        var_dump($unit);
-        return view('units.edit', [
+        $employee = get_object_vars(DB::table('employees')->where('id', '=', $id)->first());
+        return view('employees.edit', [
             'group_code'                => $group_code,
-            'oldInputs'                 => $unit,
+            'oldInputs'                 => $employee,
 
             'genders'                   => DB::table('genders')                     ->get(),
             'certificateTypes'          => DB::table('certificate_types')           ->get(),
             'business_license_sources'  => DB::table('business_license_sources')    ->get(),
-            'months'                    => $months = array(
-                                                1 => 'فروردین',
-                                                2 => 'اردیبهشت',
-                                                3 => 'خرداد',
-                                                4 => 'تیر',
-                                                5 => 'مرداد',
-                                                6 => 'شهریور',
-                                                7 => 'مهر',
-                                                8 => 'آبان',
-                                                9 => 'آذر',
-                                                10 => 'دی',
-                                                11 => 'بهمن',
-                                                12 => 'اسفند'
-                                            )
             ]);
     }
 
     public function remove(Request $request, $id){
-        DB::table('units')->where('id', '=', $id)->delete();   
+        DB::table('employees')->where('id', '=', $id)->delete();   
         return back();
     }
 
@@ -133,7 +107,7 @@ class AdminUnitsController extends Controller
             $validator = $this->myValidate($request);
             if($validator->fails()){
 
-                return view('units.new', [
+                return view('employees.new', [
                     'group_code'                => $group_code,
                     'genders'                   => DB::table('genders')                     ->get(),
                     'certificateTypes'          => DB::table('certificate_types')           ->get(),
@@ -148,7 +122,7 @@ class AdminUnitsController extends Controller
                 $has_certificate = $request->input('has_certificate');
                 $has_licence = $request->input('has_licence');
 
-                $id = DB::table('units')->insertGetId(
+                $id = DB::table('employees')->insertGetId(
                     [
                         'user'                  => $username,
                         'title'                 => $request->input('title'),
@@ -173,10 +147,10 @@ class AdminUnitsController extends Controller
                     ]
                 );
 
-                return redirect('admin/unit/' . $id);
+                return redirect('admin/employee/' . $id);
             }
         }else{
-            return view('units.new', [
+            return view('employees.new', [
                 'group_code'                => $group_code,
                 'genders'                   => DB::table('genders')                     ->get(),
                 'certificateTypes'          => DB::table('certificate_types')           ->get(),
