@@ -14,7 +14,6 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
     }
 
     /**
@@ -24,7 +23,8 @@ class HomeController extends Controller
      */
     public function dashboard(Request $request)
     {
-        $userGroupId = Auth::user()->group_code;
+        $userGroupId = 0;//Auth::user()->group_code;
+
         return view('dashboard', ['group_code' => $userGroupId]);
     }
 }

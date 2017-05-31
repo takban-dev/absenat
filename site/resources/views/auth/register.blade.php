@@ -30,94 +30,102 @@
                     <img src="{{ asset('img/logo-big.png') }}" class="img-responsive"/>
                 </div>
             </div>
-            <div class="row">
             <div class="col-md-6 col-md-offset-3">
-                <div class="card">
-    <div class="nav-tabs-navigation">
-        <div class="nav-tabs-wrapper rtl">
-            <ul class="nav nav-tabs">
-                <li class="pull-right">
-                    <a href="{{ route('login') }}">ورود</a>
-                </li>
-                <li class="active pull-right">
-                    <a href="#">ثبت نام</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-    <div class="card-content">
-        <form method="POST" action="{{ route('login') }}">
-            {{ csrf_field() }}
+                <div class="row">
+                    <div class="alert alert-danger">
+                        <button type="button" aria-hidden="true" class="close">×</button>
+                            @foreach ($errors->all() as $error)
+                                <div>{{ $error }}</div>
+                            @endforeach
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="card">
+                        <div class="nav-tabs-navigation">
+                            <div class="nav-tabs-wrapper rtl">
+                                <ul class="nav nav-tabs">
+                                    <li class="pull-right">
+                                        <a href="{{ route('login') }}">ورود</a>
+                                    </li>
+                                    <li class="active pull-right">
+                                        <a href="#">ثبت نام</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <form method="POST" action="{{ route('login') }}">
+                                {{ csrf_field() }}
 
-            <div class="row">
-                <div class="col-md-6 pull-right">
-                    <div class="form-group label-floating rtl col-lg-12 col-md-12">
-                        <label class="control-label">نام کاربری</label>
-                        <input type="text" class="form-control" id="name" type="name" name="name" value="{{ old('name') }}" required autofocus>
-                    </div>
-                </div>
-                <div class="col-md-6 pull-right">
-                    <div class="form-group label-floating rtl col-lg-12 col-md-12">
-                        <label class="control-label">آدرس ایمیل</label>
-                        <input type="email" id="email" type="email" name="email" value="{{ old('email') }}" required class="form-control">
-                    </div>
-                </div>
-            </div>
+                                <div class="row">
+                                    <div class="col-md-6 pull-right">
+                                        <div class="form-group label-floating rtl col-lg-12 col-md-12">
+                                            <label class="control-label">نام کاربری</label>
+                                            <input type="text" class="form-control" id="name" type="name" name="name" value="{{ old('name') }}" required autofocus>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 pull-right">
+                                        <div class="form-group label-floating rtl col-lg-12 col-md-12">
+                                            <label class="control-label">آدرس ایمیل</label>
+                                            <input type="email" id="email" type="email" name="email" value="{{ old('email') }}" required class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
 
-            <div class="row">
-                <div class="col-md-6 pull-right">
-                    <div class="form-group label-floating rtl col-lg-12 col-md-12">
-                        <label class="control-label">کلمه عبور</label>
-                        <input type="password" class="form-control" id="password" type="password" name="password" required>
-                    </div>
-                </div>
-                <div class="col-md-6 pull-right">
-                    <div class="form-group label-floating rtl col-lg-12 col-md-12">
-                        <label class="control-label">تکرار کلمه عبور</label>
-                        <input type="password" id="password_confirmation" type="password" name="password_confirmation" required class="form-control">
-                    </div>
-                </div>
-            </div>
+                                <div class="row">
+                                    <div class="col-md-6 pull-right">
+                                        <div class="form-group label-floating rtl col-lg-12 col-md-12">
+                                            <label class="control-label">کلمه عبور</label>
+                                            <input type="password" class="form-control" id="password" type="password" name="password" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 pull-right">
+                                        <div class="form-group label-floating rtl col-lg-12 col-md-12">
+                                            <label class="control-label">تکرار کلمه عبور</label>
+                                            <input type="password" id="password_confirmation" type="password" name="password_confirmation" required class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
 
-            <div class="row">
-                <div class="col-md-6 pull-right">
-                    <div class="form-group label-floating rtl col-lg-12 col-md-12">
-                        <label class="control-label">نام</label>
-                        <input type="text" class="form-control" id="first_name" type="first_name" name="first_name" value="{{ old('first_name') }}" required autofocus>
-                    </div>
-                </div>
-                <div class="col-md-6 pull-right">
-                    <div class="form-group label-floating rtl col-lg-12 col-md-12">
-                        <label class="control-label">نام خانوادگی</label>
-                        <input type="text" id="last_name" type="last_name" name="last_name" value="{{ old('last_name') }}" required class="form-control">
-                    </div>
-                </div>
-            </div>
+                                <div class="row">
+                                    <div class="col-md-6 pull-right">
+                                        <div class="form-group label-floating rtl col-lg-12 col-md-12">
+                                            <label class="control-label">نام</label>
+                                            <input type="text" class="form-control" id="first_name" type="first_name" name="first_name" value="{{ old('first_name') }}" required autofocus>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 pull-right">
+                                        <div class="form-group label-floating rtl col-lg-12 col-md-12">
+                                            <label class="control-label">نام خانوادگی</label>
+                                            <input type="text" id="last_name" type="last_name" name="last_name" value="{{ old('last_name') }}" required class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
 
-            <div class="row">
-                <div class="col-md-6 pull-right">
-                    <div class="form-group label-floating rtl col-lg-12 col-md-12">
-                        <label class="control-label">شماره تلفن ثابت</label>
-                        <input type="text" class="form-control" id="phone" type="phone" name="phone" value="{{ old('phone') }}" required autofocus>
-                    </div>
-                </div>
-                <div class="col-md-6 pull-right">
-                    <div class="form-group label-floating rtl col-lg-12 col-md-12">
-                        <label class="control-label">تلفن همراه</label>
-                        <input type="text" id="cellphone" type="cellphone" name="cellphone" value="{{ old('cellphone') }}" required class="form-control">
-                    </div>
-                </div>
-            </div>
+                                <div class="row">
+                                    <div class="col-md-6 pull-right">
+                                        <div class="form-group label-floating rtl col-lg-12 col-md-12">
+                                            <label class="control-label">شماره تلفن ثابت</label>
+                                            <input type="text" class="form-control" id="phone" type="phone" name="phone" value="{{ old('phone') }}" required autofocus>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 pull-right">
+                                        <div class="form-group label-floating rtl col-lg-12 col-md-12">
+                                            <label class="control-label">تلفن همراه</label>
+                                            <input type="text" id="cellphone" type="cellphone" name="cellphone" value="{{ old('cellphone') }}" required class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
 
-            <div class="row">
-                <div class="col-md-12">
-                    <button type="submit" class="btn btn-primary pull-right">ورود</button>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <button type="submit" class="btn btn-primary pull-right">ورود</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </form>
-    </div>
-</div>
-            </div>
             </div>
         </div>
     </div>

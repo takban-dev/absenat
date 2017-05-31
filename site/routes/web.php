@@ -5,8 +5,7 @@ Route::get('/', function () {
 });
 
 /* self pages */
-Route::get('/dashboard', 'HomeController@dashboard')->name('dashboard')->middleware('auth');
-
+Route::get('/dashboard', 'HomeController@dashboard')/*->middleware('auth')*/;
 Route::get('/profile', function () {
     return view('welcome');
 });
@@ -17,10 +16,10 @@ Route::get('/profile', function () {
 
 /* ====================  admin panels  =============================*/
 
-Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['auth', 'check-admin']], function () {
+Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => [/*'auth', 'check-admin'*/]], function () {
     // Controllers Within The "App\Http\Controllers\Admin" Namespace
     
-        /* users list */
+    /* users list */
     Route::get('/users', function () {
         return 'users list for admin';
     })->middleware('check-admin');
@@ -34,18 +33,14 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['aut
     });
 
     /* units list */
-    Route::get('/units', function () {
-        return 'units list for admin';
-    });
+    Route::get('/units/{page?}/{size?}', 'AdminUnitsController@list');
     /* single unit page for editing or viewing */
-    Route::get('/unit/{unitId}', function ($unitId) {
-        return "unit page id: $unitId for admin";
-    })->where('unitId', '[0-9]+');
+    Route::any ('/unit/{unitId}', 'AdminUnitsController@editGet')->where('unitId', '[0-9]+');
+    Route::post('/unit/{unitId}', 'AdminUnitsController@editPost')->where('unitId', '[0-9]+');
     /* new unit page */
-    Route::get('/unit-new', function () {
-        return 'new unit page for admin';
-    });
-
+    Route::get('/unit-new', 'AdminUnitsController@new');
+    /* remove unit */
+    Route::get('/unit-remove/{id}', 'AdminUnitsController@remove');
 
     /* employees list */
     Route::get('/employees', function () {
@@ -69,7 +64,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['aut
 
 /* ====================  regular panels  =============================*/
 
-Route::group(['namespace' => 'RegularMember', 'middleware' => 'auth'], function () {
+Route::group(['namespace' => 'RegularMember'/*, 'middleware' => 'auth'*/], function () {
     // Controllers Within The "App\Http\Controllers\RegularMember" Namespace
 
     /* units list */

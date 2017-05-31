@@ -3,56 +3,6 @@
 @section('title')
 داشبورد
 @endsection
-@section('side-bar')
-<ul class="nav">
-    <li class="active">
-        <a href="dashboard">
-            <i class="material-icons">dashboard</i>
-            <p>داشبورد</p>
-        </a>
-    </li>
-    @if ($group_code)
-        <li>
-            <a href="admin/users">
-                <i class="material-icons">people</i>
-                <p>کاربران</p>
-            </a>
-        </li>
-        <li>
-            <a href="admin/units">
-                <i class="material-icons">library_books</i>
-                <p>کارگاه ها</p>
-            </a>
-        </li>
-        <li>
-            <a href="admin/employees">
-                <i class="material-icons">people_outline</i>
-                <p>شاغلین</p>
-            </a>
-        </li>
-        <li>
-            <a href="admin/reports">
-                <i class="material-icons">show_chart</i>
-                <p>آمار ها</p>
-            </a>
-        </li>
-    @else
-        <li>
-            <a href="units">
-                <i class="material-icons">library_books</i>
-                <p>کارگاه ها</p>
-            </a>
-        </li>
-        <li>
-            <a href="employees">
-                <i class="material-icons">people_outline</i>
-                <p>شاغلین</p>
-            </a>
-        </li>
-    @endif
-    
-</ul>
-@endsection
 
 @section('header')
 <div class="container-fluid">

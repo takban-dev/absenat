@@ -27,7 +27,54 @@
         </div>
 
         <div class="sidebar-wrapper">
-            @yield('side-bar')
+            <ul class="nav">
+                <li class="active">
+                    <a href="{{url('dashboard')}}">
+                        <i class="material-icons">dashboard</i>
+                        <p>داشبورد</p>
+                    </a>
+                </li>
+                @if ($group_code)
+                    <li>
+                        <a href="{{url('admin/users')}}">
+                            <i class="material-icons">people</i>
+                            <p>کاربران</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{url('admin/units')}}">
+                            <i class="material-icons">library_books</i>
+                            <p>کارگاه ها</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{url('admin/employees')}}">
+                            <i class="material-icons">people_outline</i>
+                            <p>شاغلین</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{url('admin/reports')}}">
+                            <i class="material-icons">show_chart</i>
+                            <p>آمار ها</p>
+                        </a>
+                    </li>
+                @else
+                    <li>
+                        <a href="{{url('units')}}">
+                            <i class="material-icons">library_books</i>
+                            <p>کارگاه ها</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{url('employees')}}">
+                            <i class="material-icons">people_outline</i>
+                            <p>شاغلین</p>
+                        </a>
+                    </li>
+                @endif
+                
+            </ul>
         </div>
     </div>
 
