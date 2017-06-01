@@ -12,18 +12,24 @@ class AdminEmployeesController extends Controller
     public function list(Request $request, $page=0, $size=10)
     {
         $group_code = 1;
-        $employees = DB::table('employees')->skip($page*$size)->limit($size)->get();
+        $employees = DB::table('employees')
+            ->join('degrees', 'employees.degree', '=', 'degrees.id')
+            ->join('study_fields', 'employees.field', '=', 'study_fields.id')
+            ->join('cities', 'employees.habitate', '=', 'cities.id')
+            ->join('units', 'employees.unit_id', '=', 'units.id')
+            ->select(DB::raw("employees.id, employees.first_name, employees.last_name, degrees.title'degree', study_fields.title'field', units.title'unit', cities.title'habitate'"))
+            ->get();
         $employeeCount = DB::table('employees')->count();
 
         $pageCount = ceil($employeeCount / $size);
 
         return view('employees.list', [
-            'employees'         => $employees, 
+            'employees'     => $employees, 
             'pageCount'     => $pageCount,
             'currentPage'   => $page,
             'group_code'    => $group_code,
             'pageSize'      => $size,
-            'pagination'    => $this->generatePages($pageCount, $page)
+            'pagination'    => $this->generatePages($pageCount, $page),
             ]);
     }
 
