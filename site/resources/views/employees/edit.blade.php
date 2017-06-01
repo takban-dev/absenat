@@ -247,7 +247,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <button type="submit" class="btn btn-primary pull-right">ثبت شاغل</button>
+                            <button type="submit" class="btn btn-primary pull-right">ثبت تغییرات شاغل</button>
                         </div>
                     </div>
                 </form>

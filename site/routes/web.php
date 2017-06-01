@@ -1,7 +1,7 @@
 <?php
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('welcome', ['tab' => 'login']);
 });
 
 /* self pages */
@@ -20,22 +20,19 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => [/*'a
     // Controllers Within The "App\Http\Controllers\Admin" Namespace
     
     /* users list */
-    Route::get('/users', function () {
-        return 'users list for admin';
-    })->middleware('check-admin');
+    Route::get('/users', 'AdminUsersController@list');
     /* single user page for editing or viewing */
-    Route::get('/user/{userId}', function ($userId) {
-        return "user page id: $userId for admin";
-    })->where('userId', '[0-9]+');
+    Route::get ('/user/{userId}', 'AdminUsersController@editGet')->where('unitId', '[0-9]+');
+    Route::post('/user/{userId}', 'AdminUsersController@editPost')->where('unitId', '[0-9]+');
     /* new user page */
-    Route::get('/user-new', function () {
-        return 'new user page for admin';
-    });
+    Route::get('/user-new', 'AdminUsersController@newGet');
+    Route::post('/user-new', 'AdminUsersController@newPost');
+
 
     /* units list */
     Route::get('/units/{page?}/{size?}', 'AdminUnitsController@list');
     /* single unit page for editing or viewing */
-    Route::any ('/unit/{unitId}', 'AdminUnitsController@editGet')->where('unitId', '[0-9]+');
+    Route::get ('/unit/{unitId}', 'AdminUnitsController@editGet')->where('unitId', '[0-9]+');
     Route::post('/unit/{unitId}', 'AdminUnitsController@editPost')->where('unitId', '[0-9]+');
     /* new unit page */
     Route::get('/unit-new', 'AdminUnitsController@newGet');
@@ -92,4 +89,7 @@ Route::group(['namespace' => 'RegularMember'/*, 'middleware' => 'auth'*/], funct
     });
 
 });
-Auth::routes();
+
+Route::post('/login', 'HomeController@login');
+Route::post('/register', 'HomeController@register');
+Route::get('/logout', 'HomeController@logout');
