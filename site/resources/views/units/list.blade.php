@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-کارگاه ها
+کارگاه ها - {{$currentPage+1}}
 @endsection
 
 @section('header')

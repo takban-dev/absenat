@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }} - @yield('title')</title>
+    <title>ابسنات:@yield('title')</title>
 
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet"/>
     <link href="{{ asset('css/material-dashboard.css') }}" rel="stylesheet"/>
@@ -18,10 +18,20 @@
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' rel='stylesheet'
           type='text/css'>
     <link href="https://fonts.googleapis.com/css?family=Lateef" rel="stylesheet">
+    
+    <script src="{{ asset('js/jquery-3.1.0.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/jquery.autocomplete.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/bootstrap.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/material.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/chartist.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap-notify.js') }}"></script>
+    <script src="{{ asset('js/material-dashboard.js') }}"></script>
+    <script src="{{ asset('js/demo.js') }}"></script>
+
 </head>
 <body>
 <div class="wrapper">
-    <div class="sidebar" data-color="purple" data-image="assets/img/sidebar-1.jpg">
+    <div class="sidebar" data-color="purple" data-image="{{ asset('img/sidebar-1.jpg') }}">
         <div class="logo">
             <img src="{{ asset('img/logo-small.png') }}"/>
         </div>
@@ -100,15 +110,6 @@
     </div>
 </div>
 </body>
-<script src="{{ asset('js/jquery-3.1.0.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('js/bootstrap.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('js/material.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('js/chartist.min.js') }}"></script>
-<script src="{{ asset('js/bootstrap-notify.js') }}"></script>
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
-<script src="{{ asset('js/material-dashboard.js') }}"></script>
-<script src="{{ asset('js/demo.js') }}"></script>
-
 <script type="text/javascript">
     $(document).ready(function () {
 

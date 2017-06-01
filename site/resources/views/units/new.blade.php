@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-داشبورد
+کارگاه جدید
 @endsection
 @section('header')
 <div class="container-fluid">
@@ -134,30 +134,21 @@
                             <div class="col-md-3">
                                 <select class="form-control" name="certificate_date_day" style="padding-top: 0px">
                                     @for ($i=1; $i<=30; $i++)
-                                        <option value="{{$i}}" >{{$i}}</option>
+                                        <option value="{{$i}}" {{isset($oldInputs['certificate_date_day'])? ($i == $oldInputs['certificate_date_day'] ? 'selected': '' ): ''}}>{{$i}}</option>
                                     @endfor
                                 </select>
                             </div>
                             <div class="col-md-3">
                                 <select class="form-control" name="certificate_date_month" style="padding-top: 0px">
-                                    <option value="1">فروردین</option>
-                                    <option value="2">اردیبهشت</option>
-                                    <option value="3">خرداد</option>
-                                    <option value="4">تیر</option>
-                                    <option value="5">مرداد</option>
-                                    <option value="6">شهریور</option>
-                                    <option value="7">مهر</option>
-                                    <option value="8">آبان</option>
-                                    <option value="9">آذر</option>
-                                    <option value="10">دی</option>
-                                    <option value="11">بهمن</option>
-                                    <option value="12">اسفند</option>
+                                    @foreach($months as $key => $val)
+                                        <option value="{{$key}}" {{isset($oldInputs['certificate_date_month'])? ($key == $oldInputs['certificate_date_month'] ? 'selected': '' ): ''}} >{{$val}}</option>    
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="col-md-3">
                                 <select class="form-control" name="certificate_date_year" style="padding-top: 0px">
                                     @for ($i=1390; $i<1400; $i++)
-                                        <option value="{{$i}}">{{$i}}</option>
+                                        <option value="{{$i}}" {{isset($oldInputs['certificate_date_year'])? ($i == $oldInputs['certificate_date_year'] ? 'selected': '' ): ''}}>{{$i}}</option>
                                     @endfor
                                 </select>
                             </div>
@@ -204,24 +195,15 @@
                             </div>
                             <div class="col-md-3">
                                 <select class="form-control" name="licence_date_month" style="padding-top: 0px">
-                                    <option value="1">فروردین</option>
-                                    <option value="2">اردیبهشت</option>
-                                    <option value="3">خرداد</option>
-                                    <option value="4">تیر</option>
-                                    <option value="5">مرداد</option>
-                                    <option value="6">شهریور</option>
-                                    <option value="7">مهر</option>
-                                    <option value="8">آبان</option>
-                                    <option value="9">آذر</option>
-                                    <option value="10">دی</option>
-                                    <option value="11">بهمن</option>
-                                    <option value="12">اسفند</option>
+                                    @foreach($months as $key => $val)
+                                        <option value="{{$key}}" {{isset($oldInputs['licence_date_month'])? ($key == $oldInputs['licence_date_month'] ? 'selected': '' ): ''}} >{{$val}}</option>    
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="col-md-3">
                                 <select class="form-control" name="licence_date_year" style="padding-top: 0px">
                                     @for ($i=1390; $i<1400; $i++)
-                                        <option value="{{$i}}">{{$i}}</option>
+                                        <option value="{{$i}}" {{isset($oldInputs['licence_date_year'])? ($i == $oldInputs['licence_date_year'] ? 'selected': '' ): ''}}>{{$i}}</option>
                                     @endfor
                                 </select>
                             </div>

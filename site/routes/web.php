@@ -38,7 +38,8 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => [/*'a
     Route::any ('/unit/{unitId}', 'AdminUnitsController@editGet')->where('unitId', '[0-9]+');
     Route::post('/unit/{unitId}', 'AdminUnitsController@editPost')->where('unitId', '[0-9]+');
     /* new unit page */
-    Route::get('/unit-new', 'AdminUnitsController@new');
+    Route::get('/unit-new', 'AdminUnitsController@newGet');
+    Route::post('/unit-new', 'AdminUnitsController@newPost');
     /* remove unit */
     Route::get('/unit-remove/{id}', 'AdminUnitsController@remove');
 
@@ -48,7 +49,8 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => [/*'a
     Route::get('/employee/{employeeId}', 'AdminEmployeesController@editGet')->where('employeeId', '[0-9]+');
     Route::post('/employee/{employeeId}', 'AdminEmployeesController@editPost')->where('employeeId', '[0-9]+');
     /* new employee page */
-    Route::get('/employee-new', 'AdminEmployeesController@new');
+    Route::get('/employee-new', 'AdminEmployeesController@newGet');
+    Route::post('/employee-new', 'AdminEmployeesController@newPost');
 
     /* reporets page */
     Route::get('/reports', function () {

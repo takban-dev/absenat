@@ -59,7 +59,7 @@
                             <tbody>
                             @foreach ($employees as $employee)
                                 <tr>
-                                    <td>test</td>
+                                    <td>{{$employee->first_name . ' ' . $employee->last_name}}</td>
                                     <td>test</td>
                                     <td>test</td>
                                     <td>test</td>

@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Validator;
 
 class AdminEmployeesController extends Controller
 {
-    public function list(Request $request, $page=0, $size=2)
+    public function list(Request $request, $page=0, $size=10)
     {
         $group_code = 1;
         $employees = DB::table('employees')->skip($page*$size)->limit($size)->get();
@@ -33,12 +33,6 @@ class AdminEmployeesController extends Controller
         if($validator->fails()){
             $oldInputs = $request->all();
             $oldInputs['id'] = $id;
-            
-
-            if( isset($oldInputs['has_certificate']))
-                $oldInputs['has_certificate'] = 1;
-            if( isset($oldInputs['has_licence']))
-                $oldInputs['has_licence'] = 1;
 
             return view('employees.edit', [
                 'group_code'                => $group_code,
@@ -47,6 +41,11 @@ class AdminEmployeesController extends Controller
                 'genders'                   => DB::table('genders')                     ->get(),
                 'certificateTypes'          => DB::table('certificate_types')           ->get(),
                 'business_license_sources'  => DB::table('business_license_sources')    ->get(),
+                'habitates'                 => DB::table('cities')                      ->get(),
+                'degrees'                   => DB::table('degrees')                     ->get(),
+                'study_fields'              => DB::table('study_fields')                ->get(),
+                'marriges'                  => DB::table('merrige_types')               ->get(),
+                'months'                    => config('constants.months')
                 ])->withErrors($validator);
 
         }else{
@@ -58,24 +57,22 @@ class AdminEmployeesController extends Controller
             DB::table('employees')->where(['id' => $id])->update(
                 [
                     'user'                  => $username,
-                    'title'                 => $request->input('title'),
-                    'product'               => $request->input('product'),
-                    'manager_title'         => $request->input('manager_title'),
-                    'manager_gender'        => $request->input('manager_gender'),
-                    'manager_id_number'     => $request->input('manager_id_number'),
+                    'unit_id'               => $request->input('unit_id'),
+                    'first_name'            => $request->input('first_name'),
+                    'last_name'             => $request->input('last_name'),
+                    'father_name'           => $request->input('father_name'),
+                    'id_number'             => $request->input('id_number'),
+                    'gender'                => $request->input('gender'),
+                    'birth_date'            => $request->input('birth_date_year') . '-' . $request->input('birth_date_month') . '-' . $request->input('birth_date_day'),
+                    'birth_place'           => $request->input('birth_place'),
+                    'habitate'              => $request->input('habitate'),
+                    'habitate_years'        => $request->input('habitate_years'),
+                    'degree'                => $request->input('degree'),
+                    'field'                 => $request->input('field'),
+                    'marrige'               => $request->input('marrige'),
+                    'dependents'            => $request->input('dependents'),
+                    'experience'            => $request->input('experience'),
                     'address'               => $request->input('address'),
-                    'zip_code'              => $request->input('zip_code'),
-                    'phone'                 => $request->input('phone'),
-                    'cell_phone'            => $request->input('cell_phone'),
-                    'has_certificate'       => $has_certificate ? '1': '0',
-                    'certificate_id'        => $has_certificate ? $request->input('certificate_id') : '###',
-                    'certificate_date'      => $has_certificate ? $request->input('certificate_date_year') . '-' . $request->input('certificate_date_month') . '-' . $request->input('certificate_date_day') : '###',
-                    'certificate_type'      => $request->input('certificate_type'),
-                    'has_licence'           => $has_licence ? '1' : '0',
-                    'licence_id'            => $has_licence ? $request->input('licence_id') : '###',
-                    'licence_date'          => $has_licence ? $request->input('licence_date_year') . '-' . $request->input('licence_date_month') . '-' . $request->input('licence_date_day') : '###',
-                    'licence_source'        => $has_licence ? $request->input('licence_source') : 0,
-                    'created_at'            => time()[0],
                     'updated_at'            => time()[0]
                 ]
             );
@@ -86,6 +83,12 @@ class AdminEmployeesController extends Controller
     public function editGet(Request $request, $id){
         $group_code = 1;
         $employee = get_object_vars(DB::table('employees')->where('id', '=', $id)->first());
+
+        $birth_date = explode('-', $employee['birth_date']);
+        $employee['birth_date_day']   = $birth_date[2];
+        $employee['birth_date_month'] = $birth_date[1];
+        $employee['birth_date_year']  = $birth_date[0];
+
         return view('employees.edit', [
             'group_code'                => $group_code,
             'oldInputs'                 => $employee,
@@ -93,6 +96,11 @@ class AdminEmployeesController extends Controller
             'genders'                   => DB::table('genders')                     ->get(),
             'certificateTypes'          => DB::table('certificate_types')           ->get(),
             'business_license_sources'  => DB::table('business_license_sources')    ->get(),
+            'habitates'                 => DB::table('cities')                      ->get(),
+            'degrees'                   => DB::table('degrees')                     ->get(),
+            'study_fields'              => DB::table('study_fields')                ->get(),
+            'marriges'                  => DB::table('merrige_types')               ->get(),
+            'months'                    => config('constants.months')
             ]);
     }
 
@@ -101,115 +109,128 @@ class AdminEmployeesController extends Controller
         return back();
     }
 
-    public function new(Request $request){
+    public function newGet(Request $request){
         $group_code = 1;
-        if(sizeof($request->all()) > 0){
-            $validator = $this->myValidate($request);
-            if($validator->fails()){
+        return view('employees.new', [
+            'group_code'                => $group_code,
+            'genders'                   => DB::table('genders')                     ->get(),
+            'certificateTypes'          => DB::table('certificate_types')           ->get(),
+            'business_license_sources'  => DB::table('business_license_sources')    ->get(),
+            'habitates'                 => DB::table('cities')                      ->get(),
+            'degrees'                   => DB::table('degrees')                     ->get(),
+            'study_fields'              => DB::table('study_fields')                ->get(),
+            'marriges'                  => DB::table('merrige_types')               ->get(),
+            'months'                    => config('constants.months')
+            ]);
+    }
 
-                return view('employees.new', [
-                    'group_code'                => $group_code,
-                    'genders'                   => DB::table('genders')                     ->get(),
-                    'certificateTypes'          => DB::table('certificate_types')           ->get(),
-                    'business_license_sources'  => DB::table('business_license_sources')    ->get(),
-                    'oldInputs'                 => $request->all(),
+    public function newPost(Request $request){
+        $validator = $this->myValidate($request);
+        $group_code = 1;
+        if($validator->fails()){
 
-                    ])->withErrors($validator);
-
-            }else{
-                $username = 'admin';
-                
-                $has_certificate = $request->input('has_certificate');
-                $has_licence = $request->input('has_licence');
-
-                $id = DB::table('employees')->insertGetId(
-                    [
-                        'user'                  => $username,
-                        'title'                 => $request->input('title'),
-                        'product'               => $request->input('product'),
-                        'manager_title'         => $request->input('manager_title'),
-                        'manager_gender'        => $request->input('manager_gender'),
-                        'manager_id_number'     => $request->input('manager_id_number'),
-                        'address'               => $request->input('address'),
-                        'zip_code'              => $request->input('zip_code'),
-                        'phone'                 => $request->input('phone'),
-                        'cell_phone'            => $request->input('cell_phone'),
-                        'has_certificate'       => $has_certificate ? '1': '0',
-                        'certificate_id'        => $has_certificate ? $request->input('certificate_id') : '###',
-                        'certificate_date'      => $has_certificate ? $request->input('certificate_date_year') . '-' . $request->input('certificate_date_month') . '-' . $request->input('certificate_date_day') : '###',
-                        'certificate_type'      => $request->input('certificate_type'),
-                        'has_licence'           => $has_licence ? '1' : '0',
-                        'licence_id'            => $has_licence ? $request->input('licence_id') : '###',
-                        'licence_date'          => $has_licence ? $request->input('licence_date_year') . '-' . $request->input('licence_date_month') . '-' . $request->input('licence_date_day') : '###',
-                        'licence_source'        => $has_licence ? $request->input('licence_source') : 0,
-                        'created_at'            => time()[0],
-                        'updated_at'            => time()[0]
-                    ]
-                );
-
-                return redirect('admin/employee/' . $id);
-            }
-        }else{
             return view('employees.new', [
                 'group_code'                => $group_code,
                 'genders'                   => DB::table('genders')                     ->get(),
                 'certificateTypes'          => DB::table('certificate_types')           ->get(),
+                'habitates'                 => DB::table('cities')                      ->get(),
+                'degrees'                   => DB::table('degrees')                     ->get(),
+                'study_fields'              => DB::table('study_fields')                ->get(),
                 'business_license_sources'  => DB::table('business_license_sources')    ->get(),
-                ]);
+                'marriges'                  => DB::table('merrige_types')               ->get(),
+                'oldInputs'                 => $request->all(),
+                'months'                    => config('constants.months')
+                ])->withErrors($validator);
+
+        }else{
+            $username = 'admin';
+            
+            $has_certificate = $request->input('has_certificate');
+            $has_licence = $request->input('has_licence');
+
+            $id = DB::table('employees')->insertGetId(
+                [
+                    'user'                  => $username,
+                    'unit_id'               => $request->input('unit_id'),
+                    'first_name'            => $request->input('first_name'),
+                    'last_name'             => $request->input('last_name'),
+                    'father_name'           => $request->input('father_name'),
+                    'id_number'             => $request->input('id_number'),
+                    'gender'                => $request->input('gender'),
+                    'birth_date'            => $request->input('birth_date_year') . '-' . $request->input('birth_date_month') . '-' . $request->input('birth_date_day'),
+                    'birth_place'           => $request->input('birth_place'),
+                    'habitate'              => $request->input('habitate'),
+                    'habitate_years'        => $request->input('habitate_years'),
+                    'degree'                => $request->input('degree'),
+                    'field'                 => $request->input('field'),
+                    'marrige'               => $request->input('marrige'),
+                    'dependents'            => $request->input('dependents'),
+                    'experience'            => $request->input('experience'),
+                    'address'               => $request->input('address'),
+                    'created_at'            => time()[0],
+                    'updated_at'            => time()[0]
+                ]
+            );
+
+            return redirect('admin/employee/' . $id);
         }
     }
-
-
     public function myValidate($request){
         Validator::extend('checkIf', function ($attribute, $value, $parameters, $validator) {
             return !(in_array($parameters[0], array('on', 'true', 1, '1')));
         });
         $messages = [
-            'title.*'                     => 'خطا در فیلد عنوان کارگاه',
-            'product.*'                   => 'خطا در فیلد نوع فعالیت یا محصول',
+            'first_name.*'                => 'لطفا نام خود را وارد کنید',
+            'last_name.*'                 => 'لطفا نام خانوادگی خود را وارد کنید',
+            
+            'gender.*'                    => 'جنسیت وارد نشده است',
+            'id_number.*'                 => 'کد ملی شاغل وارد نشده است',
+            'father_name.*'               => 'نام ‍پدر وارد نشده است',
+            
+            'birth_date_day.*'            => 'روز تولد انتخاب نشده است',
+            'birth_date_month.*'          => 'ماه تولد انتخاب نشده است',
+            'birth_date_year.*'           => 'سال تولد انتخاب نشده است',
 
-            'manager_title.*'             => 'خطا در نام مدیریت کارگاه',
-            'manager_gender.*'           => 'خطا در جنسیت مدیر کارگاه',
-            'manager_id_number.*'         => 'خطا در کد ملی مدیریت کارگاه',
+            'birth_place.*'               => 'محل تولد انتخاب نشده است',
 
-            'address.*'                   => 'خطا در آدرس',
-            'zip_code.*'                  => 'خطا در کد پستی',
+            'habitate.*'                  => 'محل سکونت را انتخاب کنید',
+            'habitate_years.*'            => 'مدت سال های سکونت را انتخاب کنید',
 
-            'phone.*'                     => 'خطا در شماره تلفن همراه',
-            'cell_phone.*'                => 'خطا در شماره تماس ثابت',
+            'degree.*'                    => 'مدرک تحصیلی انتخاب نشده است',
+            'field.*'                     => 'رشته تحصیلی انتخاب نشده است',
 
-            'certificate_id.*'            => 'خطا در شماره مجوز',
-            'certificate_type.*'          => 'نوع مجوز نامعتبر است',
+            'marrige.*'                   => 'خطا در وضعیت تاهل',
+            'dependents.*'                => 'تعداد افراد تحت تکفل نامعتبر است',
 
-            'licence_id.*'                => 'پروانه کسب نامعتبر',
-            'licence_source.*'            => 'مربج پروانه کسب نامعتبر است',
+            'experience.*'                => 'تعداد ماه های سابقه کاری را وارد کنید',
+            'address.*'                   => 'آدرس را وارد کنید',
         ];
 
         $rules = [
-            'title'                     => 'required|min:5',
-            'product'                   => 'required|min:5',
+            'first_name'                => 'required',
+            'last_name'                 => 'required',
+            
+            'gender'                    => 'required|numeric|int:2,3',
+            'id_number'                 => 'required|size:10',
+            'father_name'               => 'required',
+            
+            'birth_date_day'            => 'required|numeric|min:1|max:30',
+            'birth_date_month'          => 'required|numeric|min:1|max:12',
+            'birth_date_year'           => 'required|numeric',
 
-            'manager_title'             => 'required|min:5',
-            'manager_gender'           => 'required|in:2,3',
-            'manager_id_number'         => 'required|size:10',
+            'birth_place'               => 'required',
 
-            'address'                   => 'required|min:5',
-            'zip_code'                  => 'required|size:10',
+            'habitate'                  => 'required|numeric',
+            'habitate_years'            => 'required|numeric',
 
-            'phone'                     => 'required|size:11',
-            'cell_phone'                => 'required|size:11',
+            'degree'                    => 'required|numeric',
+            'field'                     => 'required|numeric',
 
-            'certificate_id'            => 'required_with:has_certificate',
+            'marrige'                   => 'required|numeric',
+            'dependents'                => 'required|numeric',
 
-            'certificate_date_day'      => 'required|numeric|min:1|max:30',
-            'certificate_date_month'    => 'required|numeric|min:1|max:12',
-            'certificate_date_year'     => 'required|numeric|min:1380|max:1400',
-
-            'licence_id'                => 'required_with:has_licence',
-
-            'licence_date_day'          => 'required|numeric|min:1|max:30',
-            'licence_date_month'        => 'required|numeric|min:1|max:12',
-            'licence_date_year'         => 'required|numeric|min:1380|max:1400',
+            'experience'                => 'required|numeric',
+            'address'                   => 'required',
         ];
         $validator = Validator::make($request->all(), $rules, $messages);
 

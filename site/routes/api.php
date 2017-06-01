@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 
 /* =====================  fields for forms  =============================== */
-Route::group(['namespace' => 'APIs', 'prefix' => 'fields'], function () {
+Route::group(['namespace' => 'APIs'], function () {
     // Controllers Within The "App\Http\Controllers\APIs" Namespace
 
     /* genders list */
@@ -34,9 +34,7 @@ Route::group(['namespace' => 'APIs', 'prefix' => 'fields'], function () {
     });
 
     /* cities list */
-    Route::get('/cities', function (Request $request) {
-        return 'cities list for admin';
-    });
+    Route::get('/cities', 'City@getAll');
 
     Route::get('/city/{id}', function (Request $request, $id) {
         return "city $id";
@@ -78,15 +76,5 @@ Route::group(['namespace' => 'APIs', 'prefix' => 'fields'], function () {
         return "field $id";
     });
 
-
-});
-
-/* =======================  data reterivision ============================= */
-Route::group(['namespace' => 'APIs', 'prefix' => 'fields'], function () {
-    // Controllers Within The "App\Http\Controllers\APIs" Namespace
-    
-    /* users */
-    Route::get('/genders', function (Request $request) {
-        return 'genders list';
-    });
+    Route::get('/units', 'Unit@getAll');
 });
