@@ -6,12 +6,13 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
 class AdminEmployeesController extends Controller
 {
     public function list(Request $request, $page=0, $size=10)
     {
-        $group_code = 1;
+        $group_code = Auth::user()->group_code;
         $employees = DB::table('employees')
             ->join('degrees', 'employees.degree', '=', 'degrees.id')
             ->join('study_fields', 'employees.field', '=', 'study_fields.id')
@@ -34,7 +35,7 @@ class AdminEmployeesController extends Controller
     }
 
     public function editPost(Request $request, $id){
-        $group_code = 1;
+        $group_code = Auth::user()->group_code;
         $validator = $this->myValidate($request);
         if($validator->fails()){
             $oldInputs = $request->all();
@@ -87,7 +88,7 @@ class AdminEmployeesController extends Controller
         }
     }
     public function editGet(Request $request, $id){
-        $group_code = 1;
+        $group_code = Auth::user()->group_code;
         $employee = get_object_vars(DB::table('employees')->where('id', '=', $id)->first());
 
         $birth_date = explode('-', $employee['birth_date']);
@@ -116,7 +117,7 @@ class AdminEmployeesController extends Controller
     }
 
     public function newGet(Request $request){
-        $group_code = 1;
+        $group_code = Auth::user()->group_code;
         return view('employees.new', [
             'group_code'                => $group_code,
             'genders'                   => DB::table('genders')                     ->get(),
@@ -132,7 +133,7 @@ class AdminEmployeesController extends Controller
 
     public function newPost(Request $request){
         $validator = $this->myValidate($request);
-        $group_code = 1;
+        $group_code = Auth::user()->group_code;
         if($validator->fails()){
 
             return view('employees.new', [

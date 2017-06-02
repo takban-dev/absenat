@@ -2,10 +2,10 @@
 
 Route::get('/', function () {
     return view('welcome', ['tab' => 'login']);
-});
+})->name('home');
 
 /* self pages */
-Route::get('/dashboard', 'HomeController@dashboard')/*->middleware('auth')*/;
+Route::get('/dashboard', 'HomeController@dashboard')->middleware('auth');
 Route::get('/profile', function () {
     return view('welcome');
 });
@@ -16,7 +16,7 @@ Route::get('/profile', function () {
 
 /* ====================  admin panels  =============================*/
 
-Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => [/*'auth', 'check-admin'*/]], function () {
+Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['auth', 'check-admin']], function () {
     // Controllers Within The "App\Http\Controllers\Admin" Namespace
     
     /* users list */
@@ -58,7 +58,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => [/*'a
 
 /* ====================  regular panels  =============================*/
 
-Route::group(['namespace' => 'RegularMember'/*, 'middleware' => 'auth'*/], function () {
+Route::group(['namespace' => 'RegularMember', 'middleware' => 'auth'], function () {
     // Controllers Within The "App\Http\Controllers\RegularMember" Namespace
 
     /* units list */

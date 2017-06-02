@@ -6,12 +6,13 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
 class AdminUnitsController extends Controller
 {
     public function list(Request $request, $page=0, $size=10)
     {
-        $group_code = 1;
+        $group_code = Auth::user()->group_code;
         $units = DB::table('units')->skip($page*$size)->limit($size)->get();
         $unitCount = DB::table('units')->count();
 
@@ -28,7 +29,7 @@ class AdminUnitsController extends Controller
     }
 
     public function editPost(Request $request, $id){
-        $group_code = 1;
+        $group_code = Auth::user()->group_code;
         $validator = $this->myValidate($request);
         if($validator->fails()){
             $oldInputs = $request->all();
@@ -84,7 +85,7 @@ class AdminUnitsController extends Controller
         }
     }
     public function editGet(Request $request, $id){
-        $group_code = 1;
+        $group_code = Auth::user()->group_code;
         $unit = get_object_vars(DB::table('units')->where('id', '=', $id)->first());
 
         if($unit['certificate_date'] != '###'){
@@ -118,7 +119,7 @@ class AdminUnitsController extends Controller
     }
 
     public function newGet(Request $request){
-        $group_code = 1;
+        $group_code = Auth::user()->group_code;
         return view('units.new', [
             'group_code'                => $group_code,
             'genders'                   => DB::table('genders')                     ->get(),
@@ -129,7 +130,7 @@ class AdminUnitsController extends Controller
     }
 
     public function newPost(Request $request){
-        $group_code = 1;
+        $group_code = Auth::user()->group_code;
         $validator = $this->myValidate($request);
         if($validator->fails()){
 

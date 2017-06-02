@@ -90,7 +90,31 @@
 
     <div class="main-panel">
         <nav class="navbar navbar-transparent navbar-absolute">
-            @yield('header')
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">سامانه مدیریت اشتغال سازمان منطقه آزاد انزلی</a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="{{url('profile')}}">
+                                <i class="material-icons">person</i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{url('logout')}}">
+                                <i class="material-icons">lock</i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </nav>
 
         <div class="content">

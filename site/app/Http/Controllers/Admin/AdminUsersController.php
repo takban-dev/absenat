@@ -7,12 +7,13 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use App\User;
+use Illuminate\Support\Facades\Auth;
 
 class AdminusersController extends Controller
 {
     public function list(Request $request, $page=0, $size=10)
     {
-        $group_code = 1;
+        $group_code = Auth::user()->group_code;
         $users = DB::table('users')->get();
         $usersCount = DB::table('users')->count();
 
@@ -29,7 +30,7 @@ class AdminusersController extends Controller
     }
 
     public function editPost(Request $request, $id){
-        $group_code = 1;
+        $group_code = Auth::user()->group_code;
         $validator = $this->myValidate($request);
         if($validator->fails()){
             $oldInputs = $request->all();
@@ -64,7 +65,7 @@ class AdminusersController extends Controller
         }
     }
     public function editGet(Request $request, $id){
-        $group_code = 1;
+        $group_code = Auth::user()->group_code;
         $users = get_object_vars(DB::table('users')->where('id', '=', $id)->first());
 
         return view('users.edit', [
@@ -79,7 +80,7 @@ class AdminusersController extends Controller
     }
 
     public function newGet(Request $request){
-        $group_code = 1;
+        $group_code = Auth::user()->group_code;
         return view('users.new', [
             'group_code'                => $group_code
             ]);
@@ -87,7 +88,7 @@ class AdminusersController extends Controller
 
     public function newPost(Request $request){
         $validator = $this->myValidate($request);
-        $group_code = 1;
+        $group_code = Auth::user()->group_code;
         var_dump($request->all());
         if($validator->fails()){
 

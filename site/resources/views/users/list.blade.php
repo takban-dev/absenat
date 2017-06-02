@@ -4,40 +4,6 @@
 کاربران
 @endsection
 
-@section('header')
-<div class="container-fluid">
-    <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="#">سامانه مدیریت اشتغال سازمان منطقه آزاد انزلی</a>
-    </div>
-    <div class="collapse navbar-collapse">
-        <ul class="nav navbar-nav navbar-right">
-            <li>
-                <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
-                    <i class="material-icons">person</i>
-                    <p class="hidden-lg hidden-md">Profile</p>
-                </a>
-            </li>
-        </ul>
-
-        <form class="navbar-form navbar-right" role="search">
-            <div class="form-group  is-empty">
-                <input type="text" class="form-control rtl" placeholder="جستجو">
-                <span class="material-input"></span>
-            </div>
-            <button type="submit" class="btn btn-white btn-round btn-just-icon">
-                <i class="material-icons">search</i><div class="ripple-container"></div>
-            </button>
-        </form>
-    </div>
-</div>
-@endsection
-
 @section('content')
 <div class="row">
     <div class="col-lg-12 col-md-12">
@@ -58,7 +24,7 @@
                             @foreach ($users as $user)
                                 <tr>
                                     <td>{{ $user->first_name . ' ' . $user->last_name }}</td>
-                                    <td>{{ $unit->cell_phone }}</td>
+                                    <td>{{ $user->cellphone }}</td>
                                     <td><a href="{{ url( 'admin/user/' . $user->id) }}"><i class="material-icons">assignment_ind</i></a></td>
                                     <td><a href="{{ url( 'admin/user-remove/' . $user->id) }}"><i class="material-icons">delete</i></a></td>
                                 </tr>
