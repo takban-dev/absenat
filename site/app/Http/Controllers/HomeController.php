@@ -31,6 +31,50 @@ class HomeController extends Controller
         return view('dashboard', ['group_code' => $userGroupId]);
     }
 
+    public function profileGet(Request $request){
+        $userGroupId = Auth::user()->group_code;
+        $userId = Auth::user()->id;
+        $user = get_object_vars(DB::table('users')
+            ->where('id', '=', $userId)
+            ->first());
+
+        return view('profile',
+            [
+                'group_code'    => $userGroupId,
+                'user'          => $user,
+                'name'          => Auth::user()->name
+            ]);
+    }
+
+    public function profilePost(Request $request){
+        $userGroupId = Auth::user()->group_code;
+        $validator = $this->myProfileValidate($request);
+        if($validator->fails()){
+            $oldInputs = $request->all();
+
+            return view('profile', [
+                'group_code'            => $userGroupId,
+                'user'                  => $oldInputs,
+                'name'                  => Auth::user()->name
+                ])->withErrors($validator);
+
+        }else{
+            DB::table('users')->where(['name' => Auth::user()->name])->update(
+                [
+                    'email'                 => $request->input('email'),
+                    'password'              => bcrypt($request->input('password')),
+                    'first_name'            => $request->input('first_name'),
+                    'last_name'             => $request->input('last_name'),
+                    'phone'                 => $request->input('phone'),
+                    'cellphone'             => $request->input('cellphone'),
+                    'updated_at'            => time()[0]
+                ]
+            );
+
+            return redirect('profile');
+        }
+    }
+
     public function login(Request $request){
         if (Auth::attempt(['name' => $request->input('name'), 'password' => $request->input('password')])) {
             return redirect()->intended('dashboard');
@@ -44,7 +88,7 @@ class HomeController extends Controller
         return redirect('/');
     }
     public function register(Request $request){
-        $validator = $this->myValidate($request);
+        $validator = $this->myRegisterValidate($request);
         if($validator->fails()){
             return view('welcome', [
                 'oldInputs'                 => $request->all(),
@@ -66,7 +110,7 @@ class HomeController extends Controller
             return redirect('dashboard');
         }
     }
-    public function myValidate($request){
+    public function myRegisterValidate($request){
         Validator::extend('checkIf', function ($attribute, $value, $parameters, $validator) {
             return !(in_array($parameters[0], array('on', 'true', 1, '1')));
         });
@@ -90,6 +134,35 @@ class HomeController extends Controller
             'name'                      => 'required|min:4',
             'password'                  => 'required|string|min:4',
             'password_conf'             => 'required|confirmed:password',
+            'phone'                     => 'required|string',
+            'cellphone'                 => 'required|string',
+        ];
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        return $validator;
+    }
+    public function myProfileValidate($request){
+        Validator::extend('checkIf', function ($attribute, $value, $parameters, $validator) {
+            return !(in_array($parameters[0], array('on', 'true', 1, '1')));
+        });
+        $messages = [
+            'first_name.*'                  => 'لطفا نام را وارد کنید',
+            'last_name.*'                   => 'لطفا نام خانوادگی کاربر را وارد کنید',
+            'email.*'                       => 'آدرس ایمیل نامعتبر',
+            
+            'password.*'                    => 'لطفا کلمه عبور را وارد کنید(حداقل ۴ حرف)',
+            
+            'phone.*'                       => 'شماره تلفن ثابت نامعتبر است',
+            'cellphone.*'                   => 'لطفا شماره تلفن همراه را وارد کنید',
+        ];
+
+        $rules = [
+            'first_name'                => 'required',
+            'last_name'                 => 'required',
+            'email'                     => 'required|email',
+            
+            'password'                  => 'required|string|min:4',
+            
             'phone'                     => 'required|string',
             'cellphone'                 => 'required|string',
         ];

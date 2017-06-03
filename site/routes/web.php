@@ -6,9 +6,8 @@ Route::get('/', function () {
 
 /* self pages */
 Route::get('/dashboard', 'HomeController@dashboard')->middleware('auth');
-Route::get('/profile', function () {
-    return view('welcome');
-});
+Route::get('/profile', 'HomeController@profileGet')->middleware('auth');
+Route::post('/profile', 'HomeController@profilePost')->middleware('auth');
 
 /* ===================================================================
                          management pages

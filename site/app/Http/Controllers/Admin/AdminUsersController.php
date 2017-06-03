@@ -42,7 +42,7 @@ class AdminusersController extends Controller
                 ])->withErrors($validator);
 
         }else{
-            $username = 'admin';
+            $username = Auth::user()->name;;
             
             $has_certificate = $request->input('has_certificate');
             $has_licence = $request->input('has_licence');
@@ -124,7 +124,7 @@ class AdminusersController extends Controller
                 ])->withErrors($validator);
 
         }else{
-            $username = 'admin';
+            $username = Auth::user()->name;;
 
             $id = User::create([
                 'name'        => $request->input('name'),
