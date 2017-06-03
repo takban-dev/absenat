@@ -38,45 +38,73 @@
 
         <div class="sidebar-wrapper">
             <ul class="nav">
-                <li class="active">
+                @if(Request::url() == url('dashboard'))
+                    <li class="active">
+                @else
+                    <li>
+                @endif
                     <a href="{{url('dashboard')}}">
                         <i class="material-icons">dashboard</i>
                         <p>داشبورد</p>
                     </a>
                 </li>
                 @if ($group_code)
-                    <li>
+                    @if(Request::url() == url('admin/users'))
+                        <li class="active">
+                    @else
+                        <li>
+                    @endif
                         <a href="{{url('admin/users')}}">
                             <i class="material-icons">people</i>
                             <p>کاربران</p>
                         </a>
                     </li>
-                    <li>
+                    @if(Request::url() == url('admin/units'))
+                        <li class="active">
+                    @else
+                        <li>
+                    @endif
                         <a href="{{url('admin/units')}}">
                             <i class="material-icons">library_books</i>
                             <p>کارگاه ها</p>
                         </a>
                     </li>
-                    <li>
+                    @if(Request::url() == url('admin/employees'))
+                        <li class="active">
+                    @else
+                        <li>
+                    @endif
                         <a href="{{url('admin/employees')}}">
                             <i class="material-icons">people_outline</i>
                             <p>شاغلین</p>
                         </a>
                     </li>
-                    <li>
+                    @if(Request::url() == url('admin/reports'))
+                        <li class="active">
+                    @else
+                        <li>
+                    @endif
                         <a href="{{url('admin/reports')}}">
                             <i class="material-icons">show_chart</i>
                             <p>آمار ها</p>
                         </a>
                     </li>
                 @else
-                    <li>
+                    @if(Request::url() == url('units'))
+                        <li class="active">
+                    @else
+                        <li>
+                    @endif
                         <a href="{{url('units')}}">
                             <i class="material-icons">library_books</i>
                             <p>کارگاه ها</p>
                         </a>
                     </li>
-                    <li>
+                    @if(Request::url() == url('employees'))
+                        <li class="active">
+                    @else
+                        <li>
+                    @endif
                         <a href="{{url('employees')}}">
                             <i class="material-icons">people_outline</i>
                             <p>شاغلین</p>

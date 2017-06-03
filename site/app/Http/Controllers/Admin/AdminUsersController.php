@@ -19,7 +19,7 @@ class AdminusersController extends Controller
 
         $pageCount = ceil($usersCount / $size);
 
-        return view('users.list', [
+        return view('admin.users.list', [
             'users'     => $users, 
             'pageCount'     => $pageCount,
             'currentPage'   => $page,
@@ -36,7 +36,7 @@ class AdminusersController extends Controller
             $oldInputs = $request->all();
             $oldInputs['id'] = $id;
 
-            return view('users.edit', [
+            return view('admin.users.edit', [
                 'group_code'                => $group_code,
                 'oldInputs'                 => $oldInputs,
                 ])->withErrors($validator);
@@ -64,11 +64,37 @@ class AdminusersController extends Controller
             return redirect('admin/user/' . $id);
         }
     }
-    public function editGet(Request $request, $id){
+    public function editGet(Request $request, $id, $watching='units', $page=0, $size=10){
         $group_code = Auth::user()->group_code;
         $users = get_object_vars(DB::table('users')->where('id', '=', $id)->first());
 
-        return view('users.edit', [
+        $username = DB::table('users')
+                    ->where('id', '=', $id)
+                    ->first()->name;
+
+        $units = null;
+        $employees = null;
+
+        if($watching == 'units'){
+
+        }else if($watching == 'employees'){
+
+            $employees = DB::table('employees')
+                ->join('degrees', 'employees.degree', '=', 'degrees.id')
+                ->join('study_fields', 'employees.field', '=', 'study_fields.id')
+                ->join('cities', 'employees.habitate', '=', 'cities.id')
+                ->join('units', 'employees.unit_id', '=', 'units.id')
+                ->select(DB::raw("employees.id, employees.first_name, employees.last_name, degrees.title'degree', study_fields.title'field', units.title'unit', cities.title'habitate'"))
+                ->limit($size)
+                ->offset($page * $size)
+                ->where('user', '=', $username)
+                ->get();
+
+            $employeeCount = DB::table('employees')->where('user', '=', $username)->count();
+
+            $ePageCount = ceil($employeeCount / $size);
+        }
+        return view('admin.users.edit', [
             'group_code'                => $group_code,
             'oldInputs'                 => $users,
             ]);
@@ -81,7 +107,7 @@ class AdminusersController extends Controller
 
     public function newGet(Request $request){
         $group_code = Auth::user()->group_code;
-        return view('users.new', [
+        return view('admin.users.new', [
             'group_code'                => $group_code
             ]);
     }
@@ -92,7 +118,7 @@ class AdminusersController extends Controller
         var_dump($request->all());
         if($validator->fails()){
 
-            return view('users.new', [
+            return view('admin.users.new', [
                 'group_code'                => $group_code,
                 'oldInputs'                 => $request->all(),
                 ])->withErrors($validator);

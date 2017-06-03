@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\RegularMember;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 
-class AdminUnitsController extends Controller
+class NormalUnitsController extends Controller
 {
     public function list(Request $request, $page=0, $size=10)
     {
@@ -18,7 +18,7 @@ class AdminUnitsController extends Controller
 
         $pageCount = ceil($unitCount / $size);
 
-        return view('admin.units.list', [
+        return view('normal.units.list', [
             'units'         => $units, 
             'pageCount'     => $pageCount,
             'currentPage'   => $page,
@@ -31,6 +31,8 @@ class AdminUnitsController extends Controller
     public function editPost(Request $request, $id, $page=0, $size=10){
         $group_code = Auth::user()->group_code;
         $validator = $this->myValidate($request);
+
+
 
         $employees = DB::table('employees')
             ->join('degrees', 'employees.degree', '=', 'degrees.id')

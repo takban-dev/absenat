@@ -22,8 +22,8 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['aut
     /* users list */
     Route::get('/users', 'AdminUsersController@list');
     /* single user page for editing or viewing */
-    Route::get ('/user/{userId}', 'AdminUsersController@editGet')->where('unitId', '[0-9]+');
-    Route::post('/user/{userId}', 'AdminUsersController@editPost')->where('unitId', '[0-9]+');
+    Route::get ('/user/{userId}/{watching?}/{page?}/{size?}', 'AdminUsersController@editGet')->where('unitId', '[0-9]+');
+    Route::post('/user/{userId}/{watching?}/{page?}/{size?}', 'AdminUsersController@editPost')->where('unitId', '[0-9]+');
     /* new user page */
     Route::get('/user-new', 'AdminUsersController@newGet');
     Route::post('/user-new', 'AdminUsersController@newPost');
@@ -32,8 +32,8 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['aut
     /* units list */
     Route::get('/units/{page?}/{size?}', 'AdminUnitsController@list');
     /* single unit page for editing or viewing */
-    Route::get ('/unit/{unitId}', 'AdminUnitsController@editGet')->where('unitId', '[0-9]+');
-    Route::post('/unit/{unitId}', 'AdminUnitsController@editPost')->where('unitId', '[0-9]+');
+    Route::get ('/unit/{unitId}/{page?}/{size?}', 'AdminUnitsController@editGet')->where('unitId', '[0-9]+');
+    Route::post('/unit/{unitId}/{page?}/{size?}', 'AdminUnitsController@editPost')->where('unitId', '[0-9]+');
     /* new unit page */
     Route::get('/unit-new', 'AdminUnitsController@newGet');
     Route::post('/unit-new', 'AdminUnitsController@newPost');
@@ -43,10 +43,10 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['aut
     /* employees list */
     Route::get('/employees/{page?}/{size?}', 'AdminEmployeesController@list');
     /* single employees page for editing or viewing */
-    Route::get('/employee/{employeeId}', 'AdminEmployeesController@editGet')->where('employeeId', '[0-9]+');
-    Route::post('/employee/{employeeId}', 'AdminEmployeesController@editPost')->where('employeeId', '[0-9]+');
+    Route::get('/employee/{employeeId}/{page?}/{size?}', 'AdminEmployeesController@editGet')->where('employeeId', '[0-9]+');
+    Route::post('/employee/{employeeId}/{page?}/{size?}', 'AdminEmployeesController@editPost')->where('employeeId', '[0-9]+');
     /* new employee page */
-    Route::get('/employee-new', 'AdminEmployeesController@newGet');
+    Route::get('/employee-new/{unitId?}', 'AdminEmployeesController@newGet');
     Route::post('/employee-new', 'AdminEmployeesController@newPost');
 
     /* reporets page */
@@ -62,17 +62,15 @@ Route::group(['namespace' => 'RegularMember', 'middleware' => 'auth'], function 
     // Controllers Within The "App\Http\Controllers\RegularMember" Namespace
 
     /* units list */
-    Route::get('/units', function () {
-        return 'units list for member';
-    });
+    Route::get('/units/{page?}/{size?}', 'NormalUnitsController@list');
     /* single unit page for editing or viewing */
-    Route::get('/unit/{unitId}', function ($unitId) {
-        return "unit page id: $unitId for member";
-    })->where('unitId', '[0-9]+');
+    Route::get ('/unit/{unitId}/{page?}/{size?}', 'NormalUnitsController@editGet')->where('unitId', '[0-9]+');
+    Route::post('/unit/{unitId}/{page?}/{size?}', 'NormalUnitsController@editPost')->where('unitId', '[0-9]+');
     /* new unit page */
-    Route::get('/unit-new', function () {
-        return 'new unit page for member';
-    });
+    Route::get('/unit-new', 'NormalUnitsController@newGet');
+    Route::post('/unit-new', 'NormalUnitsController@newPost');
+    /* remove unit */
+    Route::get('/unit-remove/{id}', 'NormalUnitsController@remove');
 
 
     /* employees list */

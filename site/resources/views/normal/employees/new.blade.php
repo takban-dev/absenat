@@ -217,7 +217,7 @@
                                         text: unit.title
                                     }));
                                 }
-                                var value = {{isset($oldInputs)? $oldInputs['unit_id'] : 0}};
+                                var value = {{isset($oldInputs)? $oldInputs['unit_id'] : $unitId}};
                                 $('#unit').val(value);
                             });
                         </script>

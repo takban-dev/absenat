@@ -1,31 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-{{$oldInputs['first_name'] . ' ' . $oldInputs['last_name']}}
-@endsection
-
-@section('header')
-<div class="container-fluid">
-    <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="#">سامانه مدیریت اشتغال سازمان منطقه آزاد انزلی</a>
-    </div>
-    <div class="collapse navbar-collapse">
-        <ul class="nav navbar-nav navbar-right">
-            <li>
-                <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
-                    <i class="material-icons">person</i>
-                    <p class="hidden-lg hidden-md">Profile</p>
-                </a>
-            </li>
-        </ul>
-    </div>
-</div>
+داشبورد
 @endsection
 
 @section('content')
@@ -42,10 +18,10 @@
     <div class="col-lg-12 col-md-12">
         <div class="card">
             <div class="card-header rtl" data-background-color="purple">
-                <h4 class="title">{{$oldInputs['first_name'] . ' ' . $oldInputs['last_name']}}</h4>
+                <h4 class="title">شاغل جدید</h4>
             </div>
             <div class="card-content">
-                <form action="{{url('admin/employee/' . $oldInputs['id'])}}" method="post">
+                <form action="{{url('admin/employee-new')}}" method="post">
                     {{ csrf_field() }}
                     <div class="row">
                         <div class="col-md-4 col-sm-4 pull-right">
@@ -241,13 +217,14 @@
                                         text: unit.title
                                     }));
                                 }
-                                $('#unit').val({{$oldInputs['unit_id']}});
+                                var value = {{isset($oldInputs)? $oldInputs['unit_id'] : $unitId}};
+                                $('#unit').val(value);
                             });
                         </script>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <button type="submit" class="btn btn-primary pull-right">ثبت تغییرات شاغل</button>
+                            <button type="submit" class="btn btn-primary pull-right">ثبت شاغل</button>
                         </div>
                     </div>
                 </form>
