@@ -30,8 +30,8 @@
                                     <td>{{$employee->habitate}}</td>
                                     <td>{{$employee->field . ' - ' . $employee->degree}}</td>
                                     <td>{{$employee->unit}}</td>
-                                    <td><a href="{{ url( 'admin/employee/' . $employee->id) }}"><i class="material-icons">assignment_ind</i></a></td>
-                                    <td><a href="{{ url( 'admin/employee-remove/' . $employee->id) }}"><i class="material-icons">delete</i></a></td>
+                                    <td><a href="{{ url( 'employee/' . $employee->id) }}"><i class="material-icons">assignment_ind</i></a></td>
+                                    <td><a href="{{ url( 'employee-remove/' . $employee->id) }}"><i class="material-icons">delete</i></a></td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -51,7 +51,7 @@
                     @if ($page == '#')
                         <li class="page-item"><a class="page-link" href="#">...</a></li>
                     @else
-                        <li class="page-item"><a class="page-link" href="{{url('admin/employees/' . ($page-1) . '/' . $pageSize)}}">{{$page}}</a></li>
+                        <li class="page-item"><a class="page-link" href="{{url('employees/' . ($page-1) . '/' . $pageSize)}}">{{$page}}</a></li>
                     @endif
                 @endforeach
             </ul>
@@ -60,7 +60,7 @@
 </div>
 <div class="row">
     <div class="col-md-12">
-        <a href="{{url('admin/employee-new')}}">
+        <a href="{{url('employee-new')}}">
             <button type="button" class="btn btn-primary pull-right">شاغل جدید</button>
         </a>
     </div>

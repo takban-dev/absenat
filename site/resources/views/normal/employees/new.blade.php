@@ -21,7 +21,7 @@
                 <h4 class="title">شاغل جدید</h4>
             </div>
             <div class="card-content">
-                <form action="{{url('admin/employee-new')}}" method="post">
+                <form action="{{url('employee-new')}}" method="post">
                     {{ csrf_field() }}
                     <div class="row">
                         <div class="col-md-4 col-sm-4 pull-right">
@@ -187,7 +187,7 @@
                         <div class="col-md-12 col-sm-12 pull-right">
                             <div class="form-group label-floating rtl col-lg-12 col-md-12">
                                 <label class="control-label">آدرس دقیق محل سکونت</label>
-                                <input type="text" name="address" value="{{isset($oldInputs)? $oldInputs['experience']: ''}}" class="form-control">
+                                <input type="text" name="address" value="{{isset($oldInputs)? $oldInputs['address']: ''}}" class="form-control">
                             </div>
                         </div>
                     </div>
@@ -207,7 +207,7 @@
                                 value: 0,
                                 text: 'انتخاب نشده'
                             }));
-                            var url = "{{url('api/units')}}";
+                            var url = "{{url('api/units/' . $username)}}";
                             $.get(url, function(data, status){
                                 var jsonRes = JSON.parse(data);
                                 for(var i=0; i<jsonRes.length; i++){

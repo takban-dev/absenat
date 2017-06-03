@@ -74,17 +74,14 @@ Route::group(['namespace' => 'RegularMember', 'middleware' => 'auth'], function 
 
 
     /* employees list */
-    Route::get('/employees', function () {
-        return 'employees list for member';
-    });
+    Route::get('/employees/{page?}/{size?}', 'NormalEmployeesController@list');
     /* single employees page for editing or viewing */
-    Route::get('/employee/{employeeId}', function ($employeeId) {
-        return "employee page id: $employeeId for member";
-    })->where('employeeId', '[0-9]+');
+    Route::get('/employee/{employeeId}/{page?}/{size?}', 'NormalEmployeesController@editGet')->where('employeeId', '[0-9]+');
+    Route::post('/employee/{employeeId}/{page?}/{size?}', 'NormalEmployeesController@editPost')->where('employeeId', '[0-9]+');
     /* new employee page */
-    Route::get('/employee-new', function () {
-        return 'new employee page for member';
-    });
+    Route::get('/employee-new/{unitId?}', 'NormalEmployeesController@newGet');
+    Route::post('/employee-new', 'NormalEmployeesController@newPost');
+
 
 });
 

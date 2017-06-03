@@ -187,7 +187,7 @@
                         <div class="col-md-12 col-sm-12 pull-right">
                             <div class="form-group label-floating rtl col-lg-12 col-md-12">
                                 <label class="control-label">آدرس دقیق محل سکونت</label>
-                                <input type="text" name="address" value="{{isset($oldInputs)? $oldInputs['experience']: ''}}" class="form-control">
+                                <input type="text" name="address" value="{{isset($oldInputs)? $oldInputs['address']: ''}}" class="form-control">
                             </div>
                         </div>
                     </div>

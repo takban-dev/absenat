@@ -13,8 +13,14 @@ class NormalUnitsController extends Controller
     public function list(Request $request, $page=0, $size=10)
     {
         $group_code = Auth::user()->group_code;
-        $units = DB::table('units')->skip($page*$size)->limit($size)->get();
-        $unitCount = DB::table('units')->count();
+        $units = DB::table('units')
+            ->skip($page*$size)
+            ->limit($size)
+            ->where('user', '=', Auth::user()->name)
+            ->get();
+        $unitCount = DB::table('units')
+            ->where('user', '=', Auth::user()->name)
+            ->count();
 
         $pageCount = ceil($unitCount / $size);
 
@@ -31,8 +37,6 @@ class NormalUnitsController extends Controller
     public function editPost(Request $request, $id, $page=0, $size=10){
         $group_code = Auth::user()->group_code;
         $validator = $this->myValidate($request);
-
-
 
         $employees = DB::table('employees')
             ->join('degrees', 'employees.degree', '=', 'degrees.id')
@@ -57,7 +61,7 @@ class NormalUnitsController extends Controller
             if( isset($oldInputs['has_licence']))
                 $oldInputs['has_licence'] = 1;
 
-            return view('admin.units.edit', [
+            return view('normal.units.edit', [
                 'group_code'                => $group_code,
                 'oldInputs'                 => $oldInputs,
                 'employees'                 => $employees,
@@ -69,7 +73,7 @@ class NormalUnitsController extends Controller
                 ])->withErrors($validator);
 
         }else{
-            $username = 'admin';
+            $username = Auth::user()->name;
             
             $has_certificate = $request->input('has_certificate');
             $has_licence = $request->input('has_licence');
@@ -98,12 +102,20 @@ class NormalUnitsController extends Controller
                 ]
             );
 
-            return redirect('admin/unit/' . $id);
+            return redirect('unit/' . $id);
         }
     }
     public function editGet(Request $request, $id, $page=0, $size=10){
         $group_code = Auth::user()->group_code;
         $unit = get_object_vars(DB::table('units')->where('id', '=', $id)->first());
+
+        if($unit['user'] != Auth::user()->name){
+            return response()->view('errors.custom', [
+                'group_code'    => $group_code,
+                'status'        => 404,
+                'message'       => 'کارگاه مورد نظر وجود ندارد. یا شما به این کارگاه دسترسی ندارید'
+            ], 404);
+        }
 
         if($unit['certificate_date'] != '###'){
             $certificate_date = explode('-', $unit['certificate_date']);
@@ -132,7 +144,7 @@ class NormalUnitsController extends Controller
         $employeeCount = DB::table('employees')->where('employees.unit_id', '=', $id)->count();
         $pageCount = ceil($employeeCount / $size);
 
-        return view('admin.units.edit', [
+        return view('normal.units.edit', [
             'group_code'                => $group_code,
             'oldInputs'                 => $unit,
 
@@ -157,12 +169,12 @@ class NormalUnitsController extends Controller
 
     public function newGet(Request $request){
         $group_code = Auth::user()->group_code;
-        return view('admin.units.new', [
+        return view('normal.units.new', [
             'group_code'                => $group_code,
             'genders'                   => DB::table('genders')                     ->get(),
             'certificateTypes'          => DB::table('certificate_types')           ->get(),
             'business_license_sources'  => DB::table('business_license_sources')    ->get(),
-            'months'                     => config('constants.months')
+            'months'                    => config('constants.months')
             ]);
     }
 
@@ -171,17 +183,17 @@ class NormalUnitsController extends Controller
         $validator = $this->myValidate($request);
         if($validator->fails()){
 
-            return view('admin.units.new', [
+            return view('normal.units.new', [
                 'group_code'                => $group_code,
                 'genders'                   => DB::table('genders')                     ->get(),
                 'certificateTypes'          => DB::table('certificate_types')           ->get(),
                 'business_license_sources'  => DB::table('business_license_sources')    ->get(),
                 'oldInputs'                 => $request->all(),
-                'months'                     => config('constants.months')
+                'months'                    => config('constants.months')
                 ])->withErrors($validator);
 
         }else{
-            $username = 'admin';
+            $username = Auth::user()->name;
             
             $has_certificate = $request->input('has_certificate');
             $has_licence = $request->input('has_licence');
@@ -211,7 +223,7 @@ class NormalUnitsController extends Controller
                 ]
             );
 
-            return redirect('admin/unit/' . $id);
+            return redirect('unit/' . $id);
         }
     }
     public function myValidate($request){

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\RegularMember;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 
-class AdminEmployeesController extends Controller
+class NormalEmployeesController extends Controller
 {
     public function list(Request $request, $page=0, $size=10)
     {
@@ -21,12 +21,15 @@ class AdminEmployeesController extends Controller
             ->select(DB::raw("employees.id, employees.first_name, employees.last_name, degrees.title'degree', study_fields.title'field', units.title'unit', cities.title'habitate'"))
             ->limit($size)
             ->offset($page * $size)
+            ->where('employees.user', '=', Auth::user()->name)
             ->get();
-        $employeeCount = DB::table('employees')->count();
+        $employeeCount = DB::table('employees')
+            ->where('employees.user', '=', Auth::user()->name)
+            ->count();
 
         $pageCount = ceil($employeeCount / $size);
 
-        return view('admin.employees.list', [
+        return view('normal.employees.list', [
             'employees'     => $employees, 
             'pageCount'     => $pageCount,
             'currentPage'   => $page,
@@ -43,9 +46,10 @@ class AdminEmployeesController extends Controller
             $oldInputs = $request->all();
             $oldInputs['id'] = $id;
 
-            return view('admin.employees.edit', [
+            return view('normal.employees.edit', [
                 'group_code'                => $group_code,
                 'oldInputs'                 => $oldInputs,
+                'username'                  => Auth::user()->name,
 
                 'genders'                   => DB::table('genders')                     ->get(),
                 'certificateTypes'          => DB::table('certificate_types')           ->get(),
@@ -58,7 +62,7 @@ class AdminEmployeesController extends Controller
                 ])->withErrors($validator);
 
         }else{
-            $username = 'admin';
+            $username = Auth::user()->name;
             
             $has_certificate = $request->input('has_certificate');
             $has_licence = $request->input('has_licence');
@@ -86,7 +90,7 @@ class AdminEmployeesController extends Controller
                 ]
             );
 
-            return redirect('admin/employee/' . $id);
+            return redirect('employee/' . $id);
         }
     }
     public function editGet(Request $request, $id){
@@ -98,9 +102,10 @@ class AdminEmployeesController extends Controller
         $employee['birth_date_month'] = $birth_date[1];
         $employee['birth_date_year']  = $birth_date[0];
 
-        return view('admin.employees.edit', [
+        return view('normal.employees.edit', [
             'group_code'                => $group_code,
             'oldInputs'                 => $employee,
+            'username'                  => Auth::user()->name,
 
             'genders'                   => DB::table('genders')                     ->get(),
             'certificateTypes'          => DB::table('certificate_types')           ->get(),
@@ -120,9 +125,10 @@ class AdminEmployeesController extends Controller
 
     public function newGet(Request $request, $unitId=0){
         $group_code = Auth::user()->group_code;
-        return view('admin.employees.new', [
+        return view('normal.employees.new', [
             'unitId'                    => $unitId,
             'group_code'                => $group_code,
+            'username'                  => Auth::user()->name,
             'genders'                   => DB::table('genders')                     ->get(),
             'certificateTypes'          => DB::table('certificate_types')           ->get(),
             'business_license_sources'  => DB::table('business_license_sources')    ->get(),
@@ -139,8 +145,9 @@ class AdminEmployeesController extends Controller
         $group_code = Auth::user()->group_code;
         if($validator->fails()){
 
-            return view('admin.employees.new', [
+            return view('normal.employees.new', [
                 'group_code'                => $group_code,
+                'username'                  => Auth::user()->name,
                 'genders'                   => DB::table('genders')                     ->get(),
                 'certificateTypes'          => DB::table('certificate_types')           ->get(),
                 'habitates'                 => DB::table('cities')                      ->get(),
@@ -153,7 +160,7 @@ class AdminEmployeesController extends Controller
                 ])->withErrors($validator);
 
         }else{
-            $username = 'admin';
+            $username = Auth::user()->name;
             
             $has_certificate = $request->input('has_certificate');
             $has_licence = $request->input('has_licence');
@@ -182,7 +189,7 @@ class AdminEmployeesController extends Controller
                 ]
             );
 
-            return redirect('admin/employee/' . $id);
+            return redirect('employee/' . $id);
         }
     }
     public function myValidate($request){

@@ -21,7 +21,7 @@
                 <h4 class="title">کارگاه جدید</h4>
             </div>
             <div class="card-content">
-                <form action="{{url('admin/unit-new')}}" method="post">
+                <form action="{{url('unit-new')}}" method="post">
                     {{ csrf_field() }}
                     <div class="row">
                         <div class="col-md-6 pull-right">

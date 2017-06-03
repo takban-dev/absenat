@@ -27,8 +27,8 @@
                                     <td>{{ $unit->title }}</td>
                                     <td>{{ $unit->manager_title }}</td>
                                     <td>{{ $unit->phone }}</td>
-                                    <td><a href="{{ url( 'admin/unit/' . $unit->id) }}"><i class="material-icons">assignment_ind</i></a></td>
-                                    <td><a href="{{ url( 'admin/unit-remove/' . $unit->id) }}"><i class="material-icons">delete</i></a></td>
+                                    <td><a href="{{ url( 'unit/' . $unit->id) }}"><i class="material-icons">assignment_ind</i></a></td>
+                                    <td><a href="{{ url( 'unit-remove/' . $unit->id) }}"><i class="material-icons">delete</i></a></td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -48,7 +48,7 @@
                     @if ($page == '#')
                         <li class="page-item"><a class="page-link" href="#">...</a></li>
                     @else
-                        <li class="page-item"><a class="page-link" href="{{url('admin/units/' . ($page-1) . '/' . $pageSize)}}">{{$page}}</a></li>
+                        <li class="page-item"><a class="page-link" href="{{url('units/' . ($page-1) . '/' . $pageSize)}}">{{$page}}</a></li>
                     @endif
                 @endforeach
             </ul>
@@ -57,7 +57,7 @@
 </div>
 <div class="row">
     <div class="col-md-12">
-        <a href="{{url('admin/unit-new')}}">
+        <a href="{{url('unit-new')}}">
             <button type="button" class="btn btn-primary pull-right">کارگاه جدید</button>
         </a>
     </div>
