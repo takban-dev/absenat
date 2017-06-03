@@ -28,7 +28,17 @@ class HomeController extends Controller
     {
         $userGroupId = Auth::user()->group_code;
 
-        return view('dashboard', ['group_code' => $userGroupId]);
+        $userCount      = DB::table('users')        ->count();
+        $unitCount      = DB::table('units')        ->count();
+        $employeeCount  = DB::table('employees')    ->count();
+
+
+        return view('dashboard', [
+            'group_code'    => $userGroupId,
+            'userCount'     => $userCount,
+            'unitCount'     => $unitCount,
+            'employeeCount' => $employeeCount,
+            ]);
     }
 
     public function profileGet(Request $request){
