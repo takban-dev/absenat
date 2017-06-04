@@ -69,17 +69,33 @@ class HomeController extends Controller
                 ])->withErrors($validator);
 
         }else{
-            DB::table('users')->where(['name' => Auth::user()->name])->update(
-                [
-                    'email'                 => $request->input('email'),
-                    'password'              => bcrypt($request->input('password')),
-                    'first_name'            => $request->input('first_name'),
-                    'last_name'             => $request->input('last_name'),
-                    'phone'                 => $request->input('phone'),
-                    'cellphone'             => $request->input('cellphone'),
-                    'updated_at'            => time()[0]
-                ]
-            );
+            if ($request->input('password') == 'THIS_IS_A_NOT_PASSWORD'){
+
+                DB::table('users')->where(['name' => Auth::user()->name])->update(
+                    [
+                        'email'                 => $request->input('email'),
+                        'first_name'            => $request->input('first_name'),
+                        'last_name'             => $request->input('last_name'),
+                        'phone'                 => $request->input('phone'),
+                        'cellphone'             => $request->input('cellphone'),
+                        'updated_at'            => time()[0]
+                    ]
+                );   
+                
+            }else{
+
+                DB::table('users')->where(['name' => Auth::user()->name])->update(
+                    [
+                        'email'                 => $request->input('email'),
+                        'password'              => bcrypt($request->input('password')),
+                        'first_name'            => $request->input('first_name'),
+                        'last_name'             => $request->input('last_name'),
+                        'phone'                 => $request->input('phone'),
+                        'cellphone'             => $request->input('cellphone'),
+                        'updated_at'            => time()[0]
+                    ]
+                );   
+            }
 
             return redirect('profile');
         }

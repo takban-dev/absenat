@@ -49,9 +49,8 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['aut
     Route::post('/employee-new', 'AdminEmployeesController@newPost');
 
     /* reporets page */
-    Route::get('/reports', function () {
-        return 'reporsts page for admin';
-    });
+    Route::get('/reports', 'Reports@showPanelGet');
+    Route::post('/reports', 'Reports@showPanelPost');
 
 });
 

@@ -57,6 +57,7 @@ class NormalEmployeesController extends Controller
                 'habitates'                 => DB::table('cities')                      ->get(),
                 'degrees'                   => DB::table('degrees')                     ->get(),
                 'study_fields'              => DB::table('study_fields')                ->get(),
+                'job_fields'                => DB::table('job_fields')                  ->get(),
                 'marriges'                  => DB::table('merrige_types')               ->get(),
                 'months'                    => config('constants.months')
                 ])->withErrors($validator);
@@ -82,6 +83,7 @@ class NormalEmployeesController extends Controller
                     'habitate_years'        => $request->input('habitate_years'),
                     'degree'                => $request->input('degree'),
                     'field'                 => $request->input('field'),
+                    'job'                   => $request->input('job'),
                     'marrige'               => $request->input('marrige'),
                     'dependents'            => $request->input('dependents'),
                     'experience'            => $request->input('experience'),
@@ -113,6 +115,7 @@ class NormalEmployeesController extends Controller
             'habitates'                 => DB::table('cities')                      ->get(),
             'degrees'                   => DB::table('degrees')                     ->get(),
             'study_fields'              => DB::table('study_fields')                ->get(),
+            'job_fields'                => DB::table('job_fields')                  ->get(),
             'marriges'                  => DB::table('merrige_types')               ->get(),
             'months'                    => config('constants.months')
             ]);
@@ -153,6 +156,7 @@ class NormalEmployeesController extends Controller
                 'habitates'                 => DB::table('cities')                      ->get(),
                 'degrees'                   => DB::table('degrees')                     ->get(),
                 'study_fields'              => DB::table('study_fields')                ->get(),
+                'job_fields'                => DB::table('job_fields')                  ->get(),
                 'business_license_sources'  => DB::table('business_license_sources')    ->get(),
                 'marriges'                  => DB::table('merrige_types')               ->get(),
                 'oldInputs'                 => $request->all(),
@@ -180,6 +184,7 @@ class NormalEmployeesController extends Controller
                     'habitate_years'        => $request->input('habitate_years'),
                     'degree'                => $request->input('degree'),
                     'field'                 => $request->input('field'),
+                    'job'                   => $request->input('job'),
                     'marrige'               => $request->input('marrige'),
                     'dependents'            => $request->input('dependents'),
                     'experience'            => $request->input('experience'),

@@ -277,6 +277,9 @@ td, th {
     direction: rtl;
     text-align: right;
 }
+.nrtl {
+    direction: ltr;
+}
 
 .glyphicon {
     position: relative;

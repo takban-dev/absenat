@@ -41,7 +41,7 @@
                         <div class="col-md-6 col-sm-6 pull-right">
                             <div class="form-group label-floating rtl col-lg-12 col-md-12">
                                 <label class="control-label">کلمه عبور</label>
-                                <input type="password" name="password" value="{{isset($user)? '121212': ''}}" class="form-control">
+                                <input type="password" name="password" value="{{isset($user)? 'THIS_IS_A_NOT_PASSWORD': ''}}" class="form-control">
                             </div>
                         </div>
                         <div class="col-md-6 col-sm-6 pull-right">

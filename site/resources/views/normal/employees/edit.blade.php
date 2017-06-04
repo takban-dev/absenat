@@ -216,41 +216,59 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-10 col-sm-10">
-                            <div class="form-group label-floating rtl col-lg-12 col-md-12">
-                                <select class="form-control" id="unit" name="unit_id" style="padding-top: 0px">
-                                </select>
-                                @if (isset($oldInputs))
-                                    <a href="{{url('admin/unit/' . $oldInputs['unit_id'])}}">مشاهده صفحه کارگاه</a>
-                                @elseif ($unitId != 0)
-                                    <a href="{{url('admin/unit/' . $unitId)}}">مشاهده صفحه کارگاه</a>
-                                @endif
+                        <div class="col-md-6 col-sm-12">
+                            <div class="col-md-8 col-sm-8">
+                                <div class="form-group rtl col-lg-12 col-md-12">
+                                    <div class="form-group" style="margin-top: 0px">
+                                        <select class="form-control" name="job" style="padding-top: 0px">
+                                            @foreach ($job_fields->all() as $job)
+                                                <option value="{{$job->id}}" {{isset($oldInputs)?($job->id==$oldInputs['job']?'selected':''):''}}>{{$job->title}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-4 text-center" style="margin-top: 30px;">
+                                <span>عنوان شغلی</span>
                             </div>
                         </div>
-                        <div class="col-md-2 col-sm-2 text-center" style="margin-top: 30px;">
-                            <span>کارگاه</span>
+                        <div class="col-md-6- col-sm-6">
+                            <div class="col-md-10 col-sm-10">
+                                <div class="form-group label-floating rtl col-lg-12 col-md-12">
+                                    <select class="form-control" id="unit" name="unit_id" style="padding-top: 0px">
+                                    </select>
+                                    @if (isset($oldInputs))
+                                        <a href="{{url('admin/unit/' . $oldInputs['unit_id'])}}">مشاهده صفحه کارگاه</a>
+                                    @elseif ($unitId != 0)
+                                        <a href="{{url('admin/unit/' . $unitId)}}">مشاهده صفحه کارگاه</a>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="col-md-2 col-sm-2 text-center" style="margin-top: 30px;">
+                                <span>کارگاه</span>
+                            </div>
+                            <script type="text/javascript">
+                                $('#unit').append($('<option>', {
+                                    value: 0,
+                                    text: 'انتخاب نشده'
+                                }));
+                                var url = "{{url('api/units')}}";
+                                $.get(url, function(data, status){
+                                    var jsonRes = JSON.parse(data);
+                                    for(var i=0; i<jsonRes.length; i++){
+                                        var unit = jsonRes[i];
+                                        $('#unit').append($('<option>', {
+                                            value: unit.id,
+                                            text: unit.title
+                                        }));
+                                    }
+                                    var value = {{isset($oldInputs)? $oldInputs['unit_id'] : $unitId}};
+                                    $('#unit').val(value);
+                                });
+                            </script>
                         </div>
-                        <script type="text/javascript">
-                            $('#unit').append($('<option>', {
-                                value: 0,
-                                text: 'انتخاب نشده'
-                            }));
-                            var url = "{{url('api/units')}}";
-                            $.get(url, function(data, status){
-                                var jsonRes = JSON.parse(data);
-                                for(var i=0; i<jsonRes.length; i++){
-                                    var unit = jsonRes[i];
-                                    $('#unit').append($('<option>', {
-                                        value: unit.id,
-                                        text: unit.title
-                                    }));
-                                }
-                                var value = {{isset($oldInputs)? $oldInputs['unit_id'] : $unitId}};
-                                $('#unit').val(value);
-                            });
-                        </script>
                     </div>
-                    <div class="row">
+s                    <div class="row">
                         <div class="col-md-12">
                             <button type="submit" class="btn btn-primary pull-right">ثبت تغییرات شاغل</button>
                         </div>

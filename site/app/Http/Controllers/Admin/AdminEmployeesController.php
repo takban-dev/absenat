@@ -53,6 +53,7 @@ class AdminEmployeesController extends Controller
                 'habitates'                 => DB::table('cities')                      ->get(),
                 'degrees'                   => DB::table('degrees')                     ->get(),
                 'study_fields'              => DB::table('study_fields')                ->get(),
+                'job_fields'                => DB::table('job_fields')                  ->get(),
                 'marriges'                  => DB::table('merrige_types')               ->get(),
                 'months'                    => config('constants.months')
                 ])->withErrors($validator);
@@ -78,6 +79,7 @@ class AdminEmployeesController extends Controller
                     'habitate_years'        => $request->input('habitate_years'),
                     'degree'                => $request->input('degree'),
                     'field'                 => $request->input('field'),
+                    'job'                   => $request->input('job'),
                     'marrige'               => $request->input('marrige'),
                     'dependents'            => $request->input('dependents'),
                     'experience'            => $request->input('experience'),
@@ -108,6 +110,7 @@ class AdminEmployeesController extends Controller
             'habitates'                 => DB::table('cities')                      ->get(),
             'degrees'                   => DB::table('degrees')                     ->get(),
             'study_fields'              => DB::table('study_fields')                ->get(),
+            'job_fields'                => DB::table('job_fields')                  ->get(),
             'marriges'                  => DB::table('merrige_types')               ->get(),
             'months'                    => config('constants.months')
             ]);
@@ -129,6 +132,7 @@ class AdminEmployeesController extends Controller
             'habitates'                 => DB::table('cities')                      ->get(),
             'degrees'                   => DB::table('degrees')                     ->get(),
             'study_fields'              => DB::table('study_fields')                ->get(),
+            'job_fields'                => DB::table('job_fields')                  ->get(),
             'marriges'                  => DB::table('merrige_types')               ->get(),
             'months'                    => config('constants.months')
             ]);
@@ -146,6 +150,7 @@ class AdminEmployeesController extends Controller
                 'habitates'                 => DB::table('cities')                      ->get(),
                 'degrees'                   => DB::table('degrees')                     ->get(),
                 'study_fields'              => DB::table('study_fields')                ->get(),
+                'job_fields'                => DB::table('job_fields')                  ->get(),
                 'business_license_sources'  => DB::table('business_license_sources')    ->get(),
                 'marriges'                  => DB::table('merrige_types')               ->get(),
                 'oldInputs'                 => $request->all(),
@@ -173,6 +178,7 @@ class AdminEmployeesController extends Controller
                     'habitate_years'        => $request->input('habitate_years'),
                     'degree'                => $request->input('degree'),
                     'field'                 => $request->input('field'),
+                    'job'                   => $request->input('job'),
                     'marrige'               => $request->input('marrige'),
                     'dependents'            => $request->input('dependents'),
                     'experience'            => $request->input('experience'),
@@ -208,6 +214,7 @@ class AdminEmployeesController extends Controller
 
             'degree.*'                    => 'مدرک تحصیلی انتخاب نشده است',
             'field.*'                     => 'رشته تحصیلی انتخاب نشده است',
+            'job.*'                       => 'عنوان شغلی نامعتبر است',
 
             'marrige.*'                   => 'خطا در وضعیت تاهل',
             'dependents.*'                => 'تعداد افراد تحت تکفل نامعتبر است',
@@ -235,6 +242,7 @@ class AdminEmployeesController extends Controller
 
             'degree'                    => 'required|numeric',
             'field'                     => 'required|numeric',
+            'job'                       => 'required|numeric',
 
             'marrige'                   => 'required|numeric',
             'dependents'                => 'required|numeric',
