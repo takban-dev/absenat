@@ -32,35 +32,49 @@ jsData = {
          });
     },
 
-    initCharts: function(){
-        /* ===================================================================== */
-        /*                      Sexuality By Year Charts                         */
-        /* ===================================================================== */
-
-        sexualityInYearsChart = new Chartist.Bar(
-            '#sexualityInYearsChart', 
-            {
-                labels: ['۱۳۹۳', '۱۳۹۴', '۱۳۹۴', '۱۳۹۵'],
-                series: [
-                    [50, 70, 120, 180],
-                    [180, 250, 320, 340],
-                ]
-            },
-            {
-                seriesBarDistance: 15,
+    initCharts: function(dataLabels, dataSeries){
+        
+        reportChart = new Chartist.Bar('#reportChart', {
+                labels: dataLabels,
+                series: [dataSeries]
+            },{
+                stackBars: true,
                 axisX: {
-                    offset: 60
+                    labelInterpolationFnc: function(value) {
+                        return value.split(/\s+/).map(function(word) {
+                            return word[0];
+                        }).join('');
+                    }
                 },
                 axisY: {
-                    offset: 40,
-                    labelInterpolationFnc: function(value) {
-                        return value + ' نفر';
-                    },
-                    scaleMinSpace: 50
+                    offset: 20
                 },
-                height: 300
-            });
-        md.startAnimationForLineChart(sexualityInYearsChart);
+                height: 300,
+            }, [
+
+                ['screen and (min-width: 400px)', {
+                    reverseData: true,
+                    horizontalBars: true,
+                    axisX: {
+                        labelInterpolationFnc: Chartist.noop
+                    },
+                    axisY: {
+                        offset: 60
+                    }
+                }],
+
+                ['screen and (min-width: 800px)', {
+                    stackBars: false,
+                    seriesBarDistance: 10
+                }],
+
+                ['screen and (min-width: 1000px)', {
+                    reverseData: false,
+                    horizontalBars: false,
+                    seriesBarDistance: 15
+                }]
+        ]);
+        md.startAnimationForLineChart(reportChart);
 
         /* ===================================================================== */
         /*                            Degrees  Charts                            */
@@ -97,19 +111,14 @@ jsData = {
                             fill: 'freeze'
                         }
                     };
-
-                // If this was not the first slice, we need to time the animation so that it uses the end sync event of the previous animation
                 if(data.index !== 0) {
                     animationDefinition['stroke-dashoffset'].begin = 'anim' + (data.index - 1) + '.end';
                 }
 
-                // We need to set an initial value before the animation starts as we are not in guided mode which would do that for us
                 data.element.attr({
                     'stroke-dashoffset': -pathLength + 'px'
                 });
 
-                // We can't use guided mode as the animations need to rely on setting begin manually
-                // See http://gionkunz.github.io/chartist-js/api-documentation.html#chartistsvg-function-animate
                     data.element.animate(animationDefinition, false);
             }
         });
@@ -123,43 +132,6 @@ jsData = {
         });
 
     },
-
-    initGoogleMaps: function(){
-        var myLatlng = new google.maps.LatLng(40.748817, -73.985428);
-        var mapOptions = {
-          zoom: 13,
-          center: myLatlng,
-          scrollwheel: false, //we disable de scroll over the map, it is a really annoing when you scroll through page
-          styles: [{"featureType":"water","stylers":[{"saturation":43},{"lightness":-11},{"hue":"#0088ff"}]},{"featureType":"road","elementType":"geometry.fill","stylers":[{"hue":"#ff0000"},{"saturation":-100},{"lightness":99}]},{"featureType":"road","elementType":"geometry.stroke","stylers":[{"color":"#808080"},{"lightness":54}]},{"featureType":"landscape.man_made","elementType":"geometry.fill","stylers":[{"color":"#ece2d9"}]},{"featureType":"poi.park","elementType":"geometry.fill","stylers":[{"color":"#ccdca1"}]},{"featureType":"road","elementType":"labels.text.fill","stylers":[{"color":"#767676"}]},{"featureType":"road","elementType":"labels.text.stroke","stylers":[{"color":"#ffffff"}]},{"featureType":"poi","stylers":[{"visibility":"off"}]},{"featureType":"landscape.natural","elementType":"geometry.fill","stylers":[{"visibility":"on"},{"color":"#b8cb93"}]},{"featureType":"poi.park","stylers":[{"visibility":"on"}]},{"featureType":"poi.sports_complex","stylers":[{"visibility":"on"}]},{"featureType":"poi.medical","stylers":[{"visibility":"on"}]},{"featureType":"poi.business","stylers":[{"visibility":"simplified"}]}]
-
-        }
-        var map = new google.maps.Map(document.getElementById("map"), mapOptions);
-
-        var marker = new google.maps.Marker({
-            position: myLatlng,
-            title:"Hello World!"
-        });
-
-        // To add the marker to the map, call setMap();
-        marker.setMap(map);
-    },
-
-	showNotification: function(from, align){
-    	color = Math.floor((Math.random() * 4) + 1);
-
-    	$.notify({
-        	icon: "notifications",
-        	message: "Welcome to <b>Material Dashboard</b> - a beautiful freebie for every web developer."
-
-        },{
-            type: type[color],
-            timer: 4000,
-            placement: {
-                from: from,
-                align: align
-            }
-        });
-	}
 
 
 

@@ -88,36 +88,7 @@ demo = {
 
         md.startAnimationForBarChart(monthlySignsChart);
 
-        /* ----------==========     monthly Units Chart    ==========---------- */
-
-        var monthlyUnitsChart = {
-            labels: ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'],
-            series: [
-                [5, 18, 12, 25, 4, 32, 54, 12, 42, 12, 35, 13]
-
-            ]
-        };
-        var optionsMonthlyUnitsChart = {
-            axisX: {
-                showGrid: false
-            },
-            low: 0,
-            high: 75,
-            chartPadding: { top: 0, right: 0, bottom: 0, left: 5}
-        };
-        var responsiveOptions = [
-            ['screen and (max-width: 640px)', {
-                seriesBarDistance: 5,
-                axisX: {
-                    labelInterpolationFnc: function (value) {
-                        return value[0];
-                    }
-                }
-            }]
-        ];
-        var monthlyUnitsChart = Chartist.Bar('#monthlyUnitsChart', monthlyUnitsChart, optionsMonthlyUnitsChart, responsiveOptions);
-
-        md.startAnimationForBarChart(monthlyUnitsChart);
+        
 
         /* ----------==========     monthly Employee Chart    ==========---------- */
 

@@ -26,7 +26,7 @@
     <script src="{{ asset('js/chartist.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap-notify.js') }}"></script>
     <script src="{{ asset('js/material-dashboard.js') }}"></script>
-    <script src="{{ asset('js/demo.js') }}"></script>
+    <script src="{{ asset('js/reports.js') }}"></script>
 
 </head>
 <body>
@@ -162,12 +162,5 @@
     </div>
 </div>
 </body>
-<script type="text/javascript">
-    $(document).ready(function () {
-
-        // Javascript method's body can be found in assets/js/demos.js
-        demo.initDashboardPageCharts();
-
-    });
-</script>
+@yield('scripts')
 </html>

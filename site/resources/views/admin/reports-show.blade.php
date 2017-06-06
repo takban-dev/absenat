@@ -75,9 +75,69 @@
                     </div>
                 @endforeach
             </div>
-            <button class="btn btn-primary pull-right" type="submit" name="show">نمایش گزارش</button>
-            <button class="btn btn-primary pull-right" type="submit" name="print">تولید نسخه چاپی</button>
+            <button class="btn btn-primary pull-right" type="submit" name="show" value="yes">نمایش گزارش</button>
+            <button class="btn btn-primary pull-right" type="submit" name="print" value="yes">تولید نسخه چاپی</button>
         </form>
     </div>
 </div>
+@if(isset($results))
+@if(sizeof($results['data']) == 0)
+    هیچ گزارشی قابل دریافت نیست
+@else
+<div class="row">
+    <div class="col-md-12 col-lg-12 col-sm-12">
+        <div class="card">
+            <div class="card-header card-chart" data-background-color="green">
+                <div class="ct-chart" id="reportChart"></div>
+            </div>
+            <div class="card-content rtl">
+                <h4 class="title">تعداد کارکنان به تفکیک جنسیت در سال های اخیر</h4>
+                <h6>(قرمز: مرد، سفید: زن)</h6>
+            </div>
+            <div class="card-footer rtl">
+                <table class="table table-hover">
+                    <thead>
+                        @foreach($results['headers'] as $header)
+                            <th class="rtl">{{$header}}</th>
+                        @endforeach
+                    </thead>
+                    <tbody>
+                        @foreach($results['data'] as $row)
+                            <tr>
+                                @foreach($row as $item)
+                                    <td>{{$item}}</td>
+                                @endforeach
+                            </tr>    
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+@endif
+@endif
+@endsection
+
+@section('scripts')
+
+@if(isset($results))
+@if(sizeof($results['data']) > 0)
+<script type="text/javascript">
+    $(document).ready(function () {
+        var series = [
+            @foreach($results['chart']['series'] as $item)
+                '{{$item}}',
+            @endforeach
+        ];
+        var data = [
+            @foreach($results['chart']['data'] as $item)
+                {{$item}},
+            @endforeach
+        ];
+        jsData.initCharts(series, data);
+    });
+</script>
+@endif
+@endif
 @endsection
