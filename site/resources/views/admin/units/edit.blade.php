@@ -44,15 +44,20 @@
                                 <input type="text" value="{{isset($oldInputs)? $oldInputs['manager_title']: ''}}" name="manager_title" class="form-control">
                             </div>
                         </div>
-                        <div class="col-md-4 pull-right">
-                            <div class="form-group rtl col-lg-12 col-md-12">
-                                <div class="form-group" style="margin-top: 0px">
-                                    <select class="form-control" name="manager_gender" style="padding-top: 0px">
-                                        @foreach ($genders->all() as $gender)
-                                                <option value="{{$gender->id}}" {{isset($oldInputs)?($gender->id==$oldInputs['manager_gender']?'selected':''):''}}>{{$gender->title}}</option>
-                                        @endforeach
-                                    </select>
+                        <div class="col-md-4 col-lg-4 col-sm-12 pull-right">
+                            <div class="col-md-8">
+                                <div class="form-group rtl col-lg-12 col-md-12">
+                                    <div class="form-group" style="margin-top: 0px">
+                                        <select class="form-control" name="manager_gender" style="padding-top: 0px">
+                                            @foreach ($genders->all() as $gender)
+                                                    <option value="{{$gender->id}}" {{isset($oldInputs)?($gender->id==$oldInputs['manager_gender']?'selected':''):''}}>{{$gender->title}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
+                            </div>
+                            <div class="col-md-4 col-sm-4 text-center" style="margin-top: 30px;">
+                                <span>جنسیت</span>
                             </div>
                         </div>
                         <div class="col-md-4 pull-right">
@@ -63,13 +68,29 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-9 col-lg-9 col-sm-12 pull-right">
+                        <div class="col-md-5 col-lg-5 col-sm-12 pull-right">
+                            <div class="col-md-8 col-sm-8">
+                                <div class="form-group rtl col-lg-12 col-md-12">
+                                    <div class="form-group" style="margin-top: 0px">
+                                        <select class="form-control" name="city" style="padding-top: 0px">
+                                            @foreach ($cities->all() as $city)
+                                                <option value="{{$city->id}}" {{isset($oldInputs)?($city->id==$oldInputs['city']?'selected':''):''}}>{{$city->title}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-4 text-center" style="margin-top: 30px;">
+                                <span>شهر کارگاه</span>
+                            </div>
+                        </div>
+                        <div class="col-md-5 col-lg-5 col-sm-12 pull-right">
                             <div class="form-group label-floating rtl col-lg-12 col-md-12">
-                                <label class="control-label">نشانی</label>
+                                <label class="control-label">نشانی دقیق</label>
                                 <input type="text" value="{{isset($oldInputs)? $oldInputs['address']: ''}}" name="address" class="form-control">
                             </div>
                         </div>
-                        <div class="col-md-3 col-lg-3 col-sm-12 pull-right">
+                        <div class="col-md-2 col-lg-2 col-sm-12 pull-right">
                             <div class="form-group label-floating rtl col-lg-12 col-md-12">
                                 <label class="control-label">کد پستی</label>
                                 <input type="text" value="{{isset($oldInputs)? $oldInputs['zip_code']: ''}}" name="zip_code" class="form-control">
@@ -246,21 +267,6 @@
                 @endif
             </div>
         </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-12" style="text-align: center;">
-        <nav aria-label="Page navigation">
-            <ul class="pagination">
-                @foreach ($pagination as $page)
-                    @if ($page == '#')
-                        <li class="page-item"><a class="page-link" href="#">...</a></li>
-                    @else
-                        <li class="page-item"><a class="page-link" href="{{url('admin/unit/' . $oldInputs['id'] . '/' . ($page-1) . '/' . $pageSize)}}">{{$page}}</a></li>
-                    @endif
-                @endforeach
-            </ul>
-        </nav>
     </div>
 </div>
 <div class="row">

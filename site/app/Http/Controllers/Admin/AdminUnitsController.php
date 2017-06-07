@@ -61,9 +61,10 @@ class AdminUnitsController extends Controller
                 'employees'                 => $employees,
 
                 'genders'                   => DB::table('genders')                     ->get(),
+                'cities'                    => DB::table('cities')                      ->get(),
                 'certificateTypes'          => DB::table('certificate_types')           ->get(),
                 'business_license_sources'  => DB::table('business_license_sources')    ->get(),
-                'months'                     => config('constants.months')
+                'months'                    => config('constants.months')
                 ])->withErrors($validator);
 
         }else{
@@ -80,6 +81,7 @@ class AdminUnitsController extends Controller
                     'manager_title'         => $request->input('manager_title'),
                     'manager_gender'        => $request->input('manager_gender'),
                     'manager_id_number'     => $request->input('manager_id_number'),
+                    'city'                  => $request->input('city'),
                     'address'               => $request->input('address'),
                     'zip_code'              => $request->input('zip_code'),
                     'phone'                 => $request->input('phone'),
@@ -142,9 +144,10 @@ class AdminUnitsController extends Controller
             'pagination'                => $this->generatePages($pageCount, $page),
 
             'genders'                   => DB::table('genders')                     ->get(),
+            'cities'                    => DB::table('cities')                      ->get(),
             'certificateTypes'          => DB::table('certificate_types')           ->get(),
             'business_license_sources'  => DB::table('business_license_sources')    ->get(),
-            'months'                     => config('constants.months')
+            'months'                    => config('constants.months')
             ]);
     }
 
@@ -158,6 +161,7 @@ class AdminUnitsController extends Controller
         return view('admin.units.new', [
             'group_code'                => $group_code,
             'genders'                   => DB::table('genders')                     ->get(),
+            'cities'                    => DB::table('cities')                      ->get(),
             'certificateTypes'          => DB::table('certificate_types')           ->get(),
             'business_license_sources'  => DB::table('business_license_sources')    ->get(),
             'months'                     => config('constants.months')
@@ -173,6 +177,7 @@ class AdminUnitsController extends Controller
                 'group_code'                => $group_code,
                 'genders'                   => DB::table('genders')                     ->get(),
                 'certificateTypes'          => DB::table('certificate_types')           ->get(),
+                'cities'                    => DB::table('cities')                      ->get(),
                 'business_license_sources'  => DB::table('business_license_sources')    ->get(),
                 'oldInputs'                 => $request->all(),
                 'months'                     => config('constants.months')
@@ -192,6 +197,7 @@ class AdminUnitsController extends Controller
                     'manager_title'         => $request->input('manager_title'),
                     'manager_gender'        => $request->input('manager_gender'),
                     'manager_id_number'     => $request->input('manager_id_number'),
+                    'city'                  => $request->input('city'),
                     'address'               => $request->input('address'),
                     'zip_code'              => $request->input('zip_code'),
                     'phone'                 => $request->input('phone'),
@@ -221,14 +227,15 @@ class AdminUnitsController extends Controller
             'product.*'                   => 'خطا در فیلد نوع فعالیت یا محصول',
 
             'manager_title.*'             => 'خطا در نام مدیریت کارگاه',
-            'manager_gender.*'           => 'خطا در جنسیت مدیر کارگاه',
+            'manager_gender.*'            => 'خطا در جنسیت مدیر کارگاه',
             'manager_id_number.*'         => 'خطا در کد ملی مدیریت کارگاه',
 
+            'city'                        => 'لطفا شهر کارگاه را مشخص کنید',
             'address.*'                   => 'خطا در آدرس',
             'zip_code.*'                  => 'خطا در کد پستی',
 
-            'phone.*'                     => 'خطا در شماره تلفن همراه',
-            'cell_phone.*'                => 'خطا در شماره تماس ثابت',
+            'phone.*'                     => 'خطا در شماره تماس ثابت',
+            'cell_phone.*'                => 'خطا در شماره تلفن همراه',
 
             'certificate_id.*'            => 'خطا در شماره مجوز',
             'certificate_type.*'          => 'نوع مجوز نامعتبر است',
@@ -242,9 +249,10 @@ class AdminUnitsController extends Controller
             'product'                   => 'required|min:5',
 
             'manager_title'             => 'required|min:5',
-            'manager_gender'           => 'required|in:2,3',
+            'manager_gender'            => 'required|in:2,3',
             'manager_id_number'         => 'required|size:10',
 
+            'city'                      => 'required',
             'address'                   => 'required|min:5',
             'zip_code'                  => 'required|size:10',
 
