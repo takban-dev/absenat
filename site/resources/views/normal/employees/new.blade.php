@@ -36,15 +36,20 @@
                                 <input type="text" name="last_name" value="{{isset($oldInputs)? $oldInputs['last_name']: ''}}" class="form-control">
                             </div>
                         </div>
-                        <div class="col-md-4 col-sm-4 pull-right">
-                            <div class="form-group rtl col-lg-12 col-md-12">
-                                <div class="form-group" style="margin-top: 0px">
-                                    <select class="form-control" name="gender" style="padding-top: 0px">
-                                        @foreach ($genders->all() as $gender)
-                                                <option value="{{$gender->id}}" {{isset($oldInputs)?($gender->id==$oldInputs['gender']?'selected':''):''}}>{{$gender->title}}</option>
-                                        @endforeach
-                                    </select>
+                        <div class="col-md-4 col-lg-4 col-sm-12 pull-right">
+                            <div class="col-md-8 col-sm-8">
+                                <div class="form-group rtl col-lg-12 col-md-12">
+                                    <div class="form-group" style="margin-top: 0px">
+                                        <select class="form-control" name="gender" style="padding-top: 0px">
+                                            @foreach ($genders->all() as $gender)
+                                                    <option value="{{$gender->id}}" {{isset($oldInputs)?($gender->id==$oldInputs['gender']?'selected':''):''}}>{{$gender->title}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
+                            </div>
+                            <div class="col-md-4 col-sm-4 text-center" style="margin-top: 30px;">
+                                <span>جنسیت</span>
                             </div>
                         </div>
                     </div>
@@ -78,7 +83,7 @@
                                 </div>
                                 <div class="col-md-3 col-sm-3">
                                     <select class="form-control" name="birth_date_year" style="padding-top: 0px">
-                                        @for ($i=1390; $i<1400; $i++)
+                                        @for ($i=1300; $i<1388; $i++)
                                             <option value="{{$i}}" {{isset($oldInputs['birth_date_year'])? ($i == $oldInputs['birth_date_year'] ? 'selected': '' ): ''}}>{{$i}}</option>
                                         @endfor
                                     </select>
