@@ -85,7 +85,9 @@ class Reports extends Controller
             'headers'       => $this->columnDictionary,
             ]);
         }else if($request->has("print")){
-            echo 'print reports';
+            return view('admin.reports-print', [
+            'results'       => $results,
+            ]);
         }
     }
 
