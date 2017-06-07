@@ -95,6 +95,8 @@ class AdminEmployeesController extends Controller
         $group_code = Auth::user()->group_code;
         $employee = get_object_vars(DB::table('employees')->where('id', '=', $id)->first());
 
+        $employee['unit_title'] = DB::table('units')->where('id', '=', $employee['unit_id'])->first()->title;
+
         $birth_date = explode('-', $employee['birth_date']);
         $employee['birth_date_day']   = $birth_date[2];
         $employee['birth_date_month'] = $birth_date[1];

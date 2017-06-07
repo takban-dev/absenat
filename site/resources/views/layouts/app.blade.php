@@ -17,6 +17,7 @@
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' rel='stylesheet'
           type='text/css'>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link href="https://fonts.googleapis.com/css?family=Lateef" rel="stylesheet">
     
     <script src="{{ asset('js/jquery-3.1.0.min.js') }}" type="text/javascript"></script>
@@ -27,6 +28,7 @@
     <script src="{{ asset('js/bootstrap-notify.js') }}"></script>
     <script src="{{ asset('js/material-dashboard.js') }}"></script>
     <script src="{{ asset('js/reports.js') }}"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 </head>
 <body>

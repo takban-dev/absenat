@@ -91,31 +91,31 @@
                             </div>
                         </div>
                         <div class="col-md-6 col-sm-12 pull-right">
-                                <div class="col-md-3 col-sm-3">
-                                    <select class="form-control" name="birth_date_day" style="padding-top: 0px">
-                                        @for ($i=1; $i<=30; $i++)
-                                            <option value="{{$i}}" {{isset($oldInputs['birth_date_day'])? ($i == $oldInputs['birth_date_day'] ? 'selected': '' ): ''}}>{{$i}}</option>
-                                        @endfor
-                                    </select>
-                                </div>
-                                <div class="col-md-3 col-sm-3">
-                                    <select class="form-control" name="birth_date_month" style="padding-top: 0px">
-                                        @foreach($months as $key => $val)
-                                            <option value="{{$key}}" {{isset($oldInputs['birth_date_month'])? ($key == $oldInputs['birth_date_month'] ? 'selected': '' ): ''}} >{{$val}}</option>    
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="col-md-3 col-sm-3">
-                                    <select class="form-control" name="birth_date_year" style="padding-top: 0px">
-                                        @for ($i=1300; $i<1388; $i++)
-                                            <option value="{{$i}}" {{isset($oldInputs['birth_date_year'])? ($i == $oldInputs['birth_date_year'] ? 'selected': '' ): ''}}>{{$i}}</option>
-                                        @endfor
-                                    </select>
-                                </div>
-                                <div class="col-md-3 col-sm-3 text-center" style="margin-top: 30px;">
-                                    <span>تاریخ تولد</span>
-                                </div>
+                            <div class="col-md-3 col-sm-3">
+                                <select class="form-control" name="birth_date_day" style="padding-top: 0px">
+                                    @for ($i=1; $i<=30; $i++)
+                                        <option value="{{$i}}" {{isset($oldInputs['birth_date_day'])? ($i == $oldInputs['birth_date_day'] ? 'selected': '' ): ''}}>{{$i}}</option>
+                                    @endfor
+                                </select>
                             </div>
+                            <div class="col-md-3 col-sm-3">
+                                <select class="form-control" name="birth_date_month" style="padding-top: 0px">
+                                    @foreach($months as $key => $val)
+                                        <option value="{{$key}}" {{isset($oldInputs['birth_date_month'])? ($key == $oldInputs['birth_date_month'] ? 'selected': '' ): ''}} >{{$val}}</option>    
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-3 col-sm-3">
+                                <select class="form-control" name="birth_date_year" style="padding-top: 0px">
+                                    @for ($i=1300; $i<1388; $i++)
+                                        <option value="{{$i}}" {{isset($oldInputs['birth_date_year'])? ($i == $oldInputs['birth_date_year'] ? 'selected': '' ): ''}}>{{$i}}</option>
+                                    @endfor
+                                </select>
+                            </div>
+                            <div class="col-md-3 col-sm-3 text-center" style="margin-top: 30px;">
+                                <span>تاریخ تولد</span>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="row">
@@ -240,35 +240,47 @@
                         <div class="col-md-6- col-sm-6">
                             <div class="col-md-10 col-sm-10">
                                 <div class="form-group label-floating rtl col-lg-12 col-md-12">
-                                    <select class="form-control" id="unit" name="unit_id" style="padding-top: 0px">
-                                    </select>
-                                    @if (isset($oldInputs))
-                                        <a href="{{url('admin/unit/' . $oldInputs['unit_id'])}}">مشاهده صفحه کارگاه</a>
-                                    @elseif ($unitId != 0)
-                                        <a href="{{url('admin/unit/' . $unitId)}}">مشاهده صفحه کارگاه</a>
-                                    @endif
-                                </div>
-                            </div>
+                                    <label class="control-label">مدت سابقه کار(ماه)</label>
+                                    <input type="text" id="unit" name="unit_title" value="{{isset($oldInputs)? $oldInputs['unit_title']: ''}}" class="form-control">
+                                </div
+>                            </div>
                             <div class="col-md-2 col-sm-2 text-center" style="margin-top: 30px;">
                                 <span>کارگاه</span>
                             </div>
                             <script type="text/javascript">
-                                $('#unit').append($('<option>', {
-                                    value: 0,
-                                    text: 'انتخاب نشده'
-                                }));
-                                var url = "{{url('api/units')}}";
-                                $.get(url, function(data, status){
-                                    var jsonRes = JSON.parse(data);
-                                    for(var i=0; i<jsonRes.length; i++){
-                                        var unit = jsonRes[i];
-                                        $('#unit').append($('<option>', {
-                                            value: unit.id,
-                                            text: unit.title
-                                        }));
-                                    }
-                                    var value = {{isset($oldInputs)? $oldInputs['unit_id'] : $unitId}};
-                                    $('#unit').val(value);
+                                $( function() {
+                                    var availableTags = [
+                                        "ActionScript",
+                                        "AppleScript",
+                                        "Asp",
+                                        "BASIC",
+                                        "C",
+                                        "C++",
+                                        "Clojure",
+                                        "COBOL",
+                                        "ColdFusion",
+                                        "Erlang",
+                                        "Fortran",
+                                        "Groovy",
+                                        "Haskell",
+                                        "Java",
+                                        "JavaScript",
+                                        "Lisp",
+                                        "Perl",
+                                        "PHP",
+                                        "Python",
+                                        "Ruby",
+                                        "Scala",
+                                        "Scheme"
+                                    ];
+                                    var url = "{{url('api/units')}}";
+                                    $.get(url, function(data, status){
+                                        var jsonRes = JSON.parse(data);
+                                        console.log(jsonRes);
+                                        $("#unit").autocomplete({
+                                            source: jsonRes
+                                        });
+                                    });
                                 });
                             </script>
                         </div>
