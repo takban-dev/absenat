@@ -65,13 +65,12 @@ class NormalEmployeesController extends Controller
         }else{
             $username = Auth::user()->name;
             
-            $has_certificate = $request->input('has_certificate');
-            $has_licence = $request->input('has_licence');
+            $unitId = DB::table('units')->where('title', '=', $request->input('unit_title'))->first()->id;
 
             DB::table('employees')->where(['id' => $id])->update(
                 [
                     'user'                  => $username,
-                    'unit_id'               => $request->input('unit_id'),
+                    'unit_id'               => $unitId,
                     'first_name'            => $request->input('first_name'),
                     'last_name'             => $request->input('last_name'),
                     'father_name'           => $request->input('father_name'),
@@ -99,6 +98,8 @@ class NormalEmployeesController extends Controller
         $group_code = Auth::user()->group_code;
         $employee = get_object_vars(DB::table('employees')->where('id', '=', $id)->first());
 
+        $employee['unit_title'] = DB::table('units')->where('id', '=', $employee['unit_id'])->first()->title;
+        
         $birth_date = explode('-', $employee['birth_date']);
         $employee['birth_date_day']   = $birth_date[2];
         $employee['birth_date_month'] = $birth_date[1];
@@ -128,8 +129,13 @@ class NormalEmployeesController extends Controller
 
     public function newGet(Request $request, $unitId=0){
         $group_code = Auth::user()->group_code;
+
+        $unitTitle = '';
+        if($unitId != 0)
+            $unitTitle = DB::table('units')->where('id', '=', $unitId)->first()->title;
+
         return view('normal.employees.new', [
-            'unitId'                    => $unitId,
+            'unit_title'                => $unitTitle,
             'group_code'                => $group_code,
             'username'                  => Auth::user()->name,
             'genders'                   => DB::table('genders')                     ->get(),
@@ -138,6 +144,7 @@ class NormalEmployeesController extends Controller
             'habitates'                 => DB::table('cities')                      ->get(),
             'degrees'                   => DB::table('degrees')                     ->get(),
             'study_fields'              => DB::table('study_fields')                ->get(),
+            'job_fields'                => DB::table('job_fields')                  ->get(),
             'marriges'                  => DB::table('merrige_types')               ->get(),
             'months'                    => config('constants.months')
             ]);
@@ -166,13 +173,12 @@ class NormalEmployeesController extends Controller
         }else{
             $username = Auth::user()->name;
             
-            $has_certificate = $request->input('has_certificate');
-            $has_licence = $request->input('has_licence');
+            $unitId = DB::table('units')->where('title', '=', $request->input('unit_title'))->first()->id;
 
             $id = DB::table('employees')->insertGetId(
                 [
                     'user'                  => $username,
-                    'unit_id'               => $request->input('unit_id'),
+                    'unit_id'               => $unitId,
                     'first_name'            => $request->input('first_name'),
                     'last_name'             => $request->input('last_name'),
                     'father_name'           => $request->input('father_name'),
@@ -224,6 +230,7 @@ class NormalEmployeesController extends Controller
             'marrige.*'                   => 'خطا در وضعیت تاهل',
             'dependents.*'                => 'تعداد افراد تحت تکفل نامعتبر است',
 
+            'unit_title'                  => 'عنوان کرگاه را وارد کنید',
             'experience.*'                => 'تعداد ماه های سابقه کاری را وارد کنید',
             'address.*'                   => 'آدرس را وارد کنید',
         ];
@@ -251,6 +258,7 @@ class NormalEmployeesController extends Controller
             'marrige'                   => 'required|numeric',
             'dependents'                => 'required|numeric',
 
+            'unit_title'                => 'required',
             'experience'                => 'required|numeric',
             'address'                   => 'required',
         ];

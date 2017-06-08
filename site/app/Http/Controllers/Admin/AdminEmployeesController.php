@@ -59,15 +59,14 @@ class AdminEmployeesController extends Controller
                 ])->withErrors($validator);
 
         }else{
-            $username = 'admin';
+            $username = Auth::user()->name;
             
-            $has_certificate = $request->input('has_certificate');
-            $has_licence = $request->input('has_licence');
+            $unitId = DB::table('units')->where('title', '=', $request->input('unit_title'))->first()->id;
 
             DB::table('employees')->where(['id' => $id])->update(
                 [
                     'user'                  => $username,
-                    'unit_id'               => $request->input('unit_id'),
+                    'unit_id'               => $unitId,
                     'first_name'            => $request->input('first_name'),
                     'last_name'             => $request->input('last_name'),
                     'father_name'           => $request->input('father_name'),
@@ -125,8 +124,12 @@ class AdminEmployeesController extends Controller
 
     public function newGet(Request $request, $unitId=0){
         $group_code = Auth::user()->group_code;
+        $unitTitle = '';
+        if($unitId != 0)
+            $unitTitle = DB::table('units')->where('id', '=', $unitId)->first()->title;
+
         return view('admin.employees.new', [
-            'unitId'                    => $unitId,
+            'unit_title'                => $unitTitle,
             'group_code'                => $group_code,
             'genders'                   => DB::table('genders')                     ->get(),
             'certificateTypes'          => DB::table('certificate_types')           ->get(),
@@ -160,15 +163,13 @@ class AdminEmployeesController extends Controller
                 ])->withErrors($validator);
 
         }else{
-            $username = 'admin';
-            
-            $has_certificate = $request->input('has_certificate');
-            $has_licence = $request->input('has_licence');
+            $username = Auth::user()->name;
+            $unitId = DB::table('units')->where('title', '=', $request->input('unit_title'))->first()->id;
 
             $id = DB::table('employees')->insertGetId(
                 [
                     'user'                  => $username,
-                    'unit_id'               => $request->input('unit_id'),
+                    'unit_id'               => $unitId,
                     'first_name'            => $request->input('first_name'),
                     'last_name'             => $request->input('last_name'),
                     'father_name'           => $request->input('father_name'),
@@ -221,6 +222,7 @@ class AdminEmployeesController extends Controller
             'marrige.*'                   => 'خطا در وضعیت تاهل',
             'dependents.*'                => 'تعداد افراد تحت تکفل نامعتبر است',
 
+            'unit_title'                  => 'عنوان کرگاه را وارد کنید',
             'experience.*'                => 'تعداد ماه های سابقه کاری را وارد کنید',
             'address.*'                   => 'آدرس را وارد کنید',
         ];
@@ -250,6 +252,7 @@ class AdminEmployeesController extends Controller
             'dependents'                => 'required|numeric',
 
             'experience'                => 'required|numeric',
+            'unit_title'                => 'required',
             'address'                   => 'required',
         ];
         $validator = Validator::make($request->all(), $rules, $messages);

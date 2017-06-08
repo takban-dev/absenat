@@ -67,6 +67,7 @@ class NormalUnitsController extends Controller
                 'employees'                 => $employees,
 
                 'genders'                   => DB::table('genders')                     ->get(),
+                'cities'                    => DB::table('cities')                      ->get(),
                 'certificateTypes'          => DB::table('certificate_types')           ->get(),
                 'business_license_sources'  => DB::table('business_license_sources')    ->get(),
                 'months'                     => config('constants.months')
@@ -155,6 +156,7 @@ class NormalUnitsController extends Controller
             'pageSize'                  => $size,
             'pagination'                => $this->generatePages($pageCount, $page),
 
+            'cities'                    => DB::table('cities')                      ->get(),
             'genders'                   => DB::table('genders')                     ->get(),
             'certificateTypes'          => DB::table('certificate_types')           ->get(),
             'business_license_sources'  => DB::table('business_license_sources')    ->get(),
@@ -172,6 +174,7 @@ class NormalUnitsController extends Controller
         return view('normal.units.new', [
             'group_code'                => $group_code,
             'genders'                   => DB::table('genders')                     ->get(),
+            'cities'                    => DB::table('cities')                      ->get(),
             'certificateTypes'          => DB::table('certificate_types')           ->get(),
             'business_license_sources'  => DB::table('business_license_sources')    ->get(),
             'months'                    => config('constants.months')
@@ -187,6 +190,7 @@ class NormalUnitsController extends Controller
                 'group_code'                => $group_code,
                 'genders'                   => DB::table('genders')                     ->get(),
                 'certificateTypes'          => DB::table('certificate_types')           ->get(),
+                'cities'                    => DB::table('cities')                      ->get(),
                 'business_license_sources'  => DB::table('business_license_sources')    ->get(),
                 'oldInputs'                 => $request->all(),
                 'months'                    => config('constants.months')

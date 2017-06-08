@@ -213,34 +213,26 @@
                                 <span>عنوان شغلی</span>
                             </div>
                         </div>
-                        <div class="col-md-6 col-sm-12">
+                        <div class="col-md-6- col-sm-6">
                             <div class="col-md-10 col-sm-10">
                                 <div class="form-group label-floating rtl col-lg-12 col-md-12">
-                                    <select class="form-control" id="unit" name="unit_id" style="padding-top: 0px">
-                                    
-                                    </select>
-                                </div>
-                            </div>
+                                    <label class="control-label">مدت سابقه کار(ماه)</label>
+                                    <input type="text" id="unit" name="unit_title" value="{{isset($oldInputs)? $oldInputs['unit_title']: ''}}" class="form-control">
+                                </div
+>                            </div>
                             <div class="col-md-2 col-sm-2 text-center" style="margin-top: 30px;">
                                 <span>کارگاه</span>
                             </div>
                             <script type="text/javascript">
-                                $('#unit').append($('<option>', {
-                                    value: 0,
-                                    text: 'انتخاب نشده'
-                                }));
-                                var url = "{{url('api/units')}}";
-                                $.get(url, function(data, status){
-                                    var jsonRes = JSON.parse(data);
-                                    for(var i=0; i<jsonRes.length; i++){
-                                        var unit = jsonRes[i];
-                                        $('#unit').append($('<option>', {
-                                            value: unit.id,
-                                            text: unit.title
-                                        }));
-                                    }
-                                    var value = {{isset($oldInputs)? $oldInputs['unit_id'] : $unitId}};
-                                    $('#unit').val(value);
+                                $( function() {
+                                    var url = "{{url('api/units')}}";
+                                    $.get(url, function(data, status){
+                                        var jsonRes = JSON.parse(data);
+                                        console.log(jsonRes);
+                                        $("#unit").autocomplete({
+                                            source: jsonRes
+                                        });
+                                    });
                                 });
                             </script>
                         </div>
