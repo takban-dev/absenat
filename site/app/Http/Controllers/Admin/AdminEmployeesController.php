@@ -281,4 +281,43 @@ class AdminEmployeesController extends Controller
             return [];
         }
     }
+
+    function prettify($data){
+        $result = [];
+        foreach($data as $item){
+            $result[$item->id] = $item->title;
+        }
+        return $result;
+    }
+    
+    public function listPrint($start, $offset, $complete=false){
+        include(app_path() . '\functions\phpToPDF.php');
+
+    }
+
+    public function singlePrint($id){
+
+        $employee = DB::table('employees')->where('id', '=', $id)->first();
+        $unitTitle = DB::table('units')->where('id', '=', $employee->unit_id)->first()->title;
+        return view('prints/single-employee', [
+            'info'              => $employee,
+            'field'             => $this->prettify(DB::table('study_fields')->get()),
+            'degree'            => $this->prettify(DB::table('degrees')->get()),
+            'job'               => $this->prettify(DB::table('job_fields')->get()),
+            'marrige'           => $this->prettify(DB::table('merrige_types')->get()),
+            'habitate'          => $this->prettify(DB::table('cities')->get()),
+            'gender'            => $this->prettify(DB::table('genders')->get()),
+            'unitTitle'         => $unitTitle,
+            ])->render();
+    }
+
+    public function singlePDF($id){
+        include(app_path() . '/functions/phpToPDF.php');
+        $pdf_options = array(
+              "source_type" => 'url',
+              "source" => url("admin/employee-single-print/$id"),
+              "action" => 'view');
+
+        phptopdf($pdf_options);
+    }
 }

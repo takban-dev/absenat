@@ -47,6 +47,11 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['aut
     /* new employee page */
     Route::get('/employee-new/{unitId?}', 'AdminEmployeesController@newGet');
     Route::post('/employee-new', 'AdminEmployeesController@newPost');
+    /* print routes */
+    Route::get('/employee-list-print/{offset}/{limit}/{complete}', 'AdminEmployeesController@listPrint');
+    Route::get('/employee-single-print/{id}', 'AdminEmployeesController@singlePrint');
+    Route::get('/employee-list-pdf/{offset}/{limit}/{complete}', 'AdminEmployeesController@listPDF');
+    Route::get('/employee-single-pdf/{id}', 'AdminEmployeesController@singlePDF');
 
     /* reporets page */
     Route::get('/reports', 'Reports@showPanelGet');
