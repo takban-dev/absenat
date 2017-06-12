@@ -75,7 +75,9 @@ Route::group(['namespace' => 'RegularMember', 'middleware' => 'auth'], function 
     Route::post('/unit-new', 'NormalUnitsController@newPost');
     /* remove unit */
     Route::get('/unit-remove/{id}', 'NormalUnitsController@remove');
-
+    /* print routes */
+    Route::get('/unit-list-print/', 'NormalUnitsController@listPrint');
+    Route::get('/unit-single-print/{id}', 'NormalUnitsController@singlePrint');
 
     /* employees list */
     Route::get('/employees/{page?}/{size?}', 'NormalEmployeesController@list');
@@ -87,8 +89,8 @@ Route::group(['namespace' => 'RegularMember', 'middleware' => 'auth'], function 
     Route::post('/employee-new', 'NormalEmployeesController@newPost');
 
     /* print routes */
-    Route::get('/employee-list-print/{offset}/{limit}/{complete}', 'AdminEmployeesController@listPrint');
-    Route::get('/employee-single-print/{id}', 'AdminEmployeesController@singlePrint');
+    Route::get('/employee-list-print', 'NormalEmployeesController@listPrint');
+    Route::get('/employee-single-print/{id}', 'NormalEmployeesController@singlePrint');
 
 });
 

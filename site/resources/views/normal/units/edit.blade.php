@@ -19,9 +19,18 @@
         <div class="card">
             <div class="card-header rtl" data-background-color="purple">
                 <h4 class="title">{{$oldInputs['title']}}</h4>
+                <a href="{{url('unit-single-print/' . $oldInputs['id'])}}" data-toggle="tooltip" title="پرینت واحد">
+                    <i class="material-icons">print</i>
+                </a>
+                <a href="{{url('unit-single-print/' . $oldInputs['id'] . '?showEmployees=true')}}" data-toggle="tooltip" title="پرینت واحد و لیست شاغلین">
+                    <i class="material-icons">print</i>
+                </a>
+                <a href="{{url('unit-single-print/' . $oldInputs['id'] . '?showEmployees=true&complete=true')}}" data-toggle="tooltip" title="پرینت واحد و اطلاعات شاغلین">
+                    <i class="material-icons">print</i>
+                </a>
             </div>
             <div class="card-content">
-                <form action="{{url('admin/unit/' . $oldInputs['id'])}}" method="post">
+                <form action="{{url('unit/' . $oldInputs['id'])}}" method="post">
                     {{ csrf_field() }}
                     <div class="row">
                         <div class="col-md-6 pull-right">

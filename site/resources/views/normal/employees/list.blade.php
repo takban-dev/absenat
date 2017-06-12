@@ -65,4 +65,54 @@
         </a>
     </div>
 </div>
+<div class="row">
+    <div class="col-lg-12 col-md-12">
+        <div class="card rtl">
+            <div class="card-header" data-background-color="purple">
+                <h4 class="title">ارائه پرینت از لیست شاغلین</h4>
+            </div>
+            <div class="card-content table-responsive" style="text-align: center;">
+                <form action="{{url('employee-list-print/')}}" method="get">
+                    <input name="pageSize" type="hidden" value="{{$pageSize}}">
+                    <div class="col-md-3 col-lg-3 col-sm-6 pull-right">
+                        <div class="col-md-4 col-sm-12">
+                            <select class="form-control" name="startPage" style="padding-top: 0px">
+                                @for ($i=0; $i<$pageCount; $i++)
+                                    <option value="{{$i}}">{{$i+1}}</option>
+                                @endfor
+                            </select>
+                        </div>
+                        <div class="col-md-8 col-sm-12 text-center" style="margin-top: 30px;">
+                            <span>از صفحه</span>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-lg-3 col-sm-6 pull-right">
+                        <div class="col-md-4 col-sm-12">
+                            <select class="form-control" name="endPage" style="padding-top: 0px">
+                                @for ($i=0; $i<$pageCount; $i++)
+                                    <option value="{{$i}}">{{$i+1}}</option>
+                                @endfor
+                            </select>
+                        </div>
+                        <div class="col-md-8 col-sm-12 text-center" style="margin-top: 30px;">
+                            <span>تا صفحه</span>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-lg-3 col-sm-6 pull-right nrtl">
+                        <div class="checkbox" style="margin-top: 4rem;">
+                            نمایش اطلاعات کامل
+                            <label>
+                                <input type="checkbox" name="complete">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-lg-3 col-sm-6 pull-right" style="margin-top: 1rem;">
+                        <button type="submit" class="btn btn-primary text-center">ارائه گزارش</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 @endsection

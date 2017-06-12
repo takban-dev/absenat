@@ -73,7 +73,6 @@
             </div>
             <div class="card-content table-responsive" style="text-align: center;">
                 <form action="{{url('admin/employee-list-print/')}}" method="get">
-                    {{ csrf_field() }}
                     <input name="pageSize" type="hidden" value="{{$pageSize}}">
                     <div class="col-md-3 col-lg-3 col-sm-6 pull-right">
                         <div class="col-md-4 col-sm-12">

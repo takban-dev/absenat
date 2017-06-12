@@ -30,7 +30,8 @@ class NormalUnitsController extends Controller
             'currentPage'   => $page,
             'group_code'    => $group_code,
             'pageSize'      => $size,
-            'pagination'    => $this->generatePages($pageCount, $page)
+            'pagination'    => $this->generatePages($pageCount, $page),
+            'pageCount'     => $pageCount,
             ]);
     }
 
@@ -306,5 +307,73 @@ class NormalUnitsController extends Controller
         }else{
             return [];
         }
+    }
+
+    function prettify($data){
+        $result = [];
+        foreach($data as $item){
+            $result[$item->id] = $item->title;
+        }
+        $result[0] = 'مشخص نشده';
+        return $result;
+    }
+    
+    public function listPrint(Request $request){
+        $startPage  = $request->input('startPage');
+        $endPage    = $request->input('endPage');
+        $pageSize   = $request->input('pageSize');
+
+        $offset = $startPage * $pageSize;
+        $limit = $pageSize * ($endPage - $startPage + 1);
+        $units = DB::table('units')
+            ->where('user', '=', Auth::user()->name)
+            ->offset($offset)
+            ->limit($limit)
+            ->get();
+
+        for($i=0; $i<sizeof($units); $i++){
+            $employees = DB::table('employees')->where('id', '=', $units[$i]->id)->get();
+            for($j=0; $j<sizeof($employees); $j++)
+                $employees[$j]->unitTitle = DB::table('units')->where('id', '=', $employees[$j]->unit_id)->first()->title;
+            $units[$i]->employees = $employees;
+
+        }
+
+        return view('prints/list-unit', [
+            'units'             => $units,
+            'field'             => $this->prettify(DB::table('study_fields')->get()),
+            'degree'            => $this->prettify(DB::table('degrees')->get()),
+            'job'               => $this->prettify(DB::table('job_fields')->get()),
+            'certificate_types' => $this->prettify(DB::table('certificate_types')           ->get()),
+            'licence_sources'   => $this->prettify(DB::table('business_license_sources')    ->get()),
+            'marrige'           => $this->prettify(DB::table('merrige_types')->get()),
+            'habitate'          => $this->prettify(DB::table('cities')->get()),
+            'gender'            => $this->prettify(DB::table('genders')->get()),
+            'completeUnits'     => $request->has('completeUnit') ? true : false,
+            'showEmployees'     => $request->has('showEmployees')? true : false,
+            'completeEmployee'  => $request->has('completeEmployee')? true : false,
+            ])->render();
+    }
+
+    public function singlePrint(Request $request, $id){
+        $unit = DB::table('units')->where('id', '=', $id)->first();
+        $employees = DB::table('employees')->where('id', '=', $unit->id)->get();
+        for($i=0; $i<sizeof($employees); $i++)
+            $employees[$i]->unitTitle = DB::table('units')->where('id', '=', $employees[$i]->unit_id)->first()->title;
+
+        return view('prints/single-unit', [
+            'unit'              => $unit,
+            'employees'         => $employees,
+            'field'             => $this->prettify(DB::table('study_fields')                ->get()),
+            'certificate_types' => $this->prettify(DB::table('certificate_types')           ->get()),
+            'licence_sources'   => $this->prettify(DB::table('business_license_sources')    ->get()),
+            'degree'            => $this->prettify(DB::table('degrees')                     ->get()),
+            'job'               => $this->prettify(DB::table('job_fields')                  ->get()),
+            'marrige'           => $this->prettify(DB::table('merrige_types')               ->get()),
+            'habitate'          => $this->prettify(DB::table('cities')                      ->get()),
+            'gender'            => $this->prettify(DB::table('genders')                     ->get()),
+            'showEmployees'      => $request->has('showEmployees')? true : false,
+            'complete'          => $request->has('complete')? true : false,
+            ])->render();
     }
 }
