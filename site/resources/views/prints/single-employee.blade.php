@@ -1,91 +1,68 @@
-<html>
-<head>
-    <title></title>
-</head>
-<body>
-<h2 dir="rtl" style="text-align: center;"><img alt="" width="250" src="{{ asset('img/logo-big.png') }}" /></h2>
-<h2 dir="rtl" style="text-align: center;">سامانه اشتغال سازمان منطقه آزاد انزلی</h2>
+@extends('layouts.print')
 
-<h3 dir="rtl" style="text-align: center;">مشخصات شاغل</h3>
-
-<table align="center" border="0" style="width:80%;">
-    <tbody>
-        <tr>
-            <td dir="rtl" style="width: 30%; height: 45px;">جنسیت&nbsp;:&nbsp;{{$gender[$info->gender]}}</td>
-            <td dir="rtl" style="width: 40%; height: 45px;">نام خانوادگی&nbsp;:&nbsp;{{$info->last_name}}</td>
-            <td dir="rtl" style="width: 30%; height: 45px;">نام&nbsp;:&nbsp;{{$info->first_name}}</td>
-        </tr>
-    </tbody>
-</table>
-
-<table align="center" border="0" style="width:80%;">
-    <tbody>
-        <tr>
-            <td dir="rtl" style="width: 60%; height: 45px;">کد ملی&nbsp;:&nbsp;{{$info->id_number}}</td>
-            <td dir="rtl" style="width: 40%; height: 45px;">نام پدر&nbsp;:&nbsp;{{$info->father_name}}</td>
-        </tr>
-    </tbody>
-</table>
-
-<table align="center" border="0" style="width:80%;">
-    <tbody>
-        <tr>
-            <td dir="rtl" style="width: 60%; height: 45px;">تاریخ تولد&nbsp;:&nbsp;{{preg_replace('/-/', '/', $info->birth_date)}}</td>
-            <td dir="rtl" style="width: 40%; height: 45px;">محل تولد&nbsp;:&nbsp;{{$info->birth_place}}</td>
-        </tr>
-    </tbody>
-</table>
-
-<table align="center" border="0" style="width:80%;">
-    <tbody>
-        <tr>
-            <td dir="rtl" style="width: 60%; height: 45px;">محل سکونت&nbsp;:&nbsp;{{$habitate[$info->habitate]}}</td>
-            <td dir="rtl" style="width: 40%; height: 45px;">مدت سکونت&nbsp;:&nbsp;{{$info->habitate_years}} سال</td>
-        </tr>
-    </tbody>
-</table>
-
-<table align="center" border="0" style="width:80%;">
-    <tbody>
-        <tr>
-            <td dir="rtl" style="height: 45px;">آدرس دقیق محل سکونت&nbsp;:&nbsp;{{$info->address}}</td>
-        </tr>
-    </tbody>
-</table>
-
-<table align="center" border="0" style="width:80%;">
-    <tbody>
-        <tr>
-            <td dir="rtl" style="width: 60%; height: 45px;">وضعیت تاهل&nbsp;:&nbsp;{{$marrige[$info->marrige]}}</td>
-            <td dir="rtl" style="width: 40%; height: 45px;">تعداد افراد تحت تکفل&nbsp;:&nbsp;{{$info->dependents}} نفر</td>
-        </tr>
-    </tbody>
-</table>
-
-<table align="center" border="0" style="width:80%;">
-    <tbody>
-        <tr>
-            <td dir="rtl" style="width: 60%; height: 45px;">رشته تحصیلی&nbsp;:&nbsp;{{$field[$info->field]}}</td>
-            <td dir="rtl" style="width: 40%; height: 45px;">مدرک تحصیلی&nbsp;:&nbsp;{{$degree[$info->degree]}}</td>
-        </tr>
-    </tbody>
-</table>
-
-<table align="center" border="0" style="width:80%;">
-    <tbody>
-        <tr>
-            <td dir="rtl" style="width: 60%; height: 45px;">عنوان شغلی&nbsp;:&nbsp;{{$job[$info->job]}}</td>
-            <td dir="rtl" style="width: 40%; height: 45px;">مدت سابقه کار&nbsp;:&nbsp;{{$info->experience}} ماه</td>
-        </tr>
-    </tbody>
-</table>
-
-<table align="center" border="0" style="width:80%;">
-    <tbody>
-        <tr>
-            <td dir="rtl" style="height: 45px;">کارگاه&nbsp;:&nbsp;{{$unitTitle}}</td>
-        </tr>
-    </tbody>
-</table>
-</body>
-</html>
+@section('title')
+{{$info->first_name}} {{$info->last_name}}
+@endsection
+@section('content')
+<div class="row">
+    <div class="col-md-3 col-lg-3 col-sm-6 pull-right">
+        نام: {{$info->first_name}}
+    </div>
+    <div class="col-md-3 col-lg-3 col-sm-6 pull-right">
+        نام خانوادگی: {{$info->last_name}}
+    </div>
+    <div class="col-md-3 col-lg-3 col-sm-6 pull-right">
+        کد ملی: {{$info->id_number}}
+    </div>
+    <div class="col-md-3 col-lg-3 col-sm-6 pull-right">
+        جنسیت: {{$gender[$info->gender]}}
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-3 col-lg-3 col-sm-6 pull-right">
+        نام پدر: {{$info->father_name}}
+    </div>
+    <div class="col-md-3 col-lg-3 col-sm-6 pull-right">
+        محل تولد: {{$info->birth_place}}
+    </div>
+    <div class="col-md-3 col-lg-3 col-sm-6 pull-right">
+        تاریخ تولد: {{preg_replace('/-/', '/', $info->birth_date)}}
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-3 col-lg-3 col-sm-6 pull-right">
+        محل سکونت: {{$habitate[$info->habitate]}}
+    </div>
+    <div class="col-md-3 col-lg-3 col-sm-6 pull-right">
+        سال های سکونت: {{$info->habitate_years}} سال
+    </div>
+    <div class="col-md-6 col-lg-6 col-sm-12 pull-right">
+        آدرس دقیق: {{$info->address}}
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-3 col-lg-3 col-sm-6 pull-right">
+        مدرک: {{$degree[$info->degree]}}
+    </div>
+    <div class="col-md-3 col-lg-3 col-sm-6 pull-right">
+        رشته: {{$field[$info->field]}}
+    </div>
+    <div class="col-md-3 col-lg-3 col-sm-6 pull-right">
+        گارکاه: {{$unitTitle}}
+    </div>
+    <div class="col-md-3 col-lg-3 col-sm-6 pull-right">
+        عنوان شغلی: {{$job[$info->job]}}
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-3 col-lg-3 col-sm-6 pull-right">
+        سابقه کار: {{$info->experience}} ماه
+    </div>
+    <div class="col-md-3 col-lg-3 col-sm-6 pull-right">
+        وضعیت تاهل: {{$marrige[$info->marrige]}} 
+    </div>
+    <div class="col-md-6 col-lg-6 col-sm-12 pull-right">
+        تعداد افراد تحت تکفل: {{$info->dependents}} نفر
+    </div>
+</div>
+@endsection

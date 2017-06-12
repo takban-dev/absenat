@@ -4,30 +4,6 @@
 {{$oldInputs['first_name'] . ' ' . $oldInputs['last_name']}}
 @endsection
 
-@section('header')
-<div class="container-fluid">
-    <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="#">سامانه مدیریت اشتغال سازمان منطقه آزاد انزلی</a>
-    </div>
-    <div class="collapse navbar-collapse">
-        <ul class="nav navbar-nav navbar-right">
-            <li>
-                <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
-                    <i class="material-icons">person</i>
-                    <p class="hidden-lg hidden-md">Profile</p>
-                </a>
-            </li>
-        </ul>
-    </div>
-</div>
-@endsection
-
 @section('content')
 @if (count($errors) > 0)
     <div class="alert alert-danger rtl">
@@ -43,6 +19,10 @@
         <div class="card">
             <div class="card-header rtl" data-background-color="purple">
                 <h4 class="title">{{$oldInputs['first_name'] . ' ' . $oldInputs['last_name']}}</h4>
+                <a href="{{url('employee-single-print/' . $oldInputs['id'])}}">
+                    <i class="material-icons">print</i>
+                </a>
+
             </div>
             <div class="card-content">
                 <form action="{{url('admin/employee/' . $oldInputs['id'])}}" method="post">

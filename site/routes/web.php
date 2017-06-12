@@ -38,6 +38,9 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['aut
     Route::post('/unit-new', 'AdminUnitsController@newPost');
     /* remove unit */
     Route::get('/unit-remove/{id}', 'AdminUnitsController@remove');
+    /* print routes */
+    Route::get('/unit-list-print/', 'AdminUnitsController@listPrint');
+    Route::get('/unit-single-print/{id}', 'AdminUnitsController@singlePrint');
 
     /* employees list */
     Route::get('/employees/{page?}/{size?}', 'AdminEmployeesController@list');
@@ -48,10 +51,8 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['aut
     Route::get('/employee-new/{unitId?}', 'AdminEmployeesController@newGet');
     Route::post('/employee-new', 'AdminEmployeesController@newPost');
     /* print routes */
-    Route::get('/employee-list-print/{offset}/{limit}/{complete}', 'AdminEmployeesController@listPrint');
+    Route::get('/employee-list-print/', 'AdminEmployeesController@listPrint');
     Route::get('/employee-single-print/{id}', 'AdminEmployeesController@singlePrint');
-    Route::get('/employee-list-pdf/{offset}/{limit}/{complete}', 'AdminEmployeesController@listPDF');
-    Route::get('/employee-single-pdf/{id}', 'AdminEmployeesController@singlePDF');
 
     /* reporets page */
     Route::get('/reports', 'Reports@showPanelGet');
@@ -85,6 +86,9 @@ Route::group(['namespace' => 'RegularMember', 'middleware' => 'auth'], function 
     Route::get('/employee-new/{unitId?}', 'NormalEmployeesController@newGet');
     Route::post('/employee-new', 'NormalEmployeesController@newPost');
 
+    /* print routes */
+    Route::get('/employee-list-print/{offset}/{limit}/{complete}', 'AdminEmployeesController@listPrint');
+    Route::get('/employee-single-print/{id}', 'AdminEmployeesController@singlePrint');
 
 });
 

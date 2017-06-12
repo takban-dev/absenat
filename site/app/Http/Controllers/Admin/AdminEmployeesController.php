@@ -33,6 +33,7 @@ class AdminEmployeesController extends Controller
             'group_code'    => $group_code,
             'pageSize'      => $size,
             'pagination'    => $this->generatePages($pageCount, $page),
+            'pageCount'     => ceil($employeeCount / $size),
             ]);
     }
 
@@ -287,16 +288,39 @@ class AdminEmployeesController extends Controller
         foreach($data as $item){
             $result[$item->id] = $item->title;
         }
+        $result[0] = 'مشخص نشده';
         return $result;
     }
     
-    public function listPrint($start, $offset, $complete=false){
-        include(app_path() . '\functions\phpToPDF.php');
+    public function listPrint(Request $request){
+        $startPage  = $request->input('startPage');
+        $endPage    = $request->input('endPage');
+        $pageSize   = $request->input('pageSize');
 
+        $offset = $startPage * $pageSize;
+        $limit = $pageSize * ($endPage - $startPage + 1);
+        $employees = DB::table('employees')
+            ->offset($offset)
+            ->limit($limit)
+            ->get();
+
+        for($i=0; $i<sizeof($employees); $i++){
+            $employees[$i]->unitTitle = DB::table('units')->where('id', '=', $employees[$i]->unit_id)->first()->title;
+        }
+
+        return view('prints/list-employee', [
+            'employees'         => $employees,
+            'field'             => $this->prettify(DB::table('study_fields')->get()),
+            'degree'            => $this->prettify(DB::table('degrees')->get()),
+            'job'               => $this->prettify(DB::table('job_fields')->get()),
+            'marrige'           => $this->prettify(DB::table('merrige_types')->get()),
+            'habitate'          => $this->prettify(DB::table('cities')->get()),
+            'gender'            => $this->prettify(DB::table('genders')->get()),
+            'complete'          => $request->has('complete')? true : false,
+            ])->render();
     }
 
     public function singlePrint($id){
-
         $employee = DB::table('employees')->where('id', '=', $id)->first();
         $unitTitle = DB::table('units')->where('id', '=', $employee->unit_id)->first()->title;
         return view('prints/single-employee', [
@@ -311,13 +335,4 @@ class AdminEmployeesController extends Controller
             ])->render();
     }
 
-    public function singlePDF($id){
-        include(app_path() . '/functions/phpToPDF.php');
-        $pdf_options = array(
-              "source_type" => 'url',
-              "source" => url("admin/employee-single-print/$id"),
-              "action" => 'view');
-
-        phptopdf($pdf_options);
-    }
 }

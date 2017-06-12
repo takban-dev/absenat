@@ -43,6 +43,9 @@
         <div class="card">
             <div class="card-header rtl" data-background-color="purple">
                 <h4 class="title">{{$oldInputs['first_name'] . ' ' . $oldInputs['last_name']}}</h4>
+                <a href="{{url('admin/employee-single-print/' . $oldInputs['id'])}}">
+                    <i class="material-icons">print</i>
+                </a>
             </div>
             <div class="card-content">
                 <form action="{{url('admin/employee/' . $oldInputs['id'])}}" method="post">
