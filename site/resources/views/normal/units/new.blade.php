@@ -4,6 +4,14 @@
 کارگاه جدید
 @endsection
 
+@section('back')
+<li>
+    <a href="{{url('units')}}">
+        <i class="material-icons">keyboard_return</i>
+    </a>
+</li>
+@endsection
+
 @section('content')
 @if (count($errors) > 0)
     <div class="alert alert-danger rtl">

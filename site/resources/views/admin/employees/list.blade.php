@@ -5,6 +5,14 @@
 @endsection
 
 
+@section('back')
+<li>
+    <a href="{{url('dashboard')}}">
+        <i class="material-icons">keyboard_return</i>
+    </a>
+</li>
+@endsection
+
 @section('content')
 <div class="row">
     <div class="col-lg-12 col-md-12">
@@ -72,7 +80,7 @@
                 <h4 class="title">ارائه پرینت از لیست شاغلین</h4>
             </div>
             <div class="card-content table-responsive" style="text-align: center;">
-                <form action="{{url('admin/employee-list-print/')}}" method="get">
+                <form action="{{url('admin/employee-list-print/')}}" method="get" target="_blank">
                     <input name="pageSize" type="hidden" value="{{$pageSize}}">
                     <div class="col-md-3 col-lg-3 col-sm-6 pull-right">
                         <div class="col-md-4 col-sm-12">

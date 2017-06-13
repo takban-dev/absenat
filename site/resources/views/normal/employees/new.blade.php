@@ -4,6 +4,14 @@
 داشبورد
 @endsection
 
+@section('back')
+<li>
+    <a href="{{url('employees')}}">
+        <i class="material-icons">keyboard_return</i>
+    </a>
+</li>
+@endsection
+
 @section('content')
 @if (count($errors) > 0)
     <div class="alert alert-danger rtl">

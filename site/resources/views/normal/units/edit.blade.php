@@ -4,6 +4,14 @@
 {{$oldInputs['title']}}
 @endsection
 
+@section('back')
+<li>
+    <a href="{{url('units')}}">
+        <i class="material-icons">keyboard_return</i>
+    </a>
+</li>
+@endsection
+
 @section('content')
 @if (count($errors) > 0)
     <div class="alert alert-danger rtl">
@@ -19,13 +27,13 @@
         <div class="card">
             <div class="card-header rtl" data-background-color="purple">
                 <h4 class="title">{{$oldInputs['title']}}</h4>
-                <a href="{{url('unit-single-print/' . $oldInputs['id'])}}" data-toggle="tooltip" title="پرینت واحد">
+                <a href="{{url('unit-single-print/' . $oldInputs['id'])}}" data-toggle="tooltip" target="_blank" title="پرینت واحد">
                     <i class="material-icons">print</i>
                 </a>
-                <a href="{{url('unit-single-print/' . $oldInputs['id'] . '?showEmployees=true')}}" data-toggle="tooltip" title="پرینت واحد و لیست شاغلین">
+                <a href="{{url('unit-single-print/' . $oldInputs['id'] . '?showEmployees=true')}}" target="_blank" data-toggle="tooltip" title="پرینت واحد و لیست شاغلین">
                     <i class="material-icons">print</i>
                 </a>
-                <a href="{{url('unit-single-print/' . $oldInputs['id'] . '?showEmployees=true&complete=true')}}" data-toggle="tooltip" title="پرینت واحد و اطلاعات شاغلین">
+                <a href="{{url('unit-single-print/' . $oldInputs['id'] . '?showEmployees=true&complete=true')}}" target="_blank" data-toggle="tooltip" title="پرینت واحد و اطلاعات شاغلین">
                     <i class="material-icons">print</i>
                 </a>
             </div>

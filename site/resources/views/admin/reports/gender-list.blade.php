@@ -3,6 +3,15 @@
 @section('title')
 آمار ها
 @endsection
+
+@section('back')
+<li>
+    <a href="{{url('admin/reports')}}">
+        <i class="material-icons">keyboard_return</i>
+    </a>
+</li>
+@endsection
+
 @section('content')
 <div class="card rtl">
     <div class="card-header" data-background-color="purple">
@@ -10,7 +19,7 @@
     </div>
     <div class="card-content">
         <div class="row">
-            <form action="{{url('admin/reports/genders-list/1/10')}}" method="post">
+            <form action="{{url('admin/reports/genders-list')}}" method="post">
                 {{ csrf_field() }}
                 <div class="col-md-6 col-sm-12 pull-right">
                     <div class="col-md-8 col-sm-8">
@@ -28,26 +37,16 @@
                         <span>مشاهده جنسیت</span>
                     </div>
                 </div>
-                <div class="col-md-3 col-sm-6 pull-right">
-                    <div class="col-md-8 col-sm-8">
-                        <div class="form-group rtl col-lg-12 col-md-12">
-                            <div class="form-group" style="margin-top: 0px">
-                                <select class="form-control" name="gender" style="padding-top: 0px">
-                                    <option value="1">هردو</option>
-                                    <option value="2">مرد</option>
-                                    <option value="3">زن</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-4 text-center" style="margin-top: 30px;">
-                        <span>از ردیف</span>
+                <div class="col-md-3 col-lg-3 col-sm-6 pull-right">
+                    <div class="form-group label-floating rtl col-lg-12 col-md-12">
+                        <label class="control-label">از ردیف</label>
+                        <input type="text" value="" name="offset" class="form-control">
                     </div>
                 </div>
-                <div class="col-md-3 col-sm-6 pull-right">
-                    
-                    <div class="col-md-4 col-sm-4 text-center" style="margin-top: 30px;">
-                        <span>به تعداد</span>
+                <div class="col-md-3 col-lg-3 col-sm-6 pull-right">
+                    <div class="form-group label-floating rtl col-lg-12 col-md-12">
+                        <label class="control-label">به تعداد</label>
+                        <input type="text" value="" name="limit" class="form-control">
                     </div>
                 </div>
                 <div class="col-md-4 col-sm-12 col-lg-4">
@@ -75,21 +74,4 @@
 @endif
     </div>
 </div>
-@if(isset($results))
-<div class="row">
-    <div class="col-md-12" style="text-align: center;">
-        <nav aria-label="Page navigation">
-            <ul class="pagination">
-                @foreach ($pagination as $page)
-                    @if ($page == '#')
-                        <li class="page-item"><a class="page-link" href="#">...</a></li>
-                    @else
-                        <li class="page-item"><a class="page-link" href="{{url('admin/employees/' . ($page-1) . '/' . $pageSize . '/' . $gender)}}">{{$page}}</a></li>
-                    @endif
-                @endforeach
-            </ul>
-        </nav>
-    </div>
-</div>
-@endif
 @endsection

@@ -4,6 +4,14 @@
 آمار ها
 @endsection
 
+@section('back')
+<li>
+    <a href="{{url('dashboard')}}">
+        <i class="material-icons">keyboard_return</i>
+    </a>
+</li>
+@endsection
+
 @section('content')
 <div class="card rtl">
     <div class="card-header" data-background-color="purple">

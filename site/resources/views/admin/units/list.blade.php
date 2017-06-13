@@ -4,6 +4,14 @@
 کارگاه ها - {{$currentPage+1}}
 @endsection
 
+@section('back')
+<li>
+    <a href="{{url('dashboard')}}">
+        <i class="material-icons">keyboard_return</i>
+    </a>
+</li>
+@endsection
+
 @section('content')
 <div class="row">
     <div class="col-lg-12 col-md-12">
@@ -69,7 +77,7 @@
                 <h4 class="title">ارائه پرینت از لیست کارگاه ها</h4>
             </div>
             <div class="card-content table-responsive" style="text-align: center;">
-                <form action="{{url('admin/unit-list-print/')}}" method="get">
+                <form action="{{url('admin/unit-list-print/')}}" method="get" target="_blank">
                     <input name="pageSize" type="hidden" value="{{$pageSize}}">
                     <div class="row">
                         <div class="col-md-3 col-lg-3 col-sm-6 pull-right">

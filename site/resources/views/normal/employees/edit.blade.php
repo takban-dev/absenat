@@ -4,6 +4,14 @@
 {{$oldInputs['first_name'] . ' ' . $oldInputs['last_name']}}
 @endsection
 
+@section('back')
+<li>
+    <a href="{{url('employees')}}">
+        <i class="material-icons">keyboard_return</i>
+    </a>
+</li>
+@endsection
+
 @section('content')
 @if (count($errors) > 0)
     <div class="alert alert-danger rtl">
@@ -19,7 +27,7 @@
         <div class="card">
             <div class="card-header rtl" data-background-color="purple">
                 <h4 class="title">{{$oldInputs['first_name'] . ' ' . $oldInputs['last_name']}}</h4>
-                <a href="{{url('employee-single-print/' . $oldInputs['id'])}}">
+                <a href="{{url('employee-single-print/' . $oldInputs['id'])}}" target="_blank">
                     <i class="material-icons">print</i>
                 </a>
 

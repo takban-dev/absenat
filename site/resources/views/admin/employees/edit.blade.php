@@ -4,6 +4,14 @@
 {{$oldInputs['first_name'] . ' ' . $oldInputs['last_name']}}
 @endsection
 
+@section('back')
+<li>
+    <a href="{{url('admin/employees')}}">
+        <i class="material-icons">keyboard_return</i>
+    </a>
+</li>
+@endsection
+
 @section('header')
 <div class="container-fluid">
     <div class="navbar-header">
@@ -43,7 +51,7 @@
         <div class="card">
             <div class="card-header rtl" data-background-color="purple">
                 <h4 class="title">{{$oldInputs['first_name'] . ' ' . $oldInputs['last_name']}}</h4>
-                <a href="{{url('admin/employee-single-print/' . $oldInputs['id'])}}">
+                <a href="{{url('admin/employee-single-print/' . $oldInputs['id'])}}" target="_blank">
                     <i class="material-icons">print</i>
                 </a>
             </div>
