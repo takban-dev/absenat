@@ -57,6 +57,12 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['aut
     /* reporets page */
     Route::get('/reports', 'Reports@showPanelGet');
     Route::post('/reports', 'Reports@showPanelPost');
+    Route::group(['namespace' => 'Report', 'prefix' => 'reports'], function () {
+        Route::get('/genders', 'Genders@allGet');
+
+        Route::get('/genders-list', 'Genders@allListGet');
+        Route::post('/genders-list', 'Genders@allListPost');
+    });
 
 });
 
