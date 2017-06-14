@@ -75,6 +75,32 @@ class Genders extends Controller
             'headers'       => ['نام', 'نام خانوادگی', 'جنسیت'],
         ]);   
     }
+
+    public function allStudyFieldGet(Request $request){
+        $group_code = Auth::user()->group_code;
+
+
+        $query = "SELECT gender, field, SUM(gender)'sum' FROM `employees` GROUP BY gender, field";
+
+        $queryResults = DB::select(DB::raw($query));
+        $genders = $this->prettify(DB::table('genders')->get());
+        $study_fields = $this->prettify(DB::table('study_fields')->get());
+
+        for($i=0; $i<sizeof($queryResults); $i++){
+            $queryResults[$i]->gender = $genders[$queryResults[$i]->gender];
+            $queryResults[$i]->field = $study_fields[$queryResults[$i]->field];
+        }
+
+        return view('admin.reports.gender-field', [
+            'group_code'    => $group_code,
+            'results'       => $queryResults,
+        ]);
+    }
+
+    /* ====================================================================
+                        other utility functions
+       ==================================================================== */
+
     function prettify($data){
         $result = [];
         foreach($data as $item){

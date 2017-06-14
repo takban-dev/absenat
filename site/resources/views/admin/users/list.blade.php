@@ -17,7 +17,7 @@
     <div class="col-lg-12 col-md-12">
         <div class="card rtl">
             <div class="card-header" data-background-color="purple">
-                <h4 class="title">شاغلین</h4>
+                <h4 class="title">کاربران</h4>
             </div>
             <div class="card-content table-responsive" style="text-align: center;">
                 @if (sizeof($users) > 0)

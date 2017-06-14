@@ -46,7 +46,7 @@
                         </div>
                         <div class="col-md-4 col-sm-8 pull-right">
                             <div class="form-group label-floating rtl col-lg-12 col-md-12">
-                                <label class="control-label">نام خانوادگی</label>
+                                <label class="control-label">آدرس ایمیل</label>
                                 <input type="email" name="email" value="{{isset($oldInputs)? $oldInputs['email']: ''}}" class="form-control">
                             </div>
                         </div>

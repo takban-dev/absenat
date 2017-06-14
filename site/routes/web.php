@@ -62,6 +62,8 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['aut
 
         Route::get('/genders-list', 'Genders@allListGet');
         Route::post('/genders-list', 'Genders@allListPost');
+        
+        Route::get('/genders-degree', 'Genders@allStudyFieldGet');
     });
 
 });
