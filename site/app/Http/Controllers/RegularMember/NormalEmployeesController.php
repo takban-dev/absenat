@@ -21,8 +21,15 @@ class NormalEmployeesController extends Controller
             ->select(DB::raw("employees.id, employees.first_name, employees.last_name, degrees.title'degree', study_fields.title'field', units.title'unit', cities.title'habitate'"))
             ->limit($size)
             ->offset($page * $size)
-            ->where('employees.user', '=', Auth::user()->name)
-            ->get();
+            ->where('employees.user', '=', Auth::user()->name);
+
+        if($request->has('sort')){
+            $orders = preg_split('/,/', $request->input('sort'));
+            foreach($orders as $order)
+            $employees = $employees->orderBy($order, 'asc');
+        }
+        $employees = $employees->get();
+
         $employeeCount = DB::table('employees')
             ->where('employees.user', '=', Auth::user()->name)
             ->count();

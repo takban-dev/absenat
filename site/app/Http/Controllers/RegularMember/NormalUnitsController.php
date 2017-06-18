@@ -16,8 +16,17 @@ class NormalUnitsController extends Controller
         $units = DB::table('units')
             ->skip($page*$size)
             ->limit($size)
-            ->where('user', '=', Auth::user()->name)
-            ->get();
+            ->where('user', '=', Auth::user()->name);
+
+        $units = DB::table('units')->skip($page*$size)->limit($size);
+
+        if($request->has('sort')){
+            $orders = preg_split('/,/', $request->input('sort'));
+            foreach($orders as $order)
+            $units = $units->orderBy($order, 'asc');
+        }
+        $units = $units->get();
+
         $unitCount = DB::table('units')
             ->where('user', '=', Auth::user()->name)
             ->count();
@@ -32,6 +41,7 @@ class NormalUnitsController extends Controller
             'pageSize'      => $size,
             'pagination'    => $this->generatePages($pageCount, $page),
             'pageCount'     => $pageCount,
+            'sort'          => $request->has('sort')? ('?sort=' . $request->input('sort')) : '',
             ]);
     }
 

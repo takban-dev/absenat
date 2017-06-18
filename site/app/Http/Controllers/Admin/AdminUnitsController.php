@@ -13,7 +13,15 @@ class AdminUnitsController extends Controller
     public function list(Request $request, $page=0, $size=10)
     {
         $group_code = Auth::user()->group_code;
-        $units = DB::table('units')->skip($page*$size)->limit($size)->get();
+        $units = DB::table('units')->skip($page*$size)->limit($size);
+
+        if($request->has('sort')){
+            $orders = preg_split('/,/', $request->input('sort'));
+            foreach($orders as $order)
+            $units = $units->orderBy($order, 'asc');
+        }
+        $units = $units->get();
+
         $unitCount = DB::table('units')->count();
 
         $pageCount = ceil($unitCount / $size);
@@ -26,6 +34,7 @@ class AdminUnitsController extends Controller
             'pageSize'      => $size,
             'pagination'    => $this->generatePages($pageCount, $page),
             'pageCount'     => $pageCount,
+            'sort'          => $request->has('sort')? ('?sort=' . $request->input('sort')) : '',
             ]);
     }
 

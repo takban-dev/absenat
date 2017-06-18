@@ -23,12 +23,18 @@
                 @if (sizeof($units) > 0)
                     <table class="table table-hover">
                         <thead>
-                            <th class="rtl text-center">عنوان کارگاه</th>
-                            <th class="rtl text-center">مدیریت</th>
-                            <th class="rtl text-center">شماره تماس</th>
+                            <th class="rtl text-center">
+                                <a href="{{Request::url() . '?sort=title'}}">عنوان کارگاه</a>
+                            </th>
+                            <th class="rtl text-center">
+                                <a href="{{Request::url() . '?sort=manager_title'}}">مدیریت</a>
+                            </th>
+                            <th class="rtl text-center">
+                                <a href="{{Request::url() . '?sort=phone'}}">شماره تماس</a>
+                            </th>
                             <th class="rtl text-center">مشاهده کارگاه</th>
                             <th class="rtl text-center">حذف</th>
-                            </thead>
+                        </thead>
                             <tbody>
                             @foreach ($units as $unit)
                                 <tr>
@@ -56,7 +62,7 @@
                     @if ($page == '#')
                         <li class="page-item"><a class="page-link" href="#">...</a></li>
                     @else
-                        <li class="page-item"><a class="page-link" href="{{url('units/' . ($page-1) . '/' . $pageSize)}}">{{$page}}</a></li>
+                        <li class="page-item"><a class="page-link" href="{{url('units/' . ($page-1) . '/' . $pageSize. $sort)}}">{{$page}}</a></li>
                     @endif
                 @endforeach
             </ul>

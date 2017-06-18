@@ -20,8 +20,15 @@ class AdminEmployeesController extends Controller
             ->join('units', 'employees.unit_id', '=', 'units.id')
             ->select(DB::raw("employees.id, employees.first_name, employees.last_name, degrees.title'degree', study_fields.title'field', units.title'unit', cities.title'habitate'"))
             ->limit($size)
-            ->offset($page * $size)
-            ->get();
+            ->offset($page * $size);
+
+        if($request->has('sort')){
+            $orders = preg_split('/,/', $request->input('sort'));
+            foreach($orders as $order)
+            $employees = $employees->orderBy($order, 'asc');
+        }
+        $employees = $employees->get();
+
         $employeeCount = DB::table('employees')->count();
 
         $pageCount = ceil($employeeCount / $size);
@@ -34,6 +41,7 @@ class AdminEmployeesController extends Controller
             'pageSize'      => $size,
             'pagination'    => $this->generatePages($pageCount, $page),
             'pageCount'     => ceil($employeeCount / $size),
+            'sort'          => $request->has('sort')? ('?sort=' . $request->input('sort')) : '',
             ]);
     }
 

@@ -14,7 +14,15 @@ class AdminusersController extends Controller
     public function list(Request $request, $page=0, $size=10)
     {
         $group_code = Auth::user()->group_code;
-        $users = DB::table('users')->get();
+        $users = DB::table('users')->skip($page*$size)->limit($size);
+
+        if($request->has('sort')){
+            $orders = preg_split('/,/', $request->input('sort'));
+            foreach($orders as $order)
+            $users = $users->orderBy($order, 'asc');
+        }
+        $users = $users->get();
+        
         $usersCount = DB::table('users')->count();
 
         $pageCount = ceil($usersCount / $size);
@@ -26,6 +34,7 @@ class AdminusersController extends Controller
             'group_code'    => $group_code,
             'pageSize'      => $size,
             'pagination'    => $this->generatePages($pageCount, $page),
+            'sort'          => $request->has('sort')? ('?sort=' . $request->input('sort')) : '',
             ]);
     }
 

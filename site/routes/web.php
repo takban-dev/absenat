@@ -60,10 +60,18 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['aut
     Route::group(['namespace' => 'Report', 'prefix' => 'reports'], function () {
         Route::get('/genders', 'Genders@allGet');
 
-        Route::get('/genders-list', 'Genders@allListGet');
+        Route::get ('/genders-list', 'Genders@allListGet');
         Route::post('/genders-list', 'Genders@allListPost');
         
-        Route::get('/genders-degree', 'Genders@allStudyFieldGet');
+        Route::get ('/genders-field', 'Genders@studyFieldGet');
+
+        Route::get ('/genders-field-list', 'Genders@studyFieldListGet');
+        Route::post('/genders-field-list', 'Genders@studyFieldListPost');
+
+        Route::get ('/genders-degree', 'Genders@degreeGet');
+
+        Route::get ('/genders-degree-list', 'Genders@degreeListGet');
+        Route::post('/genders-degree-list', 'Genders@degreeListPost');
     });
 
 });

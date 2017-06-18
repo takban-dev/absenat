@@ -15,11 +15,11 @@
 @section('content')
 <div class="card rtl">
     <div class="card-header" data-background-color="purple">
-        <h4 class="title">تعداد شاغلین به تفکیک جنسیت</h4>
+        <h4 class="title">تعداد شاغلین به تفکیک جنسیت و رشته تحصیلی</h4>
     </div>
     <div class="card-content">
         <div class="row">
-            <form action="{{url('admin/reports/genders-list')}}" method="post">
+            <form action="{{url('admin/reports/genders-field-list')}}" method="post">
                 {{ csrf_field() }}
                 <div class="col-md-6 col-sm-12 pull-right">
                     <div class="col-md-8 col-sm-8">

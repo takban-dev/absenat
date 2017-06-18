@@ -23,13 +23,21 @@
                 @if (sizeof($employees) > 0)
                     <table class="table table-hover">
                         <thead>
-                            <th class="rtl text-center">نام و نام خانوادگی</th>
-                            <th class="rtl text-center">محل سکونت</th>
-                            <th class="rtl text-center">مدرک و رشته تحصیلی</th>
-                            <th class="rtl text-center">کارگاه</th>
+                            <th class="rtl text-center">
+                                <a href="{{Request::url() . '?sort=first_name,last_name'}}">نام و نام خانوادگی</a>
+                            </th>
+                            <th class="rtl text-center">
+                                <a href="{{Request::url() . '?sort=habitate'}}">محل سکونت</a>
+                            </th>
+                            <th class="rtl text-center">
+                                <a href="{{Request::url() . '?sort=degree,field'}}">مدرک و رشته تحصیلی</a>
+                            </th>
+                            <th class="rtl text-center">
+                                <a href="{{Request::url() . '?sort=unit_id'}}">کارگاه</a>
+                            </th>
                             <th class="rtl text-center">مشاهده اطلاعات شاغل</th>
                             <th class="rtl text-center">حذف</th>
-                            </thead>
+                        </thead>
                             <tbody>
                             @foreach ($employees as $employee)
                                 <tr>
@@ -58,7 +66,7 @@
                     @if ($page == '#')
                         <li class="page-item"><a class="page-link" href="#">...</a></li>
                     @else
-                        <li class="page-item"><a class="page-link" href="{{url('employees/' . ($page-1) . '/' . $pageSize)}}">{{$page}}</a></li>
+                        <li class="page-item"><a class="page-link" href="{{url('employees/' . ($page-1) . '/' . $pageSize. $sort)}}">{{$page}}</a></li>
                     @endif
                 @endforeach
             </ul>
