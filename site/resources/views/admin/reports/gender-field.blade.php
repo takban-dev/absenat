@@ -18,11 +18,17 @@
         <h4 class="title">تعداد شاغلین به تفکیک جنسیت و رشته تحصیلی</h4>
     </div>
     <div class="card-content">
-        <table class="table table-hover">
+        <table class="table table-hover text-center">
             <thead>
-                <th class="rtl">جنسیت</th>
-                <th class="rtl">رشته تحصیلی</th>
-                <th class="rtl">تعداد</th>
+                <th class="rtl text-center">
+                    <a href="{{$query . 'sort=gender'}}">جنسیت</a>
+                </th>
+                <th class="rtl text-center">
+                    <a href="{{$query . 'sort=field'}}">رشته تحصیلی</a>
+                </th>
+                <th class="rtl text-center">
+                    <a href="{{$query . 'sort=sum'}}">تعداد</a>
+                </th>
             </thead>
             <tbody>
                 @foreach($results as $row)

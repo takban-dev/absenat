@@ -251,7 +251,6 @@
                         <div class="col-md-6- col-sm-6">
                             <div class="col-md-10 col-sm-10">
                                 <div class="form-group label-floating rtl col-lg-12 col-md-12">
-                                    <label class="control-label">مدت سابقه کار(ماه)</label>
                                     <input type="text" id="unit" name="unit_title" value="{{isset($oldInputs)? $oldInputs['unit_title']: ''}}" class="form-control">
                                 </div
 >                            </div>

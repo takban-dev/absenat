@@ -24,7 +24,7 @@ function sortTable($table, $conn){
     $conn->query("DELETE FROM `$table` WHERE id > 1");
     $idIndex = 2;
     foreach($titles as $title){
-        $statement = $conn->query("INSERT INTO cities (id, title) VALUES($idIndex, '$title')");
+        $statement = $conn->query("INSERT INTO $table (id, title) VALUES($idIndex, '$title')");
         $idIndex ++;
     }
     echo "table $table sorted:\n";

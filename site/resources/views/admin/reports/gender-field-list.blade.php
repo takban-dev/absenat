@@ -19,8 +19,7 @@
     </div>
     <div class="card-content">
         <div class="row">
-            <form action="{{url('admin/reports/genders-field-list')}}" method="post">
-                {{ csrf_field() }}
+            <form action="{{url('admin/reports/genders-field-list')}}" method="get">
                 <div class="col-md-6 col-sm-12 pull-right">
                     <div class="col-md-8 col-sm-8">
                         <div class="form-group rtl col-lg-12 col-md-12">
@@ -49,16 +48,39 @@
                         <input type="text" value="{{isset($oldInputs)? $oldInputs['limit']: ''}}" name="limit" class="form-control">
                     </div>
                 </div>
-                <div class="col-md-4 col-sm-12 col-lg-4">
+                <div class="col-md-8 col-sm-8 pull-right">
+                    <div class="col-md-9 col-sm-12">
+                        <div class="form-group label-floating rtl col-lg-12 col-md-12">
+                            <input type="text" id="field_title" name="field_title" value="{{isset($oldInputs)? $oldInputs['field_title']: ''}}" class="form-control">
+                        </div
+>                            </div>
+                    <div class="col-md-3 col-sm-12 text-center" style="margin-top: 30px;">
+                        <span>رشته تحصیلی</span>
+                    </div>
+                    <script type="text/javascript">
+                        $( function() {
+                            var url = "{{url('api/study_fields')}}";
+                            $.get(url, function(data, status){
+                                var jsonRes = JSON.parse(data);
+                                $("#field_title").autocomplete({
+                                    source: jsonRes
+                                });
+                            });
+                        });
+                    </script>
+                </div>
+                <div class="col-md-4 col-sm-12 col-lg-4 pull-right">
                     <button type="submit" class="btn btn-primary pull-right" style="margin-top: 3rem;">مشاهده لیست</button>
                 </div>
             </form>
         </div>
 @if(isset($results))
-        <table class="table table-hover">
+        <table class="table table-hover text-center">
             <thead>
-                @foreach($headers as $header)
-                    <th class="rtl">{{$header}}</th>
+                @foreach($headers as $key => $value)
+                    <th class="rtl text-center">
+                        <a href="{{$query . 'sort=' . $key}}">{{$value}}</a>
+                    </th>
                 @endforeach
             </thead>
             <tbody>

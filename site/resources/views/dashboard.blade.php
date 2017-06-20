@@ -42,4 +42,76 @@
         </div>
     @endif
 </div>
+<div class="row">
+    <div class="col-lg-6 col-md-6">
+        <div class="card rtl">
+            <div class="card-content">
+                <ul class="nav">
+                    <li>
+                        <a href="{{url('admin/unit-new')}}">
+                            <i class="material-icons">add_box</i>
+                            ساخت کارگاه جدید
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{url('admin/user-new')}}">
+                            <i class="material-icons">add_box</i>
+                            ساخت کاربر جدید
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{url('admin/employee-new')}}">
+                            <i class="material-icons">add_box</i>
+                            ساخت شاغل جدید
+                        </a>
+                    </li>
+                </ul>   
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6 col-md-6">
+        <div class="card rtl">
+            <div class="card-content">
+                <ul class="nav">
+                    <li>
+                        <a href="{{url('admin/reports')}}">
+                            <i class="material-icons">show_chart</i>
+                            گزارش یک
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{url('admin/reports')}}">
+                            <i class="material-icons">show_chart</i>
+                            گزارش دو
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{url('admin/reports')}}">
+                            <i class="material-icons">show_chart</i>
+                            گزارش سه
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{url('admin/reports')}}">
+                            <i class="material-icons">show_chart</i>
+                            گزارش چهار
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{url('admin/reports')}}">
+                            <i class="material-icons">show_chart</i>
+                            گزارش پنج
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{url('admin/reports')}}">
+                            <i class="material-icons">show_chart</i>
+                            گزارش شش
+                        </a>
+                    </li>
+                </ul>   
+            </div>
+        </div>
+    </div>
+</div>
 @endsection

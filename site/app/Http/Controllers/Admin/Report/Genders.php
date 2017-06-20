@@ -29,7 +29,14 @@ class Genders extends Controller
         ]);
     }
 
-    public function allListGet(Request $request){
+    public function allList(Request $request){
+        if(sizeof($request->all()) > 0){
+            return $this->allListPost($request);
+        }else{
+            return $this->allListGet($request);
+        }
+    }
+    private function allListGet(Request $request){
         $group_code = Auth::user()->group_code;
 
         return view('admin.reports.gender-list', [
@@ -37,7 +44,7 @@ class Genders extends Controller
         ]);
     }
 
-    public function allListPost(Request $request){
+    private function allListPost(Request $request){
         $group_code = Auth::user()->group_code;
 
         $genderInput    = $request->input('gender');
@@ -49,13 +56,14 @@ class Genders extends Controller
         $rowCount = DB::table('employees')
             ->select('first_name', 'last_name', 'gender');
 
-        if($genderInput == '2'){
-            $queryResults = $queryResults->where('gender', '=', 2);
-            $rowCount = $rowCount->where('gender', '=', 2);
+        if($genderInput != '1'){
+            $queryResults = $queryResults->where('gender', '=', $genderInput);
+            $rowCount = $rowCount->where('gender', '=', $genderInput);
         }
-        if($genderInput == '3'){
-            $queryResults = $queryResults->where('gender', '=', 3);
-            $rowCount = $rowCount->where('gender', '=', 3);
+
+        if($request->has('sort')){
+            $queryResults = $queryResults
+                                ->orderBy($request->input('sort'), 'ASC');
         }
 
         $queryResults = $queryResults
@@ -72,19 +80,28 @@ class Genders extends Controller
             'group_code'    => $group_code,
             'results'       => $queryResults,
             'gender'        => $genderInput,
-            'headers'       => ['نام', 'نام خانوادگی', 'جنسیت'],
-            'oldInputs'     => $request->all()
+            'headers'       => [
+                'first_name'    => 'نام', 
+                'last_name'     => 'نام خانوادگی', 
+                'gender'        => 'جنسیت',
+                ],
+            'oldInputs'     => $request->all(),
+            'query'         => $request->url() . $this->createQueryButSort($request) ,
         ]);   
     }
 
     /* ==============================================
                    study fields / gender
     ============================================== */
-    public function studyFieldGet(Request $request){
+    public function studyField(Request $request){
         $group_code = Auth::user()->group_code;
 
 
         $query = "SELECT gender, field, SUM(gender)'sum' FROM `employees` GROUP BY gender, field";
+
+        if($request->has('sort')){
+            $query = "SELECT gender, field, SUM(gender)'sum' FROM `employees` GROUP BY gender, field ORDER BY " . $request->get('sort');
+        }
 
         $queryResults = DB::select(DB::raw($query));
         $genders = $this->prettify(DB::table('genders')->get());
@@ -98,7 +115,16 @@ class Genders extends Controller
         return view('admin.reports.gender-field', [
             'group_code'    => $group_code,
             'results'       => $queryResults,
+            'query'         => $request->url() . $this->createQueryButSort($request) ,
         ]);
+    }
+
+    public function studyFieldList(Request $request){
+        if(sizeof($request->all()) > 0){
+            return $this->studyFieldListPost($request);
+        }else{
+            return $this->studyFieldListGet($request);
+        }
     }
 
     public function studyFieldListGet(Request $request){
@@ -113,6 +139,7 @@ class Genders extends Controller
         $group_code = Auth::user()->group_code;
 
         $genderInput    = $request->input('gender');
+        $fieldTitle     = $request->input('field_title', 'ALL');
         $limit          = $request->input('limit');
         $offset         = $request->input('offset');
 
@@ -121,13 +148,19 @@ class Genders extends Controller
         $rowCount = DB::table('employees')
             ->select('first_name', 'last_name', 'gender', 'field');
 
-        if($genderInput == '2'){
-            $queryResults = $queryResults->where('gender', '=', 2);
-            $rowCount = $rowCount->where('gender', '=', 2);
+        if($genderInput != '1'){
+            $queryResults = $queryResults->where('gender', '=', $genderInput);
+            $rowCount = $rowCount->where('gender', '=', $genderInput);
         }
-        if($genderInput == '3'){
-            $queryResults = $queryResults->where('gender', '=', 3);
-            $rowCount = $rowCount->where('gender', '=', 3);
+
+        if($fieldTitle != 'ALL'){
+            $field = DB::table('study_fields')->where('title', '=', $fieldTitle)->first()->id;
+            $queryResults = $queryResults->where('field', '=', $field);
+            $rowCount = $rowCount->where('field', '=', $field);   
+        }
+        if($request->has('sort')){
+            $queryResults = $queryResults
+                                ->orderBy($request->input('sort'), 'ASC');
         }
 
         $queryResults = $queryResults
@@ -148,15 +181,21 @@ class Genders extends Controller
             'group_code'    => $group_code,
             'results'       => $queryResults,
             'gender'        => $genderInput,
-            'headers'       => ['نام', 'نام خانوادگی', 'جنسیت', 'رشته تحصیلی'],
-            'oldInputs'     => $request->all()
+            'headers'       => [
+                'first_name'    => 'نام',
+                'last_name'     => 'نام خانوادگی',
+                'gender'        => 'جنسیت',
+                'field'         => 'رشته تحصیلی'
+                ],
+            'oldInputs'     => $request->all(),
+            'query'         => $request->url() . $this->createQueryButSort($request) ,
         ]);   
     }
 
     /* ==============================================
                      degree / gender
     ============================================== */
-    public function degreeGet(Request $request){
+    public function degree(Request $request){
         $group_code = Auth::user()->group_code;
 
 
@@ -175,6 +214,14 @@ class Genders extends Controller
             'group_code'    => $group_code,
             'results'       => $queryResults,
         ]);
+    }
+
+    public function degreeList(Request $request){
+        if(sizeof($request->all()) > 0){
+            return $this->degreeListPost($request);
+        }else{
+            return $this->degreeListGet($request);
+        }
     }
 
     public function degreeListGet(Request $request){
@@ -276,4 +323,18 @@ class Genders extends Controller
         }
     }
     
+    function createQueryButSort(Request $request){
+        $inputArray = $request->all();
+        $queryArray = [];
+        foreach($inputArray as $key=>$value)
+            if($key != 'sort')
+                array_push($queryArray, "$key=$value");
+
+        $query = implode('&', $queryArray);
+        if(sizeof($queryArray) > 0){
+            return '?' . $query . '&';
+        }else{
+            return '?';
+        }
+    }
 }

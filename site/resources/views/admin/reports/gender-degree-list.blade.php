@@ -19,8 +19,7 @@
     </div>
     <div class="card-content">
         <div class="row">
-            <form action="{{url('admin/reports/genders-degree-list')}}" method="post">
-                {{ csrf_field() }}
+            <form action="{{url('admin/reports/genders-degree-list')}}" method="get">
                 <div class="col-md-6 col-sm-12 pull-right">
                     <div class="col-md-8 col-sm-8">
                         <div class="form-group rtl col-lg-12 col-md-12">

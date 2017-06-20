@@ -29,10 +29,56 @@
     <script src="{{ asset('js/material-dashboard.js') }}"></script>
     <script src="{{ asset('js/reports.js') }}"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
+    <link rel='stylesheet' type='text/css' href='http://awebfont.ir/css?id=1003'>
+    </style>
 </head>
 <body>
 <div class="wrapper">
+    <div class="main-panel">
+        <nav class="navbar navbar-transparent navbar-absolute">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">سامانه مدیریت اشتغال سازمان منطقه آزاد انزلی</a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        @yield('back')
+                        <li>
+                            <a href="{{url('profile')}}">
+                                <i class="material-icons">person</i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{url('logout')}}">
+                                <i class="material-icons">lock</i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div class="content">
+            <div class="container-fluid">
+                @yield('content')
+            </div>
+        </div>
+
+        <footer class="footer">
+            <div class="container-fluid">
+                <p class="copyright">
+                    <script>document.write(new Date().getFullYear())</script>
+                    <a href="http://www.prechaos.ir">Reza</a>&copy; طراحی توسط
+                </p>
+            </div>
+        </footer>
+    </div>
     <div class="sidebar" data-color="purple" data-image="{{ asset('img/sidebar-1.jpg') }}">
         <div class="logo">
             <img src="{{ asset('img/logo-small.png') }}"/>
@@ -88,7 +134,7 @@
                     @endif
                         <a href="{{url('admin/reports')}}">
                             <i class="material-icons">show_chart</i>
-                            <p>آمار ها</p>
+                            <p>آمار ها و گزارشات</p>
                         </a>
                     </li>
                 @else
@@ -116,52 +162,6 @@
                 
             </ul>
         </div>
-    </div>
-
-    <div class="main-panel">
-        <nav class="navbar navbar-transparent navbar-absolute">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="#">سامانه مدیریت اشتغال سازمان منطقه آزاد انزلی</a>
-                </div>
-                <div class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav navbar-right">
-                        @yield('back')
-                        <li>
-                            <a href="{{url('profile')}}">
-                                <i class="material-icons">person</i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{url('logout')}}">
-                                <i class="material-icons">lock</i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-
-        <div class="content">
-            <div class="container-fluid">
-                @yield('content')
-            </div>
-        </div>
-
-        <footer class="footer">
-            <div class="container-fluid">
-                <p class="copyright">
-                    <script>document.write(new Date().getFullYear())</script>
-                    <a href="http://www.prechaos.ir">Reza</a>&copy; طراحی توسط
-                </p>
-            </div>
-        </footer>
     </div>
 </div>
 </body>
