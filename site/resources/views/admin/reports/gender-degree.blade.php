@@ -18,18 +18,24 @@
         <h4 class="title">تعداد شاغلین به تفکیک جنسیت و مدرک تحصیلی</h4>
     </div>
     <div class="card-content">
-        <table class="table table-hover">
+        <table class="table table-hover text-center">
             <thead>
-                <th class="rtl">جنسیت</th>
-                <th class="rtl">مدرک تحصیلی</th>
-                <th class="rtl">تعداد</th>
+                <th class="rtl text-center">
+                    <a href="{{$query . 'sort=gender'}}">جنسیت</a>
+                </th>
+                <th class="rtl text-center">
+                    <a href="{{$query . 'sort=degree'}}">مدرک تحصیلی</a>
+                </th>
+                <th class="rtl text-center">
+                    <a href="{{$query . 'sort=COUNT'}}">تعداد</a>
+                </th>
             </thead>
             <tbody>
                 @foreach($results as $row)
                     <tr>
                     <td>{{$row->gender}}</td>
                     <td>{{$row->degree}}</td>
-                    <td>{{$row->sum}}</td>
+                    <td>{{$row->COUNT}}</td>
                     </tr>
                 @endforeach
             </tbody>
@@ -48,7 +54,7 @@
         var series = [
                 [
                 @foreach($results as $item)
-                    {{$item->sum}},
+                    {{$item->COUNT}},
                 @endforeach
                 ]
             ]

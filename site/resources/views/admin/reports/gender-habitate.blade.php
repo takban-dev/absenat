@@ -15,7 +15,7 @@
 @section('content')
 <div class="card rtl">
     <div class="card-header" data-background-color="purple">
-        <h4 class="title">تعداد شاغلین به تفکیک جنسیت و رشته تحصیلی</h4>
+        <h4 class="title">تعداد شاغلین به تفکیک جنسیت و مدرک تحصیلی</h4>
     </div>
     <div class="card-content">
         <table class="table table-hover text-center">
@@ -24,7 +24,7 @@
                     <a href="{{$query . 'sort=gender'}}">جنسیت</a>
                 </th>
                 <th class="rtl text-center">
-                    <a href="{{$query . 'sort=field'}}">رشته تحصیلی</a>
+                    <a href="{{$query . 'sort=habitate'}}">محل سکونت</a>
                 </th>
                 <th class="rtl text-center">
                     <a href="{{$query . 'sort=COUNT'}}">تعداد</a>
@@ -34,7 +34,7 @@
                 @foreach($results as $row)
                     <tr>
                     <td>{{$row->gender}}</td>
-                    <td>{{$row->field}}</td>
+                    <td>{{$row->habitate}}</td>
                     <td>{{$row->COUNT}}</td>
                     </tr>
                 @endforeach

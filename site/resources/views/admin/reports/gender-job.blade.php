@@ -24,7 +24,7 @@
                     <a href="{{$query . 'sort=gender'}}">جنسیت</a>
                 </th>
                 <th class="rtl text-center">
-                    <a href="{{$query . 'sort=field'}}">رشته تحصیلی</a>
+                    <a href="{{$query . 'sort=job'}}">عنوان شغلی</a>
                 </th>
                 <th class="rtl text-center">
                     <a href="{{$query . 'sort=COUNT'}}">تعداد</a>
@@ -34,7 +34,7 @@
                 @foreach($results as $row)
                     <tr>
                     <td>{{$row->gender}}</td>
-                    <td>{{$row->field}}</td>
+                    <td>{{$row->job}}</td>
                     <td>{{$row->COUNT}}</td>
                     </tr>
                 @endforeach

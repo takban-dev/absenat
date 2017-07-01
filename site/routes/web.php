@@ -55,10 +55,10 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['aut
     Route::get('/employee-single-print/{id}', 'AdminEmployeesController@singlePrint');
 
     /* reporets page */
-    Route::get('/reports', 'Reports@showPanelGet');
-    Route::post('/reports', 'Reports@showPanelPost');
+    Route::get ('/report/{id}', 'Reports@use');
+    /*
     Route::group(['namespace' => 'Report', 'prefix' => 'reports'], function () {
-        Route::get('/genders', 'Genders@allGet');
+        Route::get('/genders', 'Genders@all');
         Route::get('/genders-list', 'Genders@allList');
 
         Route::get('/genders-field', 'Genders@studyField');
@@ -66,9 +66,14 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['aut
 
         Route::get('/genders-degree', 'Genders@degree');
         Route::get('/genders-degree-list', 'Genders@degreeList');
-        
-    });
 
+        Route::get('/genders-habitate', 'Genders@habitate');
+        Route::get('/genders-habitate-list', 'Genders@habitateList');
+        
+        Route::get('/genders-job', 'Genders@job');
+        Route::get('/genders-job-list', 'Genders@jobList');
+    });
+    */
 });
 
 /* ====================  regular panels  =============================*/

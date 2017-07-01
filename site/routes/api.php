@@ -80,4 +80,5 @@ Route::group(['namespace' => 'APIs'], function () {
     Route::get('/units/{name}', 'Unit@getCreatedBy');
 
     Route::get('/study_fields', 'StudyFields@getAll');
+    Route::get('/job_fields', 'JobFields@getAll');
 });

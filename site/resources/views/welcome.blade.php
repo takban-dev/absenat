@@ -18,7 +18,7 @@
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' rel='stylesheet'
           type='text/css'>
     <link href="https://fonts.googleapis.com/css?family=Lateef" rel="stylesheet">
-    <link rel='stylesheet' type='text/css' href='http://awebfont.ir/css?id=1003'>
+    <link href='http://awebfont.ir/css?id=1920' rel='stylesheet' type='text/css'>
 </head>
 
 <body>
@@ -27,7 +27,7 @@
     <div class="content">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-offset-4 col-md-4">
+                <div class="col-md-offset-4 col-md-4 col-sm-offset-4 col-sm-4 col-xs-offset-3 col-xs-6">
                     <img src="{{ asset('img/logo-big.png') }}" class="img-responsive"/>
                 </div>
             </div>

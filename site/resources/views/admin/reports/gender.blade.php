@@ -64,7 +64,7 @@
             ],
             series: [
                 @foreach($results as $item)
-                    {{$item->sum}},
+                    {{$item->COUNT}},
                 @endforeach
             ]
         };
