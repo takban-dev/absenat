@@ -56,6 +56,12 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['aut
 
     /* reporets page */
     Route::get ('/report/{id}', 'Reports@use');
+    Route::get ('/report-remove/{id}', 'Reports@remove');
+    Route::get  ('/report-new', 'Reports@newGet');
+    Route::post ('/report-new', 'Reports@newPost');
+    Route::get  ('/report-edit/{id}', 'Reports@editGet');
+    Route::post ('/report-edut/{id}', 'Reports@editPost');
+    Route::get ('/reports/{page?}/{size?}', 'Reports@list');
     /*
     Route::group(['namespace' => 'Report', 'prefix' => 'reports'], function () {
         Route::get('/genders', 'Genders@all');
