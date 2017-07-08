@@ -154,7 +154,6 @@ class Reports extends Controller
             $results = DB::table('employees')
                         ->select($columnsArray);
             
-            var_dump($whereArray);
             
             $results = $results->get();
 
@@ -283,21 +282,485 @@ class Reports extends Controller
        ======================================================================== */
     public function newGet(Request $request){
         $group_code = Auth::user()->group_code;
-
+        $columns = $this->columnList();
+        $values = $this->valueList();
         return view('admin.reports.new', [
             'group_code'                => $group_code,
-            'genders'                   => DB::table('genders')                     ->get(),
-            'certificateTypes'          => DB::table('certificate_types')           ->get(),
-            'business_license_sources'  => DB::table('business_license_sources')    ->get(),
-            'habitates'                 => DB::table('cities')                      ->get(),
-            'degrees'                   => DB::table('degrees')                     ->get(),
-            'study_fields'              => DB::table('study_fields')                ->get(),
-            'job_fields'                => DB::table('job_fields')                  ->get(),
-            'marriges'                  => DB::table('merrige_types')               ->get(),
-            'months'                    => config('constants.months')
+            'columns'                   => $columns,
+            'values'                    => $values
             ]);
     }
-    public function newPost(Request $request, $id){
+    public function newPost(Request $request){
+        //die(json_encode($request->all()));
+        $title = $request->input("title");
+        $type = $request->input("type");
+        $wantedColumns = array();
+        $wantedFields = array();
+
         
+        $group_code = Auth::user()->group_code;
+        $columns = $this->columnList();
+        $values = $this->valueList();
+
+        $oldInputs = $request->all();
+        
+        foreach($oldInputs as $key=>$value){
+            if($oldInputs[$key] == 'on')
+                $oldInputs[$key] = 1;
+            $parts = preg_split('/-/', $key);
+            if(sizeof($parts) == 2){
+                if($parts[0] == 'col'){
+                    array_push($wantedColumns, $this->generateColumn($parts[1]));
+                }else if($parts[0] == 'fld'){
+                    array_push($wantedFields, $this->generateField($parts[1]));
+                }
+            }
+        }
+
+        $limits = [];
+        foreach($columns as $c_name => $c_title){
+            for($i=0; $i<3; $i++){
+                $op = $request->input($c_name . '_op_' . $i);
+                $val = $request->input($c_name . '_vl_' . $i);
+                array_push($limits, [
+                        'field'     => $c_name,
+                        'operator'  => $op,
+                        'value'     => $val,
+                    ]);
+            }
+        }
+
+        $id = DB::table('reports')->insertGetId([
+            'title'         => $title,
+            'type'          => $type,
+            'status'        => 1,
+            'properties'    => json_encode([
+                    'columns'   => $wantedColumns,
+                    'fields'    => $wantedFields,
+                    'limits'    => $limits,
+                ]),
+            ]);
+        
+        return redirect('admin/report-edit/' . $id);
+    }
+    /* ========================================================================
+                                 other functions
+       ======================================================================== */
+    public function columnList(){
+        $columns = [
+            'first_name'    => 'نام',
+            'last_name'     => 'نام خانوادگی',
+            'father_name'   => 'نام پدر',
+            'id_number'     => 'کد ملی',
+            
+            'degree'        => 'مدرک تحصیلی',
+            'field'         => 'رشته تحصیلی',
+            'job'           => 'عنوان شغلی',
+
+            'phone'         => 'شماره تلفن ثابت',
+            'cell_phone'    => 'شماره تلفن همراه',
+
+            'habitate'      => 'محل سکونت',
+            'experience'    => 'سابقه کاری(ماه)',
+
+            'gender'        => 'جنسیت',
+            'marrige'       => 'وضعیت تاهل',
+            'depentets'     => 'تعداد نفرات تحت تکفل'
+        ];
+        return $columns;
+    }
+
+    public function valueList(){
+        return  [
+                    'first_name'    => [
+                        "type"  => "text",
+                    ],
+
+                    'last_name'     => [
+                        "type"  => "text",
+                    ],
+
+                    'father_name'   => [
+                        "type"  => "text",
+                    ],
+
+                    'id_number'     => [
+                        "type"  => "text",
+                    ],
+                    
+                    'degree'        => [
+                        "type"  => "select",
+                        "val"   => DB::table('degrees')     ->get(),
+                    ],
+
+                    'field'         => [
+                        "type"  => "select",
+                        "val"   => DB::table('study_fields')->get(),
+                    ],
+
+                    'job'           => [
+                        "type"  => "select",
+                        "val"   => DB::table('job_fields')  ->get(),
+                    ],
+
+                    'phone'         => [
+                        "type"  => "text",
+                    ],
+
+                    'cell_phone'    => [
+                        "type"  => "text",
+                    ],
+
+                    'habitate'      => [
+                        "type"  => "select",
+                        "val"   => DB::table('cities')      ->get(),
+                    ],
+
+                    'experience'    => [
+                        "type"  => "text",
+                    ],
+
+                    'gender'        => [
+                        "type"  => "select",
+                        "val"   => DB::table('genders')     ->get(),
+                    ],
+                    'marrige'       => [
+                        "type"  => "select",
+                        "val"   => DB::table('merrige_types')->get(),
+                    ],
+                    'depentets'     => [
+                        "type"  => "text",
+                    ],
+                ];
+    }
+
+    private function generateColumn($name){
+        switch($name){
+            case 'first_name':
+                return [
+                    'title'     => 'نام',
+                    'name'      => $name,
+                    'values'    => [
+                        'type' => 'direct'
+                    ]
+                ];
+            case 'last_name':
+                return [
+                    'title'     => 'نام خانوادگی',
+                    'name'      => $name,
+                    'values'    => [
+                        'type' => 'direct'
+                    ]
+                ];
+            case 'father_name':
+                return [
+                    'title'     => 'نام پدر',
+                    'name'      => $name,
+                    'values'    => [
+                        'type' => 'direct'
+                    ]
+                ];
+            case 'id_number':
+                return [
+                    'title'     => 'کد ملی',
+                    'name'      => $name,
+                    'values'    => [
+                        'type' => 'direct'
+                    ]
+                ];
+            case 'degree':
+                return [
+                    'title'     => 'مدرک تحصیلی',
+                    'name'      => $name,
+                    'values'    => [
+                        'type'      => 'refrenced',
+                        'table'     => 'degrees'
+                    ]
+                ];
+            case 'field':
+                return [
+                    'title'     => 'رشته تحصیلی',
+                    'name'      => $name,
+                    'values'    => [
+                        'type'      => 'refrenced',
+                        'table'     => 'study_fields'
+                    ]
+                ];
+            case 'job':
+                return [
+                    'title'     => 'عنوان شغلی',
+                    'name'      => $name,
+                    'values'    => [
+                        'type'      => 'refrenced',
+                        'table'     => 'job_fields'
+                    ]
+                ];
+            case 'phone':
+                return [
+                    'title'     => 'شماره تماس ثابت',
+                    'name'      => $name,
+                    'values'    => [
+                        'type' => 'direct'
+                    ]
+                ];
+            case 'cell_phone':
+                return [
+                    'title'     => 'تلفن همراه',
+                    'name'      => $name,
+                    'values'    => [
+                        'type' => 'direct'
+                    ]
+                ];
+            case 'habitate':
+                return [
+                    'title'     => 'محل سکونت',
+                    'name'      => $name,
+                    'values'    => [
+                        'type'      => 'refrenced',
+                        'table'     => 'cities'
+                    ]
+                ];
+            case 'experience':
+                return [
+                    'title'     => 'سابقه کار(ماه)',
+                    'name'      => $name,
+                    'values'    => [
+                        'type' => 'direct'
+                    ]
+                ];
+            case 'gender':
+                return [
+                    'title'     => 'جنسیت',
+                    'name'      => $name,
+                    'values'    => [
+                        'type'      => 'refrenced',
+                        'table'     => 'genders'
+                    ]
+                ];
+            case 'marrige':
+                return [
+                    'title'     => 'وضعیت تاهل',
+                    'name'      => $name,
+                    'values'    => [
+                        'type'      => 'refrenced',
+                        'table'     => 'merrige_types'
+                    ]
+                ];
+            case 'depentets':
+                return [
+                    'title'     => 'تعداد نفرات تحت تکفل',
+                    'name'      => $name,
+                    'values'    => [
+                        'type' => 'direct'
+                    ]
+                ];
+        }
+    }
+
+    private function generateField($name){
+        switch($name){
+            case 'first_name':
+                return [
+                    'title'     => 'نام',
+                    'name'      => $name,
+                    'input'     => 'text',
+                    "dems"      => [
+                        "md"        => 6,
+                        "lg"        => 6,
+                        "sm"        => 12,
+                    ]
+                ];
+            case 'last_name':
+                return [
+                    'title'     => 'نام خانوادگی',
+                    'name'      => $name,
+                    'input'     => 'text',
+                    "dems"      => [
+                        "md"        => 6,
+                        "lg"        => 6,
+                        "sm"        => 12,
+                    ]
+                ];
+            case 'father_name':
+                return [
+                    'title'     => 'نام پدر',
+                    'name'      => $name,
+                    'input'     => 'text',
+                    "dems"      => [
+                        "md"        => 6,
+                        "lg"        => 6,
+                        "sm"        => 12,
+                    ]
+                ];
+            case 'id_number':
+                return [
+                    'title'     => 'کد ملی',
+                    'name'      => $name,
+                    'input'     => 'text',
+                    "dems"      => [
+                        "md"        => 6,
+                        "lg"        => 6,
+                        "sm"        => 12,
+                    ]
+                ];
+            case 'degree':
+                return [
+                    'title'     => 'مدرک تحصیلی',
+                    'name'      => $name,
+                    'input'     => 'select',
+                    'values'    => [
+                        'type'      => 'refrenced',
+                        'table'     => 'degrees'
+                    ],
+                    "dems"      => [
+                        "md"        => 6,
+                        "lg"        => 6,
+                        "sm"        => 12,
+                        "title_md"  => 4,
+                        "title_lg"  => 4
+                    ]
+                ];
+            case 'field':
+                return [
+                    'title'     => 'رشته تحصیلی',
+                    'name'      => $name,
+                    'input'     => 'autocomplete',
+                    'values'    => [
+                        'query'      => 'study_fields',
+                        'table'     => 'study_fields'
+                    ],
+                    "dems"      => [
+                        "md"        => 6,
+                        "lg"        => 6,
+                        "sm"        => 12,
+                        "title_md"  => 4,
+                        "title_lg"  => 4
+                    ]
+                ];
+            case 'job':
+                return [
+                    'title'     => 'عنوان شغلی',
+                    'name'      => $name,
+                    'input'     => 'autocomplete',
+                    'values'    => [
+                        'query'      => 'job_fields',
+                        'table'     => 'job_fields'
+                    ],
+                    "dems"      => [
+                        "md"        => 6,
+                        "lg"        => 6,
+                        "sm"        => 12,
+                        "title_md"  => 4,
+                        "title_lg"  => 4
+                    ]
+                ];
+            case 'phone':
+                return [
+                    'title'     => 'شماره تماس ثابت',
+                    'name'      => $name,
+                    'input'     => 'text',
+                    'values'    => [
+                        'type' => 'direct'
+                    ],
+                    "dems"      => [
+                        "md"        => 6,
+                        "lg"        => 6,
+                        "sm"        => 12,
+                    ]
+                ];
+            case 'cell_phone':
+                return [
+                    'title'     => 'تلفن همراه',
+                    'name'      => $name,
+                    'input'     => 'text',
+                    'values'    => [
+                        'type' => 'direct'
+                    ],
+                    "dems"      => [
+                        "md"        => 6,
+                        "lg"        => 6,
+                        "sm"        => 12,
+                    ]
+                ];
+            case 'habitate':
+                return [
+                    'title'     => 'محل سکونت',
+                    'name'      => $name,
+                    'input'     => 'select',
+                    'values'    => [
+                        'type'      => 'refrenced',
+                        'table'     => 'cities'
+                    ],
+                    "dems"      => [
+                        "md"        => 6,
+                        "lg"        => 6,
+                        "sm"        => 12,
+                        "title_md"  => 4,
+                        "title_lg"  => 4
+                    ]
+                ];
+            case 'experience':
+                return [
+                    'title'     => 'سابقه کار(ماه)',
+                    'name'      => $name,
+                    'input'     => 'text',
+                    'values'    => [
+                        'type' => 'direct'
+                    ],
+                    "dems"      => [
+                        "md"        => 6,
+                        "lg"        => 6,
+                        "sm"        => 12,
+                    ]
+                ];
+            case 'gender':
+                return [
+                    'title'     => 'جنسیت',
+                    'name'      => $name,
+                    'input'     => 'select',
+                    'values'    => [
+                        'type'      => 'refrenced',
+                        'table'     => 'genders'
+                    ],
+                    "dems"      => [
+                        "md"        => 6,
+                        "lg"        => 6,
+                        "sm"        => 12,
+                        "title_md"  => 4,
+                        "title_lg"  => 4
+                    ]
+                ];
+            case 'marrige':
+                return [
+                    'title'     => 'وضعیت تاهل',
+                    'name'      => $name,
+                    'input'     => 'select',
+                    'values'    => [
+                        'type'      => 'refrenced',
+                        'table'     => 'merrige_types'
+                    ],
+                    "dems"      => [
+                        "md"        => 6,
+                        "lg"        => 6,
+                        "sm"        => 12,
+                        "title_md"  => 4,
+                        "title_lg"  => 4
+                    ]
+                ];
+            case 'depentets':
+                return [
+                    'title'     => 'تعداد نفرات تحت تکفل',
+                    'name'      => $name,
+                    'input'     => 'text',
+                    'values'    => [
+                        'type' => 'direct'
+                    ],
+                    "dems"      => [
+                        "md"        => 6,
+                        "lg"        => 6,
+                        "sm"        => 12,
+                    ]
+                ];
+        }
     }
 }

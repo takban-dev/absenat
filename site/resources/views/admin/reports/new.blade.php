@@ -43,7 +43,7 @@
                             <div class="col-md-8">
                                 <div class="form-group rtl col-lg-12 col-md-12">
                                     <div class="form-group" style="margin-top: 0px">
-                                        <select class="form-control" name="manager_gender" style="padding-top: 0px">
+                                        <select class="form-control" name="type" style="padding-top: 0px">
                                             <option value="1" {{isset($oldInputs)?(1==$oldInputs['type']?'selected':''):''}}>تعداد</option>
                                             <option value="2" {{isset($oldInputs)?(2==$oldInputs['type']?'selected':''):''}}>لیست</option>
                                         </select>
@@ -56,9 +56,92 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-12">
-                            <div class="well">
-                            <button type="submit" class="btn btn-primary pull-right">+ تحصیلی</button>
+                        <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading rtl">فیلد ها</div>
+                                <div class="panel-body">
+                                    @foreach($columns as $key=>$value)
+                                        <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                            <div class="checkbox pull-right">
+                                                <span>{{$value}}</span>
+                                                <label>
+                                                    <input type="checkbox" name="fld-{{$key}}" {{isset($oldInputs['fld-' . $key]) && $oldInputs['fld-' . $key] == 1 ?'checked': ''}}>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading rtl">ستون ها</div>
+                                <div class="panel-body">
+                                    @foreach($columns as $key=>$value)
+                                        <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                            <div class="checkbox pull-right">
+                                                {{$value}}
+                                                <label>
+                                                    <input type="checkbox" name="col-{{$key}}" {{isset($oldInputs['col-' . $key]) && $oldInputs['col-' . $key] == 1 ?'checked': ''}}>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading rtl">محدودیت ها</div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <table class="table rtl">
+                                            <thead class="text-primary">
+                                                <th class="rtl">فیلد</th>
+                                                <th class="rtl">نوع شرط</th>
+                                                <th class="rtl">مقدار</th>
+                                            </thead>
+                                            <tbody>
+                                                @foreach($columns as $key=>$value)
+
+                                                    @for($i=0; $i<3; $i++)
+                                                    <tr>
+                                                        <td>{{$value}}</td>
+                                                        <td>
+                                                            <select class="form-control" name="{{$key}}_op_{{$i}}"
+                                                                style="padding-top: 0px">
+                                                                <option value = ">"  >بزرگتر</option>
+                                                                <option value = "<"  >کوچکتر</option>
+                                                                <option value = "="  >برابر</option>
+                                                                <option value = "<>" >نابرابر</option>
+                                                            </select>
+                                                        </td>
+                                                        @if($values[$key]['type'] == 'text')
+                                                        <td>
+                                                            <input type="text" value="" placeholder="مقدار" 
+                                                                name="{{$key}}_vl_{{$i}}" class="form-control">
+                                                        </td>
+                                                        @elseif($values[$key]['type'] == 'select')
+                                                        <td>
+                                                            <select class="form-control" name="{{$key}}_op_{{$i}}"
+                                                                style="padding-top: 0px">
+                                                                <option value = "0">مقدار</option>
+                                                                @foreach($values[$key]['val'] as $row)
+                                                                    <option value = "{{$row->id}}">{{$row->title}}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </td>
+                                                        @endif
+                                                    </tr>
+                                                    @endfor
+                                                @endforeach
+                                                <tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
