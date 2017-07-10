@@ -72,44 +72,24 @@
     <div class="col-lg-6 col-md-6">
         <div class="card rtl">
             <div class="card-content">
-                <ul class="nav">
-                    <li>
-                        <a href="{{url('admin/reports')}}">
-                            <i class="material-icons">show_chart</i>
-                            گزارش یک
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{url('admin/reports')}}">
-                            <i class="material-icons">show_chart</i>
-                            گزارش دو
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{url('admin/reports')}}">
-                            <i class="material-icons">show_chart</i>
-                            گزارش سه
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{url('admin/reports')}}">
-                            <i class="material-icons">show_chart</i>
-                            گزارش چهار
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{url('admin/reports')}}">
-                            <i class="material-icons">show_chart</i>
-                            گزارش پنج
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{url('admin/reports')}}">
-                            <i class="material-icons">show_chart</i>
-                            گزارش شش
-                        </a>
-                    </li>
-                </ul>   
+                @if (sizeof($reports) > 0)
+                    <table class="table table-hover">
+                        <thead>
+                            <th class="rtl text-center">عنوان کارگاه</th>
+                            <th class="rtl text-center">اجرا</th>
+                        </thead>
+                        <tbody>
+                            @foreach ($reports as $report)
+                                <tr>
+                                    <td>{{ $report->title }}</td>
+                                    <td><a href="{{ url( 'admin/report/' . $report->id) }}"><i class="material-icons">assignment_ind</i></a></td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                @else
+                    <span>هیچ فرم گزارش گیری وجود ندارد</span>
+                @endif
             </div>
         </div>
     </div>

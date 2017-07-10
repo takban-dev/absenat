@@ -32,12 +32,22 @@ class HomeController extends Controller
         $unitCount      = DB::table('units')        ->count();
         $employeeCount  = DB::table('employees')    ->count();
 
+        $reports = DB::table('reports')
+            ->limit(5)->get();
+
+        $employeeCount = DB::table('reports')->count();
 
         return view('dashboard', [
+            'reports'       => $reports, 
             'group_code'    => $userGroupId,
             'userCount'     => $userCount,
             'unitCount'     => $unitCount,
+            'types'         => [
+                1   => 'تعداد',
+                2   => 'لیست'
+            ],
             'employeeCount' => $employeeCount,
+
             ]);
     }
 

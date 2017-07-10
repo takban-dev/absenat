@@ -238,10 +238,6 @@ class Reports extends Controller
             'pageCount'     => $pageCount,
             'currentPage'   => $page,
             'group_code'    => $group_code,
-            'types'         => [
-                1   => 'تعداد',
-                2   => 'لیست'
-            ],
             'pageSize'      => $size,
             'pagination'    => $this->generatePages($pageCount, $page),
             'pageCount'     => ceil($employeeCount / $size),

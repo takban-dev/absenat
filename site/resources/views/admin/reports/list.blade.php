@@ -30,8 +30,6 @@
                                 <a href="{{Request::url() . '?sort=type'}}">نوع کارگاه</a>
                             </th>
                             <th class="rtl text-center">اجرا</th>
-                            <th class="rtl text-center">مشاهده گزارش</th>
-                            <th class="rtl text-center">حذف</th>
                         </thead>
                         <tbody>
                             @foreach ($reports as $report)
@@ -39,8 +37,6 @@
                                     <td>{{ $report->title }}</td>
                                     <td>{{ $types[$report->type] }}</td>
                                     <td><a href="{{ url( 'admin/report/' . $report->id) }}"><i class="material-icons">assignment_ind</i></a></td>
-                                    <td><a href="{{ url( 'admin/report-edit/' . $report->id) }}"><i class="material-icons">assignment_ind</i></a></td>
-                                    <td><a href="{{ url( 'admin/report-remove/' . $report->id) }}"><i class="material-icons">delete</i></a></td>
                                 </tr>
                             @endforeach
                         </tbody>
