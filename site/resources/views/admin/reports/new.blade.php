@@ -112,10 +112,10 @@
                                                         <td>
                                                             <select class="form-control" name="{{$key}}_op_{{$i}}"
                                                                 style="padding-top: 0px">
-                                                                <option value = ">"  >بزرگتر</option>
-                                                                <option value = "<"  >کوچکتر</option>
-                                                                <option value = "="  >برابر</option>
-                                                                <option value = "<>" >نابرابر</option>
+                                                                <option value = ">"  {{isset($oldInputs[$key . '_op_' . $i]) && $oldInputs[$key . '_op_' . $i] == '>' ?'selected': ''}}>بزرگتر</option>
+                                                                <option value = "<"  {{isset($oldInputs[$key . '_op_' . $i]) && $oldInputs[$key . '_op_' . $i] == '<' ?'selected': ''}}>کوچکتر</option>
+                                                                <option value = "="  {{isset($oldInputs[$key . '_op_' . $i]) && $oldInputs[$key . '_op_' . $i] == '=' ?'selected': ''}}>برابر</option>
+                                                                <option value = "<>" {{isset($oldInputs[$key . '_op_' . $i]) && $oldInputs[$key . '_op_' . $i] == '<>' ?'selected': ''}}>نابرابر</option>
                                                             </select>
                                                         </td>
                                                         @if($values[$key]['type'] == 'text')
@@ -127,7 +127,7 @@
                                                         <td>
                                                             <select class="form-control" name="{{$key}}_op_{{$i}}"
                                                                 style="padding-top: 0px">
-                                                                <option value = "0">مقدار</option>
+                                                                <option value = "0" {{isset($oldInputs[$key . '_op_' . $i]) && $oldInputs[$key . '_op_' . $i] == 0 ?'selected': ''}}>مقدار</option>
                                                                 @foreach($values[$key]['val'] as $row)
                                                                     <option value = "{{$row->id}}">{{$row->title}}</option>
                                                                 @endforeach

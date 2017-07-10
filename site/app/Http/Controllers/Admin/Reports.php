@@ -344,6 +344,115 @@ class Reports extends Controller
         return redirect('admin/report-edit/' . $id);
     }
     /* ========================================================================
+                                 edit a report
+       ======================================================================== */
+    public function editGet(Request $request, $id){
+        $group_code = Auth::user()->group_code;
+        $columns = $this->columnList();
+        $values = $this->valueList();
+
+        $report = DB::table('reports')
+                    ->where('id', '=', $id)
+                    ->first();
+
+        if($report == Null){
+            return view('errors.custom', [
+                'group_code'    => $group_code,
+                'status'        => 404,
+                'message'       => 'فرم گزارشگیری مورد نظر یافت نشد!']);
+        }
+
+
+
+        $oldInputs = [
+            'title'     => $report->title,
+            'type'      => $report->type,
+        ];
+
+        $properties = json_decode($report->properties);
+
+        foreach($properties->columns as $column){
+            $oldInputs['col-' . $column->name] = 1;
+        }
+        foreach($properties->fields as $field){
+            $oldInputs['fld-' . $field->name] = 1;
+        }
+
+        $limits = [];
+        foreach($properties->limits as $limit){
+            if(array_key_exists($limit->field, $limits)){
+                $section = $limits[$limit->field];
+                $oldInputs[$limit->field . '_op_' . $section]   = $limit->operator;
+                $oldInputs[$limit->field . '_val_' . $section]  = $limit->value;
+                $limits[$limit->field]++;
+            }else{
+                $limits[$limit->field] = 1;
+                $oldInputs[$limit->field . '_op_' . 0]  = $limit->operator;
+                $oldInputs[$limit->field . '_vl_' . 0] = $limit->value;
+            }
+        }
+
+        return view('admin.reports.new', [
+            'group_code'                => $group_code,
+            'columns'                   => $columns,
+            'values'                    => $values,
+            'oldInputs'                 => $oldInputs,
+            ]);
+    }
+    public function editPost(Request $request, $id){
+        //die(json_encode($request->all()));
+        $title = $request->input("title");
+        $type = $request->input("type");
+        $wantedColumns = array();
+        $wantedFields = array();
+
+        
+        $group_code = Auth::user()->group_code;
+        $columns = $this->columnList();
+        $values = $this->valueList();
+
+        $oldInputs = $request->all();
+        
+        foreach($oldInputs as $key=>$value){
+            if($oldInputs[$key] == 'on')
+                $oldInputs[$key] = 1;
+            $parts = preg_split('/-/', $key);
+            if(sizeof($parts) == 2){
+                if($parts[0] == 'col'){
+                    array_push($wantedColumns, $this->generateColumn($parts[1]));
+                }else if($parts[0] == 'fld'){
+                    array_push($wantedFields, $this->generateField($parts[1]));
+                }
+            }
+        }
+
+        $limits = [];
+        foreach($columns as $c_name => $c_title){
+            for($i=0; $i<3; $i++){
+                $op = $request->input($c_name . '_op_' . $i);
+                $val = $request->input($c_name . '_vl_' . $i);
+                array_push($limits, [
+                        'field'     => $c_name,
+                        'operator'  => $op,
+                        'value'     => $val,
+                    ]);
+            }
+        }
+
+        $id = DB::table('reports')->insertGetId([
+            'title'         => $title,
+            'type'          => $type,
+            'status'        => 1,
+            'properties'    => json_encode([
+                    'columns'   => $wantedColumns,
+                    'fields'    => $wantedFields,
+                    'limits'    => $limits,
+                ]),
+            ]);
+        
+        return redirect('admin/report-edit/' . $id);
+    }
+    /* ========================================================================
                                  other functions
        ======================================================================== */
     public function columnList(){
