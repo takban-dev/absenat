@@ -86,7 +86,7 @@ class Reports extends Controller
             $lastColumn = $column->name;
         }
 
-        $whereArray = array();
+        $whereC = array();
         foreach($fields as $field){
             $fieldName = $field->name;
             $fieldType = $field->input;
@@ -100,21 +100,10 @@ class Reports extends Controller
                                 ->where('title', '=', $input)
                                 ->first()->id;
                 }
-                array_push($whereArray, ['c' => $fieldName, 'v' => $input]);
+                array_push($whereC, [$fieldName, '=', $input]);
             }
         }
-        
-        foreach($whereArray as $where){
-            $results = $results->where($where['c'], '=', $where['v']);
-        }
 
-        foreach($limits as $limit){
-            $results = $results->where($limit->field, '=' , $limit->value);
-        }
-
-        if($request->has('sort')){
-            $results = $results->orderBy($request->input('sort'));
-        }
         if($reportType == 1){
             $results = DB::table('employees')
                         ->select(DB::raw(implode(', ', $columnsArray) . ", count($lastColumn) as count"));
@@ -124,7 +113,17 @@ class Reports extends Controller
             }
 
             
+            foreach($whereArray as $where){
+                $results = $results->where($where['c'], '=', $where['v']);
+            }
 
+            foreach($limits as $limit){
+                $results = $results->where($limit->field, $limit->operator , $limit->value);
+            }
+
+            if($request->has('sort')){
+                $results = $results->orderBy($request->input('sort'));
+            }
             
             $results = $results->get();
 
@@ -153,9 +152,19 @@ class Reports extends Controller
         }else if($reportType == 2){
             $results = DB::table('employees')
                         ->select($columnsArray);
-            
-            
-            $results = $results->get();
+            /*
+            foreach($limits as $limit){
+                echo $limit->operator;
+                array_push($whereC, [$limit->field, $limit->operator , $limit->value]);
+            }
+            */
+            if($request->has('sort')){
+                $results = $results->orderBy($request->input('sort'));
+            }
+
+            $results = $results
+                        ->where($whereC)
+                        ->get();
 
             for($i=0; $i<sizeof($results); $i++){
                 foreach($columns as $column){
@@ -239,6 +248,10 @@ class Reports extends Controller
             'currentPage'   => $page,
             'group_code'    => $group_code,
             'pageSize'      => $size,
+            'types'         => [
+                    1 => 'تعداد',
+                    2 => 'لیست',
+                ],  
             'pagination'    => $this->generatePages($pageCount, $page),
             'pageCount'     => ceil($employeeCount / $size),
             'sort'          => $request->has('sort')? ('?sort=' . $request->input('sort')) : '',
