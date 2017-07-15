@@ -31,7 +31,7 @@ class Backup extends Controller
             'reports'       => $reports
         ];
 
-        file_put_contents('../../backups/backup.json', json_encode($backup));
+        file_put_contents('backup' . gettime() . '.json', json_encode($backup));
 
         $employeesCount = DB::table('employees')->count();
         $unitsCount = DB::table('units')->count();

@@ -137,6 +137,16 @@
                             <p>آمار ها و گزارشات</p>
                         </a>
                     </li>
+                    @if(Request::url() == url('admin/backup'))
+                        <li class="active">
+                    @else
+                        <li>
+                    @endif
+                        <a href="{{url('admin/backup')}}">
+                            <i class="material-icons">show_chart</i>
+                            <p>پشتیبان گیری</p>
+                        </a>
+                    </li>
                 @else
                     @if(Request::url() == url('units'))
                         <li class="active">
