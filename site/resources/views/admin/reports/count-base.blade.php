@@ -81,7 +81,7 @@
                 @endforeach
             </div>
             <div class="row">
-                <div class="col-md-4 col-sm-12 col-lg-4">
+                <div class="col-md-4 col-sm-12 col-lg-4 pull-right">
                     <button type="submit" class="btn btn-primary pull-right" style="margin-top: 3rem;">مشاهده لیست</button>
                 </div>
             </div>
@@ -93,7 +93,7 @@
                         <thead>
                             @foreach($columns as $column)
                                 <th class="rtl text-center">
-                                    <a href="{{$query . 'sort=' . $column->name}}">{{$column->title}}</a>
+                                    <a href="{{$query . '&sort=' . $column->name}}">{{$column->title}}</a>
                                 </th>
                             @endforeach
                             <th class="rtl text-center">

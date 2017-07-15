@@ -146,18 +146,20 @@ class Reports extends Controller
                     'title'         => $title,
                     'columns'       => $columns,
                     'fields'        => $fields,
+                    'oldInputs'     => $request->all(),
                     'results'       => $results,
                     'query'         => $this->generateQuery($request),
                 ]);
         }else if($reportType == 2){
             $results = DB::table('employees')
                         ->select($columnsArray);
-            /*
+            
             foreach($limits as $limit){
-                echo $limit->operator;
+                if($limit->value == NULL || $limit->value == 0)
+                    continue;
                 array_push($whereC, [$limit->field, $limit->operator , $limit->value]);
             }
-            */
+            
             if($request->has('sort')){
                 $results = $results->orderBy($request->input('sort'));
             }
@@ -186,6 +188,7 @@ class Reports extends Controller
                     'columns'       => $columns,
                     'fields'        => $fields,
                     'results'       => $results,
+                    'oldInputs'     => $request->all(),
                     'query'         => $this->generateQuery($request),
                 ]);
         }
