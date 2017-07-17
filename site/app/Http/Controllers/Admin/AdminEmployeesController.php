@@ -71,6 +71,7 @@ class AdminEmployeesController extends Controller
             $username = Auth::user()->name;
             
             $unitId = DB::table('units')->where('title', '=', $request->input('unit_title'))->first()->id;
+            $fieldId = DB::table('study_fields')->where('study_fields', '=', $request->input('field_title'))->first()->id;
 
             DB::table('employees')->where(['id' => $id])->update(
                 [
@@ -86,7 +87,7 @@ class AdminEmployeesController extends Controller
                     'habitate'              => $request->input('habitate'),
                     'habitate_years'        => $request->input('habitate_years'),
                     'degree'                => $request->input('degree'),
-                    'field'                 => $request->input('field'),
+                    'field'                 => $fieldId,
                     'job'                   => $request->input('job'),
                     'marrige'               => $request->input('marrige'),
                     'dependents'            => $request->input('dependents'),
@@ -174,6 +175,7 @@ class AdminEmployeesController extends Controller
         }else{
             $username = Auth::user()->name;
             $unitId = DB::table('units')->where('title', '=', $request->input('unit_title'))->first()->id;
+            $fieldId = DB::table('study_fields')->where('study_fields', '=', $request->input('field_title'))->first()->id;
 
             $id = DB::table('employees')->insertGetId(
                 [
@@ -189,7 +191,7 @@ class AdminEmployeesController extends Controller
                     'habitate'              => $request->input('habitate'),
                     'habitate_years'        => $request->input('habitate_years'),
                     'degree'                => $request->input('degree'),
-                    'field'                 => $request->input('field'),
+                    'field'                 => $fieldId,
                     'job'                   => $request->input('job'),
                     'marrige'               => $request->input('marrige'),
                     'dependents'            => $request->input('dependents'),
