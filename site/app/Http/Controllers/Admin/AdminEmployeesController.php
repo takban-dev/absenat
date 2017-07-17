@@ -227,7 +227,7 @@ class AdminEmployeesController extends Controller
             'habitate_years.*'            => 'مدت سال های سکونت را انتخاب کنید',
 
             'degree.*'                    => 'مدرک تحصیلی انتخاب نشده است',
-            'field.*'                     => 'رشته تحصیلی انتخاب نشده است',
+            'field_title.*'               => 'رشته تحصیلی انتخاب نشده است',
             'job.*'                       => 'عنوان شغلی نامعتبر است',
 
             'marrige.*'                   => 'خطا در وضعیت تاهل',
@@ -256,7 +256,7 @@ class AdminEmployeesController extends Controller
             'habitate_years'            => 'required|numeric',
 
             'degree'                    => 'required|numeric',
-            'field'                     => 'required|numeric',
+            'field_title'               => 'required',
             'job'                       => 'required|numeric',
 
             'marrige'                   => 'required|numeric',
