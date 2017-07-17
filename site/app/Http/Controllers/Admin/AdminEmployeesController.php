@@ -105,6 +105,7 @@ class AdminEmployeesController extends Controller
         $employee = get_object_vars(DB::table('employees')->where('id', '=', $id)->first());
 
         $employee['unit_title'] = DB::table('units')->where('id', '=', $employee['unit_id'])->first()->title;
+        $employee['field_title'] = DB::table('study_fields')->where('id', '=', $employee['field'])->first()->title;
 
         $birth_date = explode('-', $employee['birth_date']);
         $employee['birth_date_day']   = $birth_date[2];
@@ -137,6 +138,7 @@ class AdminEmployeesController extends Controller
         $unitTitle = '';
         if($unitId != 0)
             $unitTitle = DB::table('units')->where('id', '=', $unitId)->first()->title;
+        
 
         return view('admin.employees.new', [
             'unit_title'                => $unitTitle,
