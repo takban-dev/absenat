@@ -71,7 +71,7 @@ class AdminEmployeesController extends Controller
             $username = Auth::user()->name;
             
             $unitId = DB::table('units')->where('title', '=', $request->input('unit_title'))->first()->id;
-            $fieldId = DB::table('study_fields')->where('study_fields', '=', $request->input('field_title'))->first()->id;
+            $fieldId = DB::table('study_fields')->where('title', '=', $request->input('field_title'))->first()->id;
 
             DB::table('employees')->where(['id' => $id])->update(
                 [
@@ -175,7 +175,7 @@ class AdminEmployeesController extends Controller
         }else{
             $username = Auth::user()->name;
             $unitId = DB::table('units')->where('title', '=', $request->input('unit_title'))->first()->id;
-            $fieldId = DB::table('study_fields')->where('study_fields', '=', $request->input('field_title'))->first()->id;
+            $fieldId = DB::table('study_fields')->where('title', '=', $request->input('field_title'))->first()->id;
 
             $id = DB::table('employees')->insertGetId(
                 [
