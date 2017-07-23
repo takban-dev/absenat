@@ -26,7 +26,8 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['aut
     /* new user page */
     Route::get('/user-new', 'AdminUsersController@newGet');
     Route::post('/user-new', 'AdminUsersController@newPost');
-
+    /* remove the user */
+    Route::post('/user-remove/{userId}', 'AdminUsersController@remove');
 
     /* units list */
     Route::get('/units/{page?}/{size?}', 'AdminUnitsController@list');
