@@ -53,6 +53,8 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['aut
     /* print routes */
     Route::get('/employee-list-print/', 'AdminEmployeesController@listPrint');
     Route::get('/employee-single-print/{id}', 'AdminEmployeesController@singlePrint');
+    /* employee remove */
+    Route::get('/employee-remove/{employeeId}', 'AdminEmployeesController@remove');
 
     /* backup routes */
     Route::get ('/backup', 'Backup@get');
