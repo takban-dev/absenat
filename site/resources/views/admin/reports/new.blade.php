@@ -125,9 +125,9 @@
                                                         </td>
                                                         @elseif($values[$key]['type'] == 'select')
                                                         <td>
-                                                            <select class="form-control" name="{{$key}}_op_{{$i}}"
+                                                            <select class="form-control" name="{{$key}}_vl_{{$i}}"
                                                                 style="padding-top: 0px">
-                                                                <option value = "0" {{isset($oldInputs[$key . '_op_' . $i]) && $oldInputs[$key . '_op_' . $i] == 0 ?'selected': ''}}>مقدار</option>
+                                                                <option value = "0" {{isset($oldInputs[$key . '_vl_' . $i]) && $oldInputs[$key . '_vl_' . $i] == 0 ?'selected': ''}}>مقدار</option>
                                                                 @foreach($values[$key]['val'] as $row)
                                                                     <option value = "{{$row->id}}">{{$row->title}}</option>
                                                                 @endforeach

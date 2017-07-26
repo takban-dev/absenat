@@ -86,7 +86,7 @@ class Reports extends Controller
             $lastColumn = $column->name;
         }
 
-        $whereC = array();
+        $whereArray = array();
         foreach($fields as $field){
             $fieldName = $field->name;
             $fieldType = $field->input;
@@ -100,7 +100,7 @@ class Reports extends Controller
                                 ->where('title', '=', $input)
                                 ->first()->id;
                 }
-                array_push($whereC, [$fieldName, '=', $input]);
+                array_push($whereArray, [$fieldName, '=', $input]);
             }
         }
 
@@ -113,14 +113,13 @@ class Reports extends Controller
             }
 
             
-            foreach($whereArray as $where){
-                $results = $results->where($where['c'], '=', $where['v']);
-            }
-
+            $results = $results->where($whereArray);
+            
             foreach($limits as $limit){
-                $results = $results->where($limit->field, $limit->operator , $limit->value);
+                if($limit->value != Null && $limit->value != 0)
+                    $results = $results->where($limit->field, $limit->operator , $limit->value);
             }
-
+            
             if($request->has('sort')){
                 $results = $results->orderBy($request->input('sort'));
             }
@@ -341,7 +340,7 @@ class Reports extends Controller
                     ]);
             }
         }
-
+        
         $id = DB::table('reports')->insertGetId([
             'title'         => $title,
             'type'          => $type,
