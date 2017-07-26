@@ -200,7 +200,12 @@
                                         var jsonRes = JSON.parse(data);
                                         console.log(jsonRes);
                                         $("#field").autocomplete({
-                                            source: jsonRes
+                                            source: jsonRes,
+                                            change: function (event, ui) {
+                                                if(!ui.item){
+                                                    $("#field").val("");
+                                                }
+                                            }
                                         });
                                     });
                                 });
@@ -270,7 +275,12 @@
                                         var jsonRes = JSON.parse(data);
                                         console.log(jsonRes);
                                         $("#unit").autocomplete({
-                                            source: jsonRes
+                                            source: jsonRes,
+                                            change: function (event, ui) {
+                                                if(!ui.item){
+                                                    $("#unit").val("");
+                                                }
+                                            }
                                         });
                                     });
                                 });
