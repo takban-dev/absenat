@@ -53,12 +53,14 @@
                             ساخت کارگاه جدید
                         </a>
                     </li>
+                    @if($group_code == 1)
                     <li>
                         <a href="{{url('admin/user-new')}}">
                             <i class="material-icons">add_box</i>
                             ساخت کاربر جدید
                         </a>
                     </li>
+                    @endif
                     <li>
                         <a href="{{url('admin/employee-new')}}">
                             <i class="material-icons">add_box</i>
@@ -69,13 +71,14 @@
             </div>
         </div>
     </div>
+    @if($group_code == 1)
     <div class="col-lg-6 col-md-6">
         <div class="card rtl">
             <div class="card-content">
                 @if (sizeof($reports) > 0)
                     <table class="table table-hover">
                         <thead>
-                            <th class="rtl text-center">عنوان کارگاه</th>
+                            <th class="rtl text-center">عنوان</th>
                             <th class="rtl text-center">اجرا</th>
                         </thead>
                         <tbody>
@@ -92,6 +95,8 @@
                 @endif
             </div>
         </div>
+    </div>
+    @endif
     </div>
 </div>
 @endsection

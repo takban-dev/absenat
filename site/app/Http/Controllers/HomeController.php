@@ -35,7 +35,6 @@ class HomeController extends Controller
         $reports = DB::table('reports')
             ->limit(5)->get();
 
-        $employeeCount = DB::table('reports')->count();
 
         return view('dashboard', [
             'reports'       => $reports, 
