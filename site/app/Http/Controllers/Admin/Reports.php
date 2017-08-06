@@ -294,11 +294,9 @@ class Reports extends Controller
     public function newGet(Request $request){
         $group_code = Auth::user()->group_code;
         $columns = $this->columnList();
-        $values = $this->valueList();
         return view('admin.reports.new', [
             'group_code'                => $group_code,
-            'columns'                   => $columns,
-            'values'                    => $values
+            'columns'                   => $columns
             ]);
     }
     public function newPost(Request $request){

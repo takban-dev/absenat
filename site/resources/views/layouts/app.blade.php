@@ -29,7 +29,12 @@
     <script src="{{ asset('js/material-dashboard.js') }}"></script>
     <script src="{{ asset('js/reports.js') }}"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <link rel='stylesheet' type='text/css' href='http://awebfont.ir/css?id=1003'>
+    <link href='http://awebfont.ir/css?id=1920' rel='stylesheet' type='text/css'>
+    <script>
+        body {
+            font-family: '0 Roya', tahoma, Arial;
+        }
+    </script>
 </head>
 <body>
 <div class="wrapper">

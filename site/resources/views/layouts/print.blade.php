@@ -18,6 +18,12 @@
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' rel='stylesheet'
           type='text/css'>
     <link href="https://fonts.googleapis.com/css?family=Lateef" rel="stylesheet">
+    <link href='http://awebfont.ir/css?id=1920' rel='stylesheet' type='text/css'>
+    <script>
+        body {
+            font-family: '0 Roya', tahoma, Arial;
+        }
+    </script>
 </head>
 
 <body>
