@@ -31,7 +31,6 @@ class Reports extends Controller
         $properties = json_decode($report->properties);
         $columns = $properties->columns;
         $fields = $properties->fields;
-        $limits = $properties->limits;
 
         for($i=0; $i<sizeof($fields); $i++){
             if($fields[$i]->input == 'select'){
@@ -60,8 +59,8 @@ class Reports extends Controller
                 $group_code,
                 $report->title,
                 $columns,
+                $report->chart_type,
                 $fields,
-                $limits,
                 $report->type);
         }else{
             return $this->useGet(
@@ -70,12 +69,12 @@ class Reports extends Controller
                 $group_code,
                 $report->title,
                 $columns,
+                $report->chart_type,
                 $fields,
-                $limits,
                 $report->type);
         }
     }
-    private function usePost($request, $id, $group_code, $title, $columns, $fields, $limits, $reportType){
+    private function usePost($request, $id, $group_code, $title, $columns, $chart_type, $fields, $reportType){
         /* preparing the query to run */
         $results = DB::table('employees');
 
@@ -115,11 +114,6 @@ class Reports extends Controller
             
             $results = $results->where($whereArray);
             
-            foreach($limits as $limit){
-                if($limit->value != Null && $limit->value != 0)
-                    $results = $results->where($limit->field, $limit->operator , $limit->value);
-            }
-            
             if($request->has('sort')){
                 $results = $results->orderBy($request->input('sort'));
             }
@@ -144,6 +138,7 @@ class Reports extends Controller
                     'reportId'      => $id,
                     'title'         => $title,
                     'columns'       => $columns,
+                    'chart_type'    => $chart_type,
                     'fields'        => $fields,
                     'oldInputs'     => $request->all(),
                     'results'       => $results,
@@ -185,6 +180,7 @@ class Reports extends Controller
                     'reportId'      => $id,
                     'title'         => $title,
                     'columns'       => $columns,
+                    'chart_type'    => $chart_type,
                     'fields'        => $fields,
                     'results'       => $results,
                     'oldInputs'     => $request->all(),
@@ -192,7 +188,7 @@ class Reports extends Controller
                 ]);
         }
     }
-    private function useGet($request, $id, $group_code, $title, $columns, $fields, $limits, $reportType){
+    private function useGet($request, $id, $group_code, $title, $columns, $fields, $reportType){
         if($reportType == 1){
             return view('admin.reports.count-base', [
                     'group_code'    => $group_code,
@@ -303,54 +299,36 @@ class Reports extends Controller
         //die(json_encode($request->all()));
         $title = $request->input("title");
         $type = $request->input("type");
+        $chart_type = $request->input('chart_type');
+
         $wantedColumns = array();
         $wantedFields = array();
 
         
         $group_code = Auth::user()->group_code;
         $columns = $this->columnList();
-        $values = $this->valueList();
 
         $oldInputs = $request->all();
         
-        foreach($oldInputs as $key=>$value){
-            if($oldInputs[$key] == 'on')
-                $oldInputs[$key] = 1;
-            $parts = preg_split('/-/', $key);
-            if(sizeof($parts) == 2){
-                if($parts[0] == 'col'){
-                    array_push($wantedColumns, $this->generateColumn($parts[1]));
-                }else if($parts[0] == 'fld'){
-                    array_push($wantedFields, $this->generateField($parts[1]));
-                }
-            }
-        }
-
-        $limits = [];
-        foreach($columns as $c_name => $c_title){
-            for($i=0; $i<3; $i++){
-                $op = $request->input($c_name . '_op_' . $i);
-                $val = $request->input($c_name . '_vl_' . $i);
-                array_push($limits, [
-                        'field'     => $c_name,
-                        'operator'  => $op,
-                        'value'     => $val,
-                    ]);
-            }
+        foreach($columns as $key=>$value){
+            if(array_key_exists('field_' . $key, $oldInputs))
+                array_push($wantedFields, $this->generateField($key));
+            if(array_key_exists('col_' . $key, $oldInputs))
+                array_push($wantedColumns, $this->generateColumn($key));
         }
         
         $id = DB::table('reports')->insertGetId([
             'title'         => $title,
             'type'          => $type,
             'status'        => 1,
+            'chart_type'    => $chart_type,
             'properties'    => json_encode([
                     'columns'   => $wantedColumns,
                     'fields'    => $wantedFields,
-                    'limits'    => $limits,
                 ]),
             ]);
         
-        return redirect('admin/report-edit/' . $id);
+        return redirect('admin/reports');
     }
     /* ========================================================================
                                  edit a report

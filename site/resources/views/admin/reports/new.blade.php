@@ -30,15 +30,10 @@
                 <h4 class="title">فرم گزارش گیری جدید</h4>
             </div>
             <div class="card-content">
-                <div class="row">
-                    <div class="col-md-12 col-lg-12">
-                        <button type="button" id="new-row" class="btn btn-primary pull-right">
-                            سطر جدید
-                        </button>
-                    </div>
-                </div>
                 <div class="card">
                     <div class="card-content">
+                    <form action="{{url('admin/report-new')}}" method="post">
+                        {{ csrf_field() }}
                         <div class="row">
                             <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12 pull-right">
                                 <div class="form-group label-floating rtl col-lg-12 col-md-12">
@@ -79,13 +74,34 @@
                                     </td>
                                     <td>
                                         <label>
-                                            <input type="checkbox" name="col_{{$key}}">
+                                            <input type="checkbox" name="field_{{$key}}">
                                         </label>
                                     </td>
                                 </tr>
                             @endforeach
                             </tbody>
                         </table>
+                        <div class="row">
+                            <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12 pull-right">
+                                <div class="col-md-8">
+                                    <div class="form-group rtl col-lg-12 col-md-12">
+                                        <div class="form-group" style="margin-top: 0px">
+                                            <select class="form-control" name="chart_type" style="padding-top: 0px">
+                                                <option value="1" >میله‌ای</option>
+                                                <option value="2" >دایره‌ای</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-4 text-center" style="margin-top: 30px;">
+                                    <span>نوع نمودار</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                                <button type="submit" class="btn btn-primary pull-left">ثبت فرم گزارش</button>
+                            </div>
+                        </div>
+                    </form>
                     </div>
                 </div>
             </div>

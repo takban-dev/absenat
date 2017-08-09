@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>ابسنات:@yield('title')</title>
+    <title>شاغلین:@yield('title')</title>
 
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet"/>
     <link href="{{ asset('css/material-dashboard.css') }}" rel="stylesheet"/>
