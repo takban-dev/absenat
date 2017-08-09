@@ -150,7 +150,7 @@
                             labelInterpolationFnc: function(value) {
                                 return value[0]
                             },
-                            height: '400px',
+                            height: '300px',
                             };
 
                             var responsiveOptions = [

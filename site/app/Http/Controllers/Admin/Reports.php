@@ -42,7 +42,7 @@ class Reports extends Controller
                 }
             }
         }
-
+        
         for($i=0; $i<sizeof($columns); $i++){
             if($columns[$i]->values->type == 'refrenced'){
                 $columns[$i]->values->vars = 
@@ -51,7 +51,7 @@ class Reports extends Controller
                         ->get();
             }
         }
-
+        
         if(sizeof($request->all())){
             return $this->usePost(
                 $request,
@@ -111,7 +111,6 @@ class Reports extends Controller
                 $results = $results->groupBy($group);
             }
 
-            
             $results = $results->where($whereArray);
             
             if($request->has('sort')){
@@ -147,20 +146,13 @@ class Reports extends Controller
         }else if($reportType == 2){
             $results = DB::table('employees')
                         ->select($columnsArray);
-            
-            foreach($limits as $limit){
-                if($limit->value == NULL || $limit->value == 0)
-                    continue;
-                array_push($whereC, [$limit->field, $limit->operator , $limit->value]);
-            }
-            
+                        
             if($request->has('sort')){
                 $results = $results->orderBy($request->input('sort'));
             }
 
-            $results = $results
-                        ->where($whereC)
-                        ->get();
+            $results = $results->where($whereArray);
+            $results = $results->get();
 
             for($i=0; $i<sizeof($results); $i++){
                 foreach($columns as $column){
@@ -188,13 +180,14 @@ class Reports extends Controller
                 ]);
         }
     }
-    private function useGet($request, $id, $group_code, $title, $columns, $fields, $reportType){
+    private function useGet($request, $id, $group_code, $title, $columns, $chart_type, $fields, $reportType){
         if($reportType == 1){
             return view('admin.reports.count-base', [
                     'group_code'    => $group_code,
                     'reportId'      => $id,
                     'title'         => $title,
                     'columns'       => $columns,
+                    'chart_type'    => $chart_type,
                     'fields'        => $fields,
                     'query'         => $this->generateQuery($request),
                 ]);
@@ -204,6 +197,7 @@ class Reports extends Controller
                     'reportId'      => $id,
                     'title'         => $title,
                     'columns'       => $columns,
+                    'chart_type'    => $chart_type,
                     'fields'        => $fields,
                     'query'         => $this->generateQuery($request),
                 ]);
