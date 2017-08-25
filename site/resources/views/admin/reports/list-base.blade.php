@@ -84,6 +84,9 @@
                 <div class="col-md-4 col-sm-12 col-lg-4 pull-right">
                     <button type="submit" class="btn btn-primary pull-right" style="margin-top: 3rem;">مشاهده لیست</button>
                 </div>
+                <div class="col-md-4 col-sm-12 col-lg-4 pull-left" style="text-align: left; vertical-align: middle;">
+                    <h5>تعداد سطر ها: {{$rowCount}}</h5>
+                </div>
             </div>
         </form>
         @if(isset($results))
@@ -91,6 +94,7 @@
                 <div class="row">
                     <table class="table table-hover text-center">
                         <thead>
+                            <th class="rtl text-center">ردیف</th>
                             @foreach($columns as $column)
                                 <th class="rtl text-center">
                                     <a href="{{$query . '&sort=' . $column->name}}">{{$column->title}}</a>
@@ -98,12 +102,15 @@
                             @endforeach
                         </thead>
                         <tbody>
+                            <?php $count = 0; ?>
                             @foreach($results as $row)
                                 <tr>
+                                    <td>{{$count+1}}</td>
                                     @foreach($row as $item)
                                         <td>{{$item}}</td>
                                     @endforeach
                                 </tr>    
+                                <?php $count++; ?>
                             @endforeach
                         </tbody>
                     </table>

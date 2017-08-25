@@ -78,7 +78,7 @@
             <div class="container-fluid">
                 <p class="copyright">
                     <script>document.write(new Date().getFullYear())</script>
-                    <a href="http://www.prechaos.ir">Reza</a>&copy; طراحی توسط
+                    <a href="http://www.takbanco.ir">تکبان رایانه کاسپین</a>&copy; طراحی توسط
                 </p>
             </div>
         </footer>

@@ -146,13 +146,18 @@ class Reports extends Controller
         }else if($reportType == 2){
             $results = DB::table('employees')
                         ->select($columnsArray);
+            $rowCount = DB::table('employees')
+                        ->select($columnsArray);
                         
             if($request->has('sort')){
                 $results = $results->orderBy($request->input('sort'));
             }
 
             $results = $results->where($whereArray);
+            $rowCount = $rowCount->where($whereArray);
+
             $results = $results->get();
+            $rowCount = $rowCount->count();
 
             for($i=0; $i<sizeof($results); $i++){
                 foreach($columns as $column){
@@ -176,6 +181,7 @@ class Reports extends Controller
                     'fields'        => $fields,
                     'results'       => $results,
                     'oldInputs'     => $request->all(),
+                    'rowCount'      => $rowCount,
                     'query'         => $this->generateQuery($request),
                 ]);
         }
@@ -290,39 +296,51 @@ class Reports extends Controller
             ]);
     }
     public function newPost(Request $request){
-        //die(json_encode($request->all()));
-        $title = $request->input("title");
-        $type = $request->input("type");
-        $chart_type = $request->input('chart_type');
+        $validator = $this->myValidate($request);
 
-        $wantedColumns = array();
-        $wantedFields = array();
-
-        
         $group_code = Auth::user()->group_code;
         $columns = $this->columnList();
+        
+        if($validator->fails()){
+            return view('admin.reports.new', [
+                'group_code'                => $group_code,
+                'columns'                   => $columns,
+                 ])->withErrors($validator);
 
-        $oldInputs = $request->all();
-        
-        foreach($columns as $key=>$value){
-            if(array_key_exists('field_' . $key, $oldInputs))
-                array_push($wantedFields, $this->generateField($key));
-            if(array_key_exists('col_' . $key, $oldInputs))
-                array_push($wantedColumns, $this->generateColumn($key));
+        }else{
+            $title = $request->input("title");
+            $type = $request->input("type");
+            $chart_type = $request->input('chart_type');
+
+            $wantedColumns = array();
+            $wantedFields = array();
+
+            
+            $group_code = Auth::user()->group_code;
+            $columns = $this->columnList();
+
+            $oldInputs = $request->all();
+            
+            foreach($columns as $key=>$value){
+                if(array_key_exists('field_' . $key, $oldInputs))
+                    array_push($wantedFields, $this->generateField($key));
+                if(array_key_exists('col_' . $key, $oldInputs))
+                    array_push($wantedColumns, $this->generateColumn($key));
+            }
+            
+            $id = DB::table('reports')->insertGetId([
+                'title'         => $title,
+                'type'          => $type,
+                'status'        => 1,
+                'chart_type'    => $chart_type,
+                'properties'    => json_encode([
+                        'columns'   => $wantedColumns,
+                        'fields'    => $wantedFields,
+                    ]),
+                ]);
+            
+            return redirect('admin/reports');
         }
-        
-        $id = DB::table('reports')->insertGetId([
-            'title'         => $title,
-            'type'          => $type,
-            'status'        => 1,
-            'chart_type'    => $chart_type,
-            'properties'    => json_encode([
-                    'columns'   => $wantedColumns,
-                    'fields'    => $wantedFields,
-                ]),
-            ]);
-        
-        return redirect('admin/reports');
     }
     /* ========================================================================
                                  edit a report
@@ -852,5 +870,19 @@ class Reports extends Controller
                     ]
                 ];
         }
+    }
+    public function myValidate($request){
+        $messages = [
+            'title.*'               => 'لطفا عنوان را وارد کنید',
+            'type.*'                => 'لطفا نوع فرم گزارش را تعیین کنید',
+        ];
+
+        $rules = [
+            'title'                 => 'required',
+            'type'                  => 'required',
+        ];
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        return $validator;
     }
 }

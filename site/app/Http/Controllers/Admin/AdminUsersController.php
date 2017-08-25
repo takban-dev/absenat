@@ -33,7 +33,6 @@ class AdminusersController extends Controller
             'currentPage'   => $page,
             'group_code'    => $group_code,
             'pageSize'      => $size,
-            'pagination'    => $this->generatePages($pageCount, $page),
             'sort'          => $request->has('sort')? ('?sort=' . $request->input('sort')) : '',
             ]);
     }
@@ -180,27 +179,5 @@ class AdminusersController extends Controller
         $validator = Validator::make($request->all(), $rules, $messages);
 
         return $validator;
-    }
-    function generatePages($total, $current){
-        if($total > 1){
-            $total=intval($total);
-
-            $output=[];
-            $current_page= (false == isset($current)) ? 0 : $current;
-            $lastPage = -1;
-            $lower = $current_page -3;
-            $upper = $current_page +3;
-            for($page=0;$page<$total;$page++){
-                if(($page > $lower && $page < $upper) || $page < 1 || $page > ($total-2)){
-                    if($lastPage + 1 != $page)
-                        array_push($output, '#');
-                    array_push($output, $page+1);
-                    $lastPage = $page;
-                }
-            }
-            return $output;
-        }else{
-            return [];
-        }
     }
 }

@@ -54,13 +54,11 @@
     <div class="col-md-12" style="text-align: center;">
         <nav aria-label="Page navigation">
             <ul class="pagination">
-                @foreach ($pagination as $page)
-                    @if ($page == '#')
-                        <li class="page-item"><a class="page-link" href="#">...</a></li>
-                    @else
-                        <li class="page-item"><a class="page-link" href="{{url('admin/users/' . ($page-1) . '/' . $pageSize. $sort)}}">{{$page}}</a></li>
-                    @endif
-                @endforeach
+                <li class="page-item"><a class="page-link" href="{{($currentPage > 1)?url('admin/users/0/' . $pageSize. $sort):'#'}}">صفحه اول</a></li>
+                <li class="page-item"><a class="page-link" href="{{($currentPage > 0)?url('admin/users/' . ($currentPage-1) . '/' . $pageSize. $sort):'#'}}">صفحه اول</a></li>
+                <li class="page-item active"><a class="page-link" href="#">{{$currentPage+1}}/{{$pageCount}}</a></li>
+                <li class="page-item"><a class="page-link" href="{{($currentPage+1 < $pageCount)? url('admin/users/' . ($currentPage+1) . '/' . $pageSize. $sort):'#'}}">صفحه بعد</a></li>
+                <li class="page-item"><a class="page-link" href="{{($currentPage+2 < $pageCount)? url('admin/users/' . ($pageCount-1) . '/' . $pageSize. $sort):'#'}}">صفحه آخر</a></li>
             </ul>
         </nav>
     </div>
