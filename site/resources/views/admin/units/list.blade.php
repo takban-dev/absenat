@@ -20,6 +20,25 @@
                 <h4 class="title">کارگاه ها</h4>
             </div>
             <div class="card-content table-responsive" style="text-align: center;">
+                <div class="row" style="margin-bottom: 25px;">
+                    <form action="{{url('admin/units/')}}" method="get">
+                        <div class="col-md-4 pull-right">
+                            <div class="form-group label-floating">
+                                <label class="control-label">عنوان کارگاه</label>
+                                <input type="text" name="title" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-4 pull-right">
+                            <div class="form-group label-floating">
+                                <label class="control-label">نام مدیریت</label>
+                                <input type="text" name="manager_title" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-lg-3 col-sm-6 pull-right" style="margin-top: 1rem;">
+                            <button type="submit" class="btn btn-primary text-center">جستجو</button>
+                        </div>
+                    </form>
+                </div>
                 @if (sizeof($units) > 0)
                     <table class="table table-hover">
                         <thead>

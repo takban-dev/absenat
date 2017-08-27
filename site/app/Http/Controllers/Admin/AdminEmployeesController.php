@@ -27,6 +27,16 @@ class AdminEmployeesController extends Controller
             foreach($orders as $order)
             $employees = $employees->orderBy($order, 'asc');
         }
+        
+        if($request->has('first_name')){
+            $search = $request->input('first_name');
+            $employees = $employees->whereRaw("employees.first_name LIKE '%$search%'");
+        }
+        if($request->has('last_name')){
+            $search = $request->input('last_name');
+            $employees = $employees->whereRaw("employees.last_name LIKE '%$search%'");
+        }
+
         $employees = $employees->get();
 
         $employeeCount = DB::table('employees')->count();

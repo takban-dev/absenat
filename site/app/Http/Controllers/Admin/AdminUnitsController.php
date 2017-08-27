@@ -20,6 +20,16 @@ class AdminUnitsController extends Controller
             foreach($orders as $order)
             $units = $units->orderBy($order, 'asc');
         }
+
+        if($request->has('title')){
+            $search = $request->input('title');
+            $units = $units->whereRaw("units.title LIKE '%$search%'");
+        }
+        if($request->has('manager_title')){
+            $search = $request->input('manager_title');
+            $units = $units->whereRaw("units.manager_title LIKE '%$search%'");
+        }
+
         $units = $units->get();
 
         $unitCount = DB::table('units')->count();
