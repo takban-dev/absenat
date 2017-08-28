@@ -101,6 +101,7 @@ class AdminEmployeesController extends Controller
                     'dependents'            => $request->input('dependents'),
                     'experience'            => $request->input('experience'),
                     'address'               => $request->input('address'),
+                    'phone'                 => $request->input('phone'),
                     'updated_at'            => time()[0]
                 ]
             );
@@ -179,7 +180,7 @@ class AdminEmployeesController extends Controller
                 'business_license_sources'  => DB::table('business_license_sources')    ->get(),
                 'marriges'                  => DB::table('merrige_types')               ->get(),
                 'oldInputs'                 => $request->all(),
-                'months'                    => config('constants.months')
+                'months'                    => config('constants.months'),
                 ])->withErrors($validator);
 
         }else{
@@ -207,6 +208,7 @@ class AdminEmployeesController extends Controller
                     'dependents'            => $request->input('dependents'),
                     'experience'            => $request->input('experience'),
                     'address'               => $request->input('address'),
+                    'phone'                 => $request->input('phone'),
                     'created_at'            => time()[0],
                     'updated_at'            => time()[0]
                 ]

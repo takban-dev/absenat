@@ -160,10 +160,16 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-12 col-sm-12 pull-right">
+                        <div class="col-md-9 col-sm-12 pull-right">
                             <div class="form-group label-floating rtl col-lg-12 col-md-12">
                                 <label class="control-label">آدرس دقیق محل سکونت</label>
                                 <input type="text" name="address" value="{{isset($oldInputs)? $oldInputs['address']: ''}}" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-12 pull-right">
+                            <div class="form-group label-floating rtl col-lg-12 col-md-12">
+                                <label class="control-label">شماره تماس</label>
+                                <input type="text" name="phone" value="{{isset($oldInputs)? $oldInputs['phone']: ''}}" class="form-control">
                             </div>
                         </div>
                     </div>
