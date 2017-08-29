@@ -54,6 +54,9 @@
                 <a href="{{url('admin/employee-single-print/' . $oldInputs['id'])}}" target="_blank">
                     <i class="material-icons">print</i>
                 </a>
+                <a href="{{url('admin/employee-remove-self/' . $oldInputs['id'])}}">
+                    <i class="material-icons">close</i>
+                </a>
             </div>
             <div class="card-content">
                 <form action="{{url('admin/employee/' . $oldInputs['id'])}}" method="post">
@@ -268,7 +271,7 @@
                         <div class="col-md-6- col-sm-6">
                             <div class="col-md-10 col-sm-10">
                                 <div class="form-group label-floating rtl col-lg-12 col-md-12">
-                                    <input type="text" id="unit" name="unit_title" value="{{isset($oldInputs)? $oldInputs['unit_title']: ''}}" class="form-control">
+                                    <input type="text" id="unit" name="unit_title" disabled value="{{isset($oldInputs)? $oldInputs['unit_title']: ''}}" class="form-control">
                                 </div
 >                            </div>
                             <div class="col-md-2 col-sm-2 text-center" style="margin-top: 30px;">

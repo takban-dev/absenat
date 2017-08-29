@@ -142,6 +142,11 @@ class AdminEmployeesController extends Controller
         return back();
     }
 
+    public function removeSelf(Request $request, $id){
+        DB::table('employees')->where('id', '=', $id)->delete();
+        return redirect('admin/employees/');;
+    }
+
     public function newGet(Request $request, $unitId=0){
         $group_code = Auth::user()->group_code;
         $unitTitle = '';
