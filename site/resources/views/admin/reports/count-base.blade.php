@@ -132,45 +132,53 @@
                         md.startAnimationForLineChart(
                             new Chartist.Bar('.ct-chart', {
                                 labels: {{json_encode($chart_cols)}},
-                                series: 
-                                    {{json_encode($chart_vals)}}
+                                series: {{json_encode($chart_vals)}}
                                 
                             }, {
                                 distributeSeries: true
                             }));
                     @elseif($chart_type == 2)
+                        <?php
+                            $labels = array();
+                            $sum = 0;
+                            for($i=0; $i<sizeof($chart_vals); $i++)
+                                $sum += $chart_vals[$i];
+
+                            for($i=0; $i<sizeof($chart_vals); $i++)
+                                array_push($labels, $chart_cols[$i] . ' - (' . intval(($chart_vals[$i]/$sum)*100) . '%)');
+                        ?>
                         var data = {
-                            labels: {{json_encode($chart_cols)}},
-                                series: 
-                                    {{json_encode($chart_vals)}}
-                                
-                            };
+                          labels: [
+                            @foreach($labels as $label)
+                                '{{$label}}',
+                            @endforeach
+                          ],
+                          series: {{json_encode($chart_vals)}},
+                        };
 
-                            var options = {
+                        var options = {
+                          labelInterpolationFnc: function(value) {
+                            return value[0]
+                          },
+                          height: 400
+                        };
+
+                        var responsiveOptions = [
+                          ['screen and (min-width: 640px)', {
+                            chartPadding: 30,
+                            labelOffset: 10,
+                            labelDirection: 'explode',
                             labelInterpolationFnc: function(value) {
-                                return value[0]
-                            },
-                            height: '300px',
-                            };
+                              return value;
+                            }
+                          }],
+                          ['screen and (min-width: 1024px)', {
+                            labelOffset: 80,
+                            chartPadding: 20
+                          }]
+                        ];
 
-                            var responsiveOptions = [
-                            ['screen and (min-width: 640px)', {
-                                chartPadding: 30,
-                                labelOffset: 100,
-                                labelDirection: 'explode',
-                                labelInterpolationFnc: function(value) {
-                                return value;
-                                }
-                            }],
-                            ['screen and (min-width: 1024px)', {
-                                labelOffset: 80,
-                                chartPadding: 20
-                            }]
-                            ];
-
-                            md.startAnimationForLineChart(
-                                new Chartist.Pie('.ct-chart', data, options, responsiveOptions)
-                            );
+                        md.startAnimationForLineChart(new Chartist.Pie('.ct-chart', data, options, responsiveOptions));
                     @endif
                     
                 </script>
