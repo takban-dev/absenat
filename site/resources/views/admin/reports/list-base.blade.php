@@ -82,11 +82,16 @@
             </div>
             <div class="row">
                 <div class="col-md-4 col-sm-12 col-lg-4 pull-right">
-                    <button type="submit" class="btn btn-primary pull-right" style="margin-top: 3rem;">مشاهده لیست</button>
+                    <button type="submit" name="action" value="normal" class="btn btn-primary pull-right" style="margin-top: 3rem;">مشاهده لیست</button>
                 </div>
+                <div class="col-md-4 col-sm-12 col-lg-4 pull-left">
+                    <button type="submit" name="action" value="print" class="btn btn-primary pull-left" style="margin-top: 3rem;">پرینت نتایج</button>
+                </div>
+                @if(isset($rowCount))
                 <div class="col-md-4 col-sm-12 col-lg-4 pull-left" style="text-align: left; vertical-align: middle;">
                     <h5>تعداد سطر ها: {{$rowCount}}</h5>
                 </div>
+                @endif
             </div>
         </form>
         @if(isset($results))

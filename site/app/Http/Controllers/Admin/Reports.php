@@ -132,7 +132,20 @@ class Reports extends Controller
                 }
             }
             
-            return view('admin.reports.count-base', [
+            if($request->input('action') == 'normal')
+                return view('admin.reports.count-base', [
+                        'group_code'    => $group_code,
+                        'reportId'      => $id,
+                        'title'         => $title,
+                        'columns'       => $columns,
+                        'chart_type'    => $chart_type,
+                        'fields'        => $fields,
+                        'oldInputs'     => $request->all(),
+                        'results'       => $results,
+                        'query'         => $this->generateQuery($request),
+                    ]);
+            else
+                return view('admin.reports.count-base-print', [
                     'group_code'    => $group_code,
                     'reportId'      => $id,
                     'title'         => $title,
@@ -172,18 +185,32 @@ class Reports extends Controller
                 }
             }
             
-            return view('admin.reports.list-base', [
-                    'group_code'    => $group_code,
-                    'reportId'      => $id,
-                    'title'         => $title,
-                    'columns'       => $columns,
-                    'chart_type'    => $chart_type,
-                    'fields'        => $fields,
-                    'results'       => $results,
-                    'oldInputs'     => $request->all(),
-                    'rowCount'      => $rowCount,
-                    'query'         => $this->generateQuery($request),
-                ]);
+            if($request->input('action') == 'normal')
+                return view('admin.reports.list-base', [
+                        'group_code'    => $group_code,
+                        'reportId'      => $id,
+                        'title'         => $title,
+                        'columns'       => $columns,
+                        'chart_type'    => $chart_type,
+                        'fields'        => $fields,
+                        'results'       => $results,
+                        'oldInputs'     => $request->all(),
+                        'rowCount'      => $rowCount,
+                        'query'         => $this->generateQuery($request),
+                    ]);
+            else
+                return view('admin.reports.list-base-print', [
+                        'group_code'    => $group_code,
+                        'reportId'      => $id,
+                        'title'         => $title,
+                        'columns'       => $columns,
+                        'chart_type'    => $chart_type,
+                        'fields'        => $fields,
+                        'results'       => $results,
+                        'oldInputs'     => $request->all(),
+                        'rowCount'      => $rowCount,
+                        'query'         => $this->generateQuery($request),
+                    ]);
         }
     }
     private function useGet($request, $id, $group_code, $title, $columns, $chart_type, $fields, $reportType){
