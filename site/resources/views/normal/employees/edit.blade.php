@@ -81,7 +81,7 @@
                         <div class="col-md-6 col-sm-12 pull-right">
                                 <div class="col-md-3 col-sm-3">
                                     <select class="form-control" name="birth_date_day" style="padding-top: 0px">
-                                        @for ($i=1; $i<=30; $i++)
+                                        @for ($i=1; $i<=31; $i++)
                                             <option value="{{$i}}" {{isset($oldInputs['birth_date_day'])? ($i == $oldInputs['birth_date_day'] ? 'selected': '' ): ''}}>{{$i}}</option>
                                         @endfor
                                     </select>

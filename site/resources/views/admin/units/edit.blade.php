@@ -148,7 +148,7 @@
                         <div class="col-md-6 pull-right">
                             <div class="col-md-3">
                                 <select class="form-control" name="certificate_date_day" style="padding-top: 0px">
-                                    @for ($i=1; $i<=30; $i++)
+                                    @for ($i=1; $i<=31; $i++)
                                         <option value="{{$i}}" {{isset($oldInputs['certificate_date_day'])? ($i == $oldInputs['certificate_date_day'] ? 'selected': '' ): ''}}>{{$i}}</option>
                                     @endfor
                                 </select>
@@ -203,7 +203,7 @@
                         <div class="col-md-6 pull-right">
                             <div class="col-md-3">
                                 <select class="form-control" name="licence_date_day" style="padding-top: 0px">
-                                    @for ($i=1; $i<=30; $i++)
+                                    @for ($i=1; $i<=31; $i++)
                                         <option value="{{$i}}" {{isset($oldInputs['licence_date_day'])? ($i == $oldInputs['licence_date_day'] ? 'selected': '' ): ''}}>{{$i}}</option>
                                     @endfor
                                 </select>
