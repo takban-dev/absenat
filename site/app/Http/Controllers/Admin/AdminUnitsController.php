@@ -47,7 +47,7 @@ class AdminUnitsController extends Controller
             ]);
     }
 
-    public function editPost(Request $request, $id, $page=0, $size=10){
+    public function editPost(Request $request, $id){
         $group_code = Auth::user()->group_code;
         $validator = $this->myValidate($request);
 
@@ -60,8 +60,6 @@ class AdminUnitsController extends Controller
             ->where('employees.unit_id', '=', $id)
             ->get();
         $employeeCount = DB::table('employees')->where('employees.unit_id', '=', $id)->count();
-
-        $pageCount = ceil($employeeCount / $size);
 
 
         if($validator->fails()){
@@ -120,7 +118,7 @@ class AdminUnitsController extends Controller
             return redirect('admin/unit/' . $id);
         }
     }
-    public function editGet(Request $request, $id, $page=0, $size=10){
+    public function editGet(Request $request, $id){
         $group_code = Auth::user()->group_code;
         $unit = get_object_vars(DB::table('units')->where('id', '=', $id)->first());
 
@@ -145,8 +143,6 @@ class AdminUnitsController extends Controller
             ->join('units', 'employees.unit_id', '=', 'units.id')
             ->select(DB::raw("employees.id, employees.first_name, employees.last_name, degrees.title'degree', study_fields.title'field', units.title'unit', cities.title'habitate'"))
             ->where('employees.unit_id', '=', $id)
-            ->limit($size)
-            ->offset($size * $page)
             ->get();
         $employeeCount = DB::table('employees')->where('employees.unit_id', '=', $id)->count();
         $pageCount = ceil($employeeCount / $size);

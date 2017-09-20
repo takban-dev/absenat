@@ -59,6 +59,7 @@ class AdminEmployeesController extends Controller
         if($validator->fails()){
             $oldInputs = $request->all();
             $oldInputs['id'] = $id;
+            $oldInputs['unit_title'] = $request->input('unit_title');
 
             return view('admin.employees.edit', [
                 'group_code'                => $group_code,
@@ -72,7 +73,7 @@ class AdminEmployeesController extends Controller
                 'study_fields'              => DB::table('study_fields')                ->get(),
                 'job_fields'                => DB::table('job_fields')                  ->get(),
                 'marriges'                  => DB::table('merrige_types')               ->get(),
-                'months'                    => config('constants.months')
+                'months'                    => config('constants.months'),
                 ])->withErrors($validator);
 
         }else{
@@ -219,7 +220,7 @@ class AdminEmployeesController extends Controller
                 ]
             );
 
-            return redirect('admin/employee/' . $id);
+            return redirect('admin/employee-new/' . $unitId);
         }
     }
     public function myValidate($request){
