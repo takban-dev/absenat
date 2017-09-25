@@ -145,7 +145,6 @@ class AdminUnitsController extends Controller
             ->where('employees.unit_id', '=', $id)
             ->get();
         $employeeCount = DB::table('employees')->where('employees.unit_id', '=', $id)->count();
-        $pageCount = ceil($employeeCount / $size);
 
         return view('admin.units.edit', [
             'group_code'                => $group_code,
@@ -153,9 +152,6 @@ class AdminUnitsController extends Controller
 
             /* employees list */
             'employees'                 => $employees,
-            'pageCount'                 => $pageCount,
-            'currentPage'               => $page,
-            'pageSize'                  => $size,
 
             'genders'                   => DB::table('genders')                     ->get(),
             'cities'                    => DB::table('cities')                      ->get(),

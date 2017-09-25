@@ -37,7 +37,7 @@
                                 <tr>
                                     <td>{{ $report->title }}</td>
                                     <td>{{ $types[$report->type] }}</td>
-                                    <td><a href="{{ url( 'admin/report/' . $report->id) }}"><i class="material-icons">assignment_ind</i></a></td>
+                                    <td><a href="{{ url( 'admin/report/' . $report->id) }}"><i class="material-icons">settings_ethernet</i></a></td>
                                     <td><a href="{{ url( 'admin/report-remove/' . $report->id) }}"><i class="material-icons">assignment_ind</i></a></td>
                                 </tr>
                             @endforeach

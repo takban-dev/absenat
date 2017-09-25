@@ -64,7 +64,7 @@
                         $sum += $chart_vals[$i];
 
                     for($i=0; $i<sizeof($chart_vals); $i++)
-                        array_push($labels, $chart_cols[$i] . ' - (' . intval(($chart_vals[$i]/$sum)*100) . '%)');
+                        array_push($labels, $chart_cols[$i] . ': ' . intval(($chart_vals[$i]/$sum)*100) . '%');
                 ?>
                 var data = {
                   labels: [
