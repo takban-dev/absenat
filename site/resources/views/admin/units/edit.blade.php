@@ -242,6 +242,9 @@
                     <div class="row">
                         <div class="col-md-12">
                             <button type="submit" class="btn btn-primary pull-right">ثبت تغییرات</button>
+                            <a href="{{Request::url()}}">
+                                <button type="button" class="btn btn-primary pull-left">فرم جدید</button>
+                            </a>
                         </div>
                     </div>
                 </form>
