@@ -333,7 +333,7 @@ class AdminUnitsController extends Controller
 
     public function singlePrint(Request $request, $id){
         $unit = DB::table('units')->where('id', '=', $id)->first();
-        $employees = DB::table('employees')->where('id', '=', $unit->id)->get();
+        $employees = DB::table('employees')->where('unit_id', '=', $unit->id)->get();
         for($i=0; $i<sizeof($employees); $i++)
             $employees[$i]->unitTitle = DB::table('units')->where('id', '=', $employees[$i]->unit_id)->first()->title;
 
