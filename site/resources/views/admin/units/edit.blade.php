@@ -253,6 +253,13 @@
     </div>
 </div>
 <div class="row">
+    <div class="col-md-12">
+        <a href="{{url('admin/employee-new/' . $oldInputs['id'])}}">
+            <button type="button" class="btn btn-primary pull-right">شاغل جدید</button>
+        </a>
+    </div>
+</div>
+<div class="row">
     <div class="col-lg-12 col-md-12">
         <div class="card rtl">
             <div class="card-header" data-background-color="purple">
@@ -287,13 +294,6 @@
                 @endif
             </div>
         </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-12">
-        <a href="{{url('admin/employee-new/' . $oldInputs['id'])}}">
-            <button type="button" class="btn btn-primary pull-right">شاغل جدید</button>
-        </a>
     </div>
 </div>
 
