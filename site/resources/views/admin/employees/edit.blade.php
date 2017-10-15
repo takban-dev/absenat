@@ -37,6 +37,14 @@
 @endsection
 
 @section('content')
+<script>
+  function remove (employeeId, employeeName){
+    var result = confirm("آیا واقعا مایل به حذف اظلاعات شاغل " + employeeName + " هستید؟");
+    if (result) {
+        window.location = '{{ url( 'admin/employee-remove-self/') }}/' + employeeId
+    }
+  }
+</script>
 @if (count($errors) > 0)
     <div class="alert alert-danger rtl">
         <ul>
@@ -54,7 +62,10 @@
                 <a href="{{url('admin/employee-single-print/' . $oldInputs['id'])}}" target="_blank">
                     <i class="material-icons">print</i>
                 </a>
-                <a href="{{url('admin/employee-remove-self/' . $oldInputs['id'])}}">
+                <!-- <a href="{{url('admin/employee-remove-self/' . $oldInputs['id'])}}">
+                    <i class="material-icons">close</i>
+                </a> -->
+                <a onclick="remove({{$oldInputs['id']}}, '{{$oldInputs['first_name'] . ' ' . $oldInputs['last_name']}}')">
                     <i class="material-icons">close</i>
                 </a>
             </div>
