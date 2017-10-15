@@ -13,6 +13,14 @@
 @endsection
 
 @section('content')
+<script>
+  function remove (unitId, unitTitle){
+    var result = confirm("آیا واقعا مایل به حذف کارگاه " + unitTitle + " هستید؟");
+    if (result) {
+        window.location = '{{ url( 'admin/unit-remove/') }}/' + unitId
+    }
+  }
+</script>
 <div class="row">
     <div class="col-lg-12 col-md-12">
         <div class="card rtl">
@@ -61,7 +69,8 @@
                                     <td>{{ $unit->manager_title }}</td>
                                     <td>{{ $unit->phone }}</td>
                                     <td><a href="{{ url( 'admin/unit/' . $unit->id) }}"><i class="material-icons">assignment_ind</i></a></td>
-                                    <td><a href="{{ url( 'admin/unit-remove/' . $unit->id) }}"><i class="material-icons">delete</i></a></td>
+                                    <!-- <td><a href="{{ url( 'admin/unit-remove/' . $unit->id) }}"><i class="material-icons">delete</i></a></td> -->
+                                    <td><a onclick="remove({{$unit->id}}, '{{$unit->title}}')"><i class="material-icons">delete</i></a></td>
                                 </tr>
                             @endforeach
                         </tbody>
