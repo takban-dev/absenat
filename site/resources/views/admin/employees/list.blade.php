@@ -14,6 +14,14 @@
 @endsection
 
 @section('content')
+<script>
+  function remove (employeeId, employeeName){
+    var result = confirm("آیا واقعا مایل به حذف اظلاعات شاغل " + employeeName + " هستید؟");
+    if (result) {
+        window.location = '{{ url( 'admin/employee-remove/') }}/' + employeeId
+    }
+  }
+</script>
 <div class="row">
     <div class="col-lg-12 col-md-12">
         <div class="card rtl">
@@ -66,7 +74,8 @@
                                     <td>{{$employee->field . ' - ' . $employee->degree}}</td>
                                     <td>{{$employee->unit}}</td>
                                     <td><a href="{{ url( 'admin/employee/' . $employee->id) }}"><i class="material-icons">assignment_ind</i></a></td>
-                                    <td><a href="{{ url( 'admin/employee-remove/' . $employee->id) }}"><i class="material-icons">delete</i></a></td>
+                                    <!-- <td><a href="{{ url( 'admin/employee-remove/' . $employee->id) }}"><i class="material-icons">delete</i></a></td> -->
+                                    <td><a onclick="remove({{$employee->id}}, '{{$employee->first_name . ' ' . $employee->last_name}}')"><i class="material-icons">delete</i></a></td>
                                 </tr>
                             @endforeach
                         </tbody>
