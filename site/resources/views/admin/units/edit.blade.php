@@ -6,21 +6,21 @@
 
 @section('back')
 <li>
-    <a href="{{url('admin/units')}}">
-        <i class="material-icons">keyboard_return</i>
-    </a>
+  <a href="{{url('admin/units')}}">
+    <i class="material-icons">keyboard_return</i>
+  </a>
 </li>
 @endsection
 
 @section('content')
 @if (count($errors) > 0)
-    <div class="alert alert-danger rtl">
-        <ul>
-        @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-        @endforeach
-        </ul>
-    </div>
+  <div class="alert alert-danger rtl">
+    <ul>
+      @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+      @endforeach
+    </ul>
+  </div>
 @endif
 <div class="row">
     <div class="col-lg-12 col-md-12">
