@@ -145,34 +145,41 @@ class HomeController extends Controller
             return redirect('dashboard');
         }
     }
+
+    private $niceNames = [
+      'first_name'    => 'نام',
+      'last_name'     => 'نام خانوادگی',
+      'email'         => 'آدرس ایمیل',
+      'name'          => 'نام کاربری',
+      'phone'         => 'شماره همراه',
+      'cellphone'     => 'شماره ثابت',
+      'password'      => 'کلمه عبور',
+      'password_conf' => 'تایید کلمه عبور',
+    ];
+    private $messages = [
+      '*.required'                  => 'لطفا :attribute را وارد کنید',
+      '*.email'                     => 'آدرس ایمیل وارد شده نامعتبر است',
+      '*.min'                       => 'حداقل طول :attribute باید :min حرف باشد',
+    ];
+
     public function myRegisterValidate($request){
         Validator::extend('checkIf', function ($attribute, $value, $parameters, $validator) {
             return !(in_array($parameters[0], array('on', 'true', 1, '1')));
         });
-        $messages = [
-            'first_name.*'                  => 'لطفا نام را وارد کنید',
-            'last_name.*'                   => 'لطفا نام خانوادگی کاربر را وارد کنید',
-            'email.*'                       => 'آدرس ایمیل نامعتبر',
-            
-            'name.*'                        => 'لطفا نام کاربری را وارد کنید',
-            'password.*'                    => 'لطفا کلمه عبور را وارد کنید(حداقل ۴ حرف)',
-            
-            'phone.*'                       => 'شماره تلفن ثابت نامعتبر است',
-            'cellphone.*'                   => 'لطفا شماره تلفن همراه را وارد کنید',
-        ];
 
         $rules = [
-            'first_name'                => 'required',
-            'last_name'                 => 'required',
-            'email'                     => 'required|email',
-            
-            'name'                      => 'required|min:4',
-            'password'                  => 'required|string|min:4',
-            'password_conf'             => 'required|string|min:4',
-            'phone'                     => 'required|string',
-            'cellphone'                 => 'required|string',
+          'first_name'                => 'required',
+          'last_name'                 => 'required',
+          'email'                     => 'required|email',
+          'name'                      => 'required|min:4',
+          'password'                  => 'required|string|min:4',
+          'password_conf'             => 'required|string|min:4',
+          'phone'                     => 'required|string',
+          'cellphone'                 => 'required|string',
         ];
-        $validator = Validator::make($request->all(), $rules, $messages);
+
+        $validator = Validator::make($request->all(), $rules, $this->messages);
+        $validator->setAttributeNames($this->niceNames);
 
         return $validator;
     }
@@ -180,28 +187,16 @@ class HomeController extends Controller
         Validator::extend('checkIf', function ($attribute, $value, $parameters, $validator) {
             return !(in_array($parameters[0], array('on', 'true', 1, '1')));
         });
-        $messages = [
-            'first_name.*'                  => 'لطفا نام را وارد کنید',
-            'last_name.*'                   => 'لطفا نام خانوادگی کاربر را وارد کنید',
-            'email.*'                       => 'آدرس ایمیل نامعتبر',
-            
-            'password.*'                    => 'لطفا کلمه عبور را وارد کنید(حداقل ۴ حرف)',
-            
-            'phone.*'                       => 'شماره تلفن ثابت نامعتبر است',
-            'cellphone.*'                   => 'لطفا شماره تلفن همراه را وارد کنید',
-        ];
-
         $rules = [
-            'first_name'                => 'required',
-            'last_name'                 => 'required',
-            'email'                     => 'required|email',
-            
-            'password'                  => 'required|string|min:4',
-            
-            'phone'                     => 'required|string',
-            'cellphone'                 => 'required|string',
+          'first_name'                => 'required',
+          'last_name'                 => 'required',
+          'email'                     => 'required|email',
+          'password'                  => 'required|string|min:4',
+          'phone'                     => 'required|string',
+          'cellphone'                 => 'required|string',
         ];
-        $validator = Validator::make($request->all(), $rules, $messages);
+        $validator = Validator::make($request->all(), $rules, $this->messages);
+        $validator->setAttributeNames($this->niceNames); 
 
         return $validator;
     }

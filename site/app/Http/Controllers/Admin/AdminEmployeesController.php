@@ -227,33 +227,32 @@ class AdminEmployeesController extends Controller
         Validator::extend('checkIf', function ($attribute, $value, $parameters, $validator) {
             return !(in_array($parameters[0], array('on', 'true', 1, '1')));
         });
+        $niceNames = [
+          'first_name'                => 'نام',
+          'last_name'                 => 'نام خانوادگی',
+          'gender'                    => 'جنسیت',
+          'id_number'                 => 'کدملی',
+          'father_name'               => 'نام پدر',
+          'birth_date_day'            => 'روز تولد',
+          'birth_date_month'          => 'ماه تولد',
+          'birth_date_year'           => 'سال تولد',
+          'birth_place'               => 'محل تولد',
+          'habitate'                  => 'محل سکونت',
+          'habitate_years'            => 'سال های سکونت',
+          'degree'                    => 'مدرک تحصیلی',
+          'field_title'               => 'رشته تحصیلی',
+          'job'                       => 'شغل',
+          'marrige'                   => 'وضعیت تاهل',
+          'dependents'                => 'تعداد افراد تحت تکفل',
+          'unit_title'                => 'کارگاه',
+          'experience'                => 'سابقه کار',
+          'address'                   => 'آدرس دقیق',
+        ];
         $messages = [
-            'first_name.*'                => 'لطفا نام خود را وارد کنید',
-            'last_name.*'                 => 'لطفا نام خانوادگی خود را وارد کنید',
-            
-            'gender.*'                    => 'جنسیت وارد نشده است',
-            'id_number.*'                 => 'کد ملی شاغل وارد نشده است',
-            'father_name.*'               => 'نام ‍پدر وارد نشده است',
-            
-            'birth_date_day.*'            => 'روز تولد انتخاب نشده است',
-            'birth_date_month.*'          => 'ماه تولد انتخاب نشده است',
-            'birth_date_year.*'           => 'سال تولد انتخاب نشده است',
-
-            'birth_place.*'               => 'محل تولد انتخاب نشده است',
-
-            'habitate.*'                  => 'محل سکونت را انتخاب کنید',
-            'habitate_years.*'            => 'مدت سال های سکونت را انتخاب کنید',
-
-            'degree.*'                    => 'مدرک تحصیلی انتخاب نشده است',
-            'field_title.*'               => 'رشته تحصیلی انتخاب نشده است',
-            'job.*'                       => 'عنوان شغلی نامعتبر است',
-
-            'marrige.*'                   => 'خطا در وضعیت تاهل',
-            'dependents.*'                => 'تعداد افراد تحت تکفل نامعتبر است',
-
-            'unit_title'                  => 'عنوان کرگاه را وارد کنید',
-            'experience.*'                => 'تعداد ماه های سابقه کاری را وارد کنید',
-            'address.*'                   => 'آدرس را وارد کنید',
+          '*.required'                  => 'لطفا :attribute را وارد کنید',
+          '*.email'                     => 'آدرس ایمیل وارد شده نامعتبر است',
+          '*.min'                       => 'حداقل طول :attribute باید :min حرف باشد',
+          '*.numeric'                   => ':attribute باید عدد باشد'
         ];
 
         $rules = [
@@ -285,6 +284,7 @@ class AdminEmployeesController extends Controller
             'address'                   => 'required',
         ];
         $validator = Validator::make($request->all(), $rules, $messages);
+        $validator->setAttributeNames($niceNames);
 
         return $validator;
     }

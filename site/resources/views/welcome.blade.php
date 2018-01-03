@@ -236,7 +236,7 @@
         <div class="container-fluid">
             <p class="copyright">
                 <script>document.write(new Date().getFullYear())</script>
-                <a href="http://www.prechaos.ir">کبان رایانه</a>&copy; طراحی توسط
+                <a href="http://www.prechaos.ir">تکبان رایانه</a>&copy; طراحی توسط
             </p>
         </div>
     </footer>

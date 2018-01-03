@@ -232,26 +232,33 @@ class AdminUnitsController extends Controller
         Validator::extend('checkIf', function ($attribute, $value, $parameters, $validator) {
             return !(in_array($parameters[0], array('on', 'true', 1, '1')));
         });
+        $niceNames = [
+          'title'                     => 'عنوان کارگاه',
+          'product'                   => 'نوع فعالیت(محصول)',
+
+          'manager_title'             => 'نام مدیریت',
+          'manager_gender'            => 'جنیست مدیریت',
+          'manager_id_number'         => 'کد ملی مدیریت',
+
+          'city'                      => 'شهر',
+          'address'                   => 'آدرس دقیق',
+          'zip_code'                  => 'کد پستی',
+
+          'phone'                     => 'شماره تماس ثابت',
+          'cell_phone'                => 'شماره تماس همراه',
+
+          'certificate_id'            => 'شماره مجوز',
+          'certificate_type'          => 'نوع مجوز',
+
+          'licence_id'                => 'شماره پروانه',
+          'licence_source'            => 'نوع پروانه',
+        ];
         $messages = [
-            'title.*'                     => 'خطا در فیلد عنوان کارگاه',
-            'product.*'                   => 'خطا در فیلد نوع فعالیت یا محصول',
-
-            'manager_title.*'             => 'خطا در نام مدیریت کارگاه',
-            'manager_gender.*'            => 'خطا در جنسیت مدیر کارگاه',
-            'manager_id_number.*'         => 'خطا در کد ملی مدیریت کارگاه',
-
-            'city'                        => 'لطفا شهر کارگاه را مشخص کنید',
-            'address.*'                   => 'خطا در آدرس',
-            'zip_code.*'                  => 'خطا در کد پستی',
-
-            'phone.*'                     => 'خطا در شماره تماس ثابت',
-            'cell_phone.*'                => 'خطا در شماره تلفن همراه',
-
-            'certificate_id.*'            => 'خطا در شماره مجوز',
-            'certificate_type.*'          => 'نوع مجوز نامعتبر است',
-
-            'licence_id.*'                => 'پروانه کسب نامعتبر',
-            'licence_source.*'            => 'مربج پروانه کسب نامعتبر است',
+          '*.required'                  => 'لطفا :attribute را وارد کنید',
+          '*.email'                     => 'آدرس ایمیل وارد شده نامعتبر است',
+          '*.min'                       => 'حداقل طول :attribute باید :min حرف باشد',
+          '*.size'                      => ':attribute باید :size حرف باید',
+          '*.numeric'                   => ':attribute باید عدد باشد'
         ];
 
         $rules = [
@@ -282,6 +289,7 @@ class AdminUnitsController extends Controller
             'licence_date_year'         => 'required|numeric|min:1380|max:1400',
         ];
         $validator = Validator::make($request->all(), $rules, $messages);
+        $validator->setAttributeNames($niceNames);
 
         return $validator;
     }

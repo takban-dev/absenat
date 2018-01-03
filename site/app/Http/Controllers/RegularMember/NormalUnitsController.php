@@ -240,60 +240,71 @@ class NormalUnitsController extends Controller
         }
     }
     public function myValidate($request){
-        Validator::extend('checkIf', function ($attribute, $value, $parameters, $validator) {
-            return !(in_array($parameters[0], array('on', 'true', 1, '1')));
-        });
-        $messages = [
-            'title.*'                     => 'خطا در فیلد عنوان کارگاه',
-            'product.*'                   => 'خطا در فیلد نوع فعالیت یا محصول',
+      Validator::extend('checkIf', function ($attribute, $value, $parameters, $validator) {
+          return !(in_array($parameters[0], array('on', 'true', 1, '1')));
+      });
+      $niceNames = [
+        'title'                     => 'عنوان کارگاه',
+        'product'                   => 'نوع فعالیت(محصول)',
 
-            'manager_title.*'             => 'خطا در نام مدیریت کارگاه',
-            'manager_gender.*'           => 'خطا در جنسیت مدیر کارگاه',
-            'manager_id_number.*'         => 'خطا در کد ملی مدیریت کارگاه',
+        'manager_title'             => 'نام مدیریت',
+        'manager_gender'            => 'جنیست مدیریت',
+        'manager_id_number'         => 'کد ملی مدیریت',
 
-            'address.*'                   => 'خطا در آدرس',
-            'zip_code.*'                  => 'خطا در کد پستی',
+        'city'                      => 'شهر',
+        'address'                   => 'آدرس دقیق',
+        'zip_code'                  => 'کد پستی',
 
-            'phone.*'                     => 'خطا در شماره تلفن همراه',
-            'cell_phone.*'                => 'خطا در شماره تماس ثابت',
+        'phone'                     => 'شماره تماس ثابت',
+        'cell_phone'                => 'شماره تماس همراه',
 
-            'certificate_id.*'            => 'خطا در شماره مجوز',
-            'certificate_type.*'          => 'نوع مجوز نامعتبر است',
+        'certificate_id'            => 'شماره مجوز',
+        'certificate_type'          => 'نوع مجوز',
 
-            'licence_id.*'                => 'پروانه کسب نامعتبر',
-            'licence_source.*'            => 'مربج پروانه کسب نامعتبر است',
-        ];
+        'licence_id'                => 'شماره پروانه',
+        'licence_source'            => 'نوع پروانه',
+      ];
+      $messages = [
+        '*.required'                  => 'لطفا :attribute را وارد کنید',
+        '*.email'                     => 'آدرس ایمیل وارد شده نامعتبر است',
+        '*.min'                       => 'حداقل طول :attribute باید :min حرف باشد',
+        '*.size'                      => ':attribute باید :size حرف باید',
+        '*.numeric'                   => ':attribute باید عدد باشد'
+      ];
 
-        $rules = [
-            'title'                     => 'required|min:5',
-            'product'                   => 'required|min:5',
+      $rules = [
+          'title'                     => 'required|min:5',
+          'product'                   => 'required|min:5',
 
-            'manager_title'             => 'required|min:5',
-            'manager_gender'           => 'required|in:2,3',
-            'manager_id_number'         => 'required|size:10',
+          'manager_title'             => 'required|min:5',
+          'manager_gender'            => 'required|in:2,3',
+          'manager_id_number'         => 'required|size:10',
 
-            'address'                   => 'required|min:5',
-            'zip_code'                  => 'required|size:10',
+          'city'                      => 'required',
+          'address'                   => 'required|min:5',
+          'zip_code'                  => 'required|size:10',
 
-            'phone'                     => 'required|size:11',
-            'cell_phone'                => 'required|size:11',
+          'phone'                     => 'required|size:11',
+          'cell_phone'                => 'required|size:11',
 
-            'certificate_id'            => 'required_with:has_certificate',
+          'certificate_id'            => 'required_with:has_certificate',
 
-            'certificate_date_day'      => 'required|numeric|min:1|max:30',
-            'certificate_date_month'    => 'required|numeric|min:1|max:12',
-            'certificate_date_year'     => 'required|numeric|min:1380|max:1400',
+          'certificate_date_day'      => 'required|numeric|min:1|max:30',
+          'certificate_date_month'    => 'required|numeric|min:1|max:12',
+          'certificate_date_year'     => 'required|numeric|min:1380|max:1400',
 
-            'licence_id'                => 'required_with:has_licence',
+          'licence_id'                => 'required_with:has_licence',
 
-            'licence_date_day'          => 'required|numeric|min:1|max:30',
-            'licence_date_month'        => 'required|numeric|min:1|max:12',
-            'licence_date_year'         => 'required|numeric|min:1380|max:1400',
-        ];
-        $validator = Validator::make($request->all(), $rules, $messages);
+          'licence_date_day'          => 'required|numeric|min:1|max:30',
+          'licence_date_month'        => 'required|numeric|min:1|max:12',
+          'licence_date_year'         => 'required|numeric|min:1380|max:1400',
+      ];
+      $validator = Validator::make($request->all(), $rules, $messages);
+      $validator->setAttributeNames($niceNames);
 
-        return $validator;
+      return $validator;
     }
+    
     function generatePages($total, $current){
         if($total > 1){
             $total=intval($total);

@@ -212,67 +212,69 @@ class NormalEmployeesController extends Controller
         }
     }
     public function myValidate($request){
-        Validator::extend('checkIf', function ($attribute, $value, $parameters, $validator) {
-            return !(in_array($parameters[0], array('on', 'true', 1, '1')));
-        });
-        $messages = [
-            'first_name.*'                => 'لطفا نام خود را وارد کنید',
-            'last_name.*'                 => 'لطفا نام خانوادگی خود را وارد کنید',
-            
-            'gender.*'                    => 'جنسیت وارد نشده است',
-            'id_number.*'                 => 'کد ملی شاغل وارد نشده است',
-            'father_name.*'               => 'نام ‍پدر وارد نشده است',
-            
-            'birth_date_day.*'            => 'روز تولد انتخاب نشده است',
-            'birth_date_month.*'          => 'ماه تولد انتخاب نشده است',
-            'birth_date_year.*'           => 'سال تولد انتخاب نشده است',
+      Validator::extend('checkIf', function ($attribute, $value, $parameters, $validator) {
+          return !(in_array($parameters[0], array('on', 'true', 1, '1')));
+      });
+      $niceNames = [
+        'first_name'                => 'نام',
+        'last_name'                 => 'نام خانوادگی',
+        'gender'                    => 'جنسیت',
+        'id_number'                 => 'کدملی',
+        'father_name'               => 'نام پدر',
+        'birth_date_day'            => 'روز تولد',
+        'birth_date_month'          => 'ماه تولد',
+        'birth_date_year'           => 'سال تولد',
+        'birth_place'               => 'محل تولد',
+        'habitate'                  => 'محل سکونت',
+        'habitate_years'            => 'سال های سکونت',
+        'degree'                    => 'مدرک تحصیلی',
+        'field_title'               => 'رشته تحصیلی',
+        'job'                       => 'شغل',
+        'marrige'                   => 'وضعیت تاهل',
+        'dependents'                => 'تعداد افراد تحت تکفل',
+        'unit_title'                => 'کارگاه',
+        'experience'                => 'سابقه کار',
+        'address'                   => 'آدرس دقیق',
+      ];
+      $messages = [
+        '*.required'                  => 'لطفا :attribute را وارد کنید',
+        '*.email'                     => 'آدرس ایمیل وارد شده نامعتبر است',
+        '*.min'                       => 'حداقل طول :attribute باید :min حرف باشد',
+        '*.numeric'                   => ':attribute باید عدد باشد'
+      ];
 
-            'birth_place.*'               => 'محل تولد انتخاب نشده است',
+      $rules = [
+          'first_name'                => 'required',
+          'last_name'                 => 'required',
+          
+          'gender'                    => 'required|numeric|int:2,3',
+          'id_number'                 => 'required|size:10',
+          'father_name'               => 'required',
+          
+          'birth_date_day'            => 'required|numeric|min:1|max:30',
+          'birth_date_month'          => 'required|numeric|min:1|max:12',
+          'birth_date_year'           => 'required|numeric',
 
-            'habitate.*'                  => 'محل سکونت را انتخاب کنید',
-            'habitate_years.*'            => 'مدت سال های سکونت را انتخاب کنید',
+          'birth_place'               => 'required',
 
-            'degree.*'                    => 'مدرک تحصیلی انتخاب نشده است',
-            'field.*'                     => 'رشته تحصیلی انتخاب نشده است',
+          'habitate'                  => 'required|numeric',
+          'habitate_years'            => 'required|numeric',
 
-            'marrige.*'                   => 'خطا در وضعیت تاهل',
-            'dependents.*'                => 'تعداد افراد تحت تکفل نامعتبر است',
+          'degree'                    => 'required|numeric',
+          'field_title'               => 'required',
+          'job'                       => 'required|numeric',
 
-            'unit_title'                  => 'عنوان کرگاه را وارد کنید',
-            'experience.*'                => 'تعداد ماه های سابقه کاری را وارد کنید',
-            'address.*'                   => 'آدرس را وارد کنید',
-        ];
+          'marrige'                   => 'required|numeric',
+          'dependents'                => 'required|numeric',
 
-        $rules = [
-            'first_name'                => 'required',
-            'last_name'                 => 'required',
-            
-            'gender'                    => 'required|numeric|int:2,3',
-            'id_number'                 => 'required|size:10',
-            'father_name'               => 'required',
-            
-            'birth_date_day'            => 'required|numeric|min:1|max:30',
-            'birth_date_month'          => 'required|numeric|min:1|max:12',
-            'birth_date_year'           => 'required|numeric',
+          'experience'                => 'required|numeric',
+          'unit_title'                => 'required',
+          'address'                   => 'required',
+      ];
+      $validator = Validator::make($request->all(), $rules, $messages);
+      $validator->setAttributeNames($niceNames);
 
-            'birth_place'               => 'required',
-
-            'habitate'                  => 'required|numeric',
-            'habitate_years'            => 'required|numeric',
-
-            'degree'                    => 'required|numeric',
-            'field'                     => 'required|numeric',
-
-            'marrige'                   => 'required|numeric',
-            'dependents'                => 'required|numeric',
-
-            'unit_title'                => 'required',
-            'experience'                => 'required|numeric',
-            'address'                   => 'required',
-        ];
-        $validator = Validator::make($request->all(), $rules, $messages);
-
-        return $validator;
+      return $validator;
     }
     function generatePages($total, $current){
         if($total > 1){
