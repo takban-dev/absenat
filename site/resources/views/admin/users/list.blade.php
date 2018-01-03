@@ -44,7 +44,7 @@
                         </tbody>
                     </table>
                 @else
-                    <span>هیچ شاغلی ثبت نشده است</span>
+                    <span>هیچ کاربری ثبت نشده است</span>
                 @endif
             </div>
         </div>
@@ -66,7 +66,7 @@
 <div class="row">
     <div class="col-md-12">
         <a href="{{url('admin/user-new')}}">
-            <button type="button" class="btn btn-primary pull-right">شاغل جدید</button>
+            <button type="button" class="btn btn-primary pull-right">کاربر جدید</button>
         </a>
     </div>
 </div>

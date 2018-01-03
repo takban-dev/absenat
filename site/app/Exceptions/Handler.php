@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Exception;
+use Auth;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
@@ -44,6 +45,12 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+      if ($exception instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException) {
+        if(Auth::user())
+          return redirect('/dashboard');
+        else
+          return redirect('/');
+      } 
         return parent::render($request, $exception);
     }
 

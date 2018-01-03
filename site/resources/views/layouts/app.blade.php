@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>شاغلین:@yield('title')</title>
+    <title>{{config('app.name', 'no title')}}:@yield('title')</title>
 
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet"/>
     <link href="{{ asset('css/material-dashboard.css') }}" rel="stylesheet"/>
@@ -48,7 +48,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">سامانه مدیریت اشتغال سازمان منطقه آزاد انزلی</a>
+                    <a class="navbar-brand" href="#">سازمان مدیریت کار و خدمات اشتغال منطقه آزاد انزلی</a>
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">

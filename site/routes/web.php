@@ -1,6 +1,8 @@
 <?php
 
 Route::get('/', function () {
+    if(\Auth::user())
+      return redirect('/dashboard');
     return view('welcome', ['tab' => 'login']);
 })->name('home');
 

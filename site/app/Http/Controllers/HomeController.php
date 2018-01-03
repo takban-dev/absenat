@@ -28,10 +28,19 @@ class HomeController extends Controller
     {
         $userGroupId = Auth::user()->group_code;
 
-        $userCount      = DB::table('users')        ->count();
-        $unitCount      = DB::table('units')        ->count();
-        $employeeCount  = DB::table('employees')    ->count();
+        $userCount = 0;
+        $unitCount = 0;
+        $employeeCount = 0;
 
+        if($userGroupId == 1){
+          $userCount      = DB::table('users')        ->count();
+          $unitCount      = DB::table('units')        ->count();
+          $employeeCount  = DB::table('employees')    ->count();
+        }else{
+          $userCount      = DB::table('users')        ->count();
+          $unitCount      = DB::table('units')        ->where('user', Auth::user()->name)->count();
+          $employeeCount  = DB::table('employees')    ->where('user', Auth::user()->name)->count();
+        }
         $reports = DB::table('reports')
             ->limit(5)->get();
 

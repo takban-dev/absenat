@@ -35,7 +35,7 @@
                     <i class="material-icons">person</i>
                 </div>
                 <div class="card-content">
-                    <p class="category">کابران</p>
+                    <p class="category">کاربران</p>
                     <h3 class="title">{{$userCount}}</h3>
                 </div>
             </div>
