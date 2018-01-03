@@ -168,7 +168,7 @@ class HomeController extends Controller
             
             'name'                      => 'required|min:4',
             'password'                  => 'required|string|min:4',
-            'password_conf'             => 'required|confirmed:password',
+            'password_conf'             => 'required|string|min:4',
             'phone'                     => 'required|string',
             'cellphone'                 => 'required|string',
         ];

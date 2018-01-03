@@ -18,8 +18,6 @@ class NormalUnitsController extends Controller
             ->limit($size)
             ->where('user', '=', Auth::user()->name);
 
-        $units = DB::table('units')->skip($page*$size)->limit($size);
-
         if($request->has('sort')){
             $orders = preg_split('/,/', $request->input('sort'));
             foreach($orders as $order)

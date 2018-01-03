@@ -250,7 +250,7 @@
                             </div>
                             <script type="text/javascript">
                                 $( function() {
-                                    var url = "{{url('api/units')}}";
+                                    var url = "{{url('api/units/')}}";
                                     $.get(url, function(data, status){
                                         var jsonRes = JSON.parse(data);
                                         console.log(jsonRes);

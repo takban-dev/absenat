@@ -237,7 +237,7 @@
                             </div>
                             <script type="text/javascript">
                                 $( function() {
-                                    var url = "{{url('api/units')}}";
+                                    var url = "{{url('api/units/' . Auth::user()->name)}}";
                                     $.get(url, function(data, status){
                                         var jsonRes = JSON.parse(data);
                                         console.log(jsonRes);
