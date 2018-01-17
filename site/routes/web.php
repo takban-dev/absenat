@@ -119,6 +119,9 @@ Route::group(['namespace' => 'RegularMember', 'middleware' => 'auth'], function 
     /* new employee page */
     Route::get('/employee-new/{unitId?}', 'NormalEmployeesController@newGet');
     Route::post('/employee-new', 'NormalEmployeesController@newPost');
+    /* employee remove */
+    Route::get('/employee-remove/{employeeId}', 'NormalEmployeesController@remove');
+    Route::get('/employee-remove-self/{employeeId}', 'NormalEmployeesController@removeSelf');
 
     /* print routes */
     Route::get('/employee-list-print', 'NormalEmployeesController@listPrint');
