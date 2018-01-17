@@ -150,20 +150,31 @@
                             </div>
                         </div>
                         <div class="col-md-6 col-sm-12">
-                            <div class="col-md-8 col-sm-8">
-                                <div class="form-group rtl col-lg-12 col-md-12">
-                                    <div class="form-group" style="margin-top: 0px">
-                                        <select class="form-control" name="field" style="padding-top: 0px">
-                                            @foreach ($study_fields->all() as $field)
-                                                <option value="{{$field->id}}" {{isset($oldInputs)?($field->id==$oldInputs['field']?'selected':''):''}}>{{$field->title}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
+                          <div class="col-md-10 col-sm-10">
+                            <div class="form-group label-floating rtl col-lg-12 col-md-12">
+                                <input type="text" id="field" name="field_title" value="{{isset($oldInputs)? $oldInputs['field_title']: ''}}" class="form-control">
                             </div>
-                            <div class="col-md-4 col-sm-4 text-center" style="margin-top: 30px;">
-                                <span>رشته تحصیلی</span>
-                            </div>
+                          </div>
+                          <div class="col-md-2 col-sm-2 text-center" style="margin-top: 30px;">
+                              <span>رشته تحصیلی</span>
+                          </div>
+                          <script type="text/javascript">
+                              $( function() {
+                                  var url = "{{url('api/study_fields')}}";
+                                  $.get(url, function(data, status){
+                                      var jsonRes = JSON.parse(data);
+                                      console.log(jsonRes);
+                                      $("#field").autocomplete({
+                                          source: jsonRes,
+                                          change: function (event, ui) {
+                                              if(!ui.item){
+                                                  $("#field").val("");
+                                              }
+                                          }
+                                      });
+                                  });
+                              });
+                          </script>
                         </div>
                     </div>
                     <div class="row">

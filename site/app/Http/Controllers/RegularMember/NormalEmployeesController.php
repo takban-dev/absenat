@@ -74,6 +74,7 @@ class NormalEmployeesController extends Controller
             $username = Auth::user()->name;
             
             $unitId = DB::table('units')->where('title', '=', $request->input('unit_title'))->first()->id;
+            $fieldId = DB::table('study_fields')->where('title', '=', $request->input('field_title'))->first()->id;
 
             DB::table('employees')->where(['id' => $id])->update(
                 [
@@ -89,7 +90,7 @@ class NormalEmployeesController extends Controller
                     'habitate'              => $request->input('habitate'),
                     'habitate_years'        => $request->input('habitate_years'),
                     'degree'                => $request->input('degree'),
-                    'field'                 => $request->input('field'),
+                    'field'                 => $fieldId,
                     'job'                   => $request->input('job'),
                     'marrige'               => $request->input('marrige'),
                     'dependents'            => $request->input('dependents'),
@@ -107,7 +108,8 @@ class NormalEmployeesController extends Controller
         $employee = get_object_vars(DB::table('employees')->where('id', '=', $id)->first());
 
         $employee['unit_title'] = DB::table('units')->where('id', '=', $employee['unit_id'])->first()->title;
-        
+        $employee['field_title'] = DB::table('study_fields')->where('id', '=', $employee['field'])->first()->title;
+
         $birth_date = explode('-', $employee['birth_date']);
         $employee['birth_date_day']   = $birth_date[2];
         $employee['birth_date_month'] = $birth_date[1];
@@ -182,6 +184,7 @@ class NormalEmployeesController extends Controller
             $username = Auth::user()->name;
             
             $unitId = DB::table('units')->where('title', '=', $request->input('unit_title'))->first()->id;
+            $fieldId = DB::table('study_fields')->where('title', '=', $request->input('field_title'))->first()->id;
 
             $id = DB::table('employees')->insertGetId(
                 [
@@ -197,7 +200,7 @@ class NormalEmployeesController extends Controller
                     'habitate'              => $request->input('habitate'),
                     'habitate_years'        => $request->input('habitate_years'),
                     'degree'                => $request->input('degree'),
-                    'field'                 => $request->input('field'),
+                    'field'                 => $fieldId,
                     'job'                   => $request->input('job'),
                     'marrige'               => $request->input('marrige'),
                     'dependents'            => $request->input('dependents'),
