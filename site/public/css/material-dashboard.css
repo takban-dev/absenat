@@ -520,7 +520,7 @@ h2.title {
 .off-canvas-sidebar .nav p {
     margin: 0;
     line-height: 30px;
-    font-size: 16px;
+    font-size: 18px;
 }
 
 .sidebar .nav i,
@@ -741,7 +741,7 @@ h2.title {
     position: relative;
     padding: 12px 30px;
     margin: 10px 1px;
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 400;
     text-transform: uppercase;
     letter-spacing: 0;
@@ -1723,7 +1723,7 @@ output {
 .form-control {
     height: 36px;
     padding: 7px 0;
-    font-size: 16px;
+    font-size: 18px;
     line-height: 1.42857;
 }
 
@@ -2205,14 +2205,14 @@ label.control-label {
 
 .form-group.label-floating label.control-label, .form-group.label-placeholder label.control-label {
     top: -7px;
-    font-size: 16px;
+    font-size: 18px;
     line-height: 0.6;
 }
 
 .form-group.label-static label.control-label, .form-group.label-floating.is-focused label.control-label, .form-group.label-floating:not(.is-empty) label.control-label {
     top: -28px;
     right: 0;
-    font-size: 16px;
+    font-size: 18px;
     line-height: 1.07143;
 }
 
@@ -3205,7 +3205,7 @@ fieldset[disabled] .form-group.is-focused .togglebutton label {
 }
 
 .modal .modal-header .close i {
-    font-size: 16px;
+    font-size: 18px;
 }
 
 .modal-notice .instruction {
@@ -4161,7 +4161,7 @@ footer .btn {
 .card .card-footer .stats .material-icons {
     position: relative;
     top: 4px;
-    font-size: 16px;
+    font-size: 18px;
 }
 
 .card .card-footer h6 {
