@@ -29,6 +29,9 @@
                             <th class="rtl text-center">
                                 <a href="{{Request::url() . '?sort=phone'}}">شماره تماس</a>
                             </th>
+                            <th class="rtl text-center">
+                                <a href="{{Request::url() . '?sort=status'}}">وضعیت</a>
+                            </th>
                             <th class="rtl text-center">مشاهده اطلاعات</th>
                             <th class="rtl text-center">حذف</th>
                         </thead>
@@ -37,6 +40,7 @@
                                 <tr>
                                     <td>{{ $user->first_name . ' ' . $user->last_name }}</td>
                                     <td>{{ $user->cellphone }}</td>
+                                    <td>{{ $user->status == 1? 'فعال':'غیرفعال' }}</td>
                                     <td><a href="{{ url( 'admin/user/' . $user->id) }}"><i class="material-icons">assignment_ind</i></a></td>
                                     <td><a href="{{ url( 'admin/user-remove/' . $user->id) }}"><i class="material-icons">delete</i></a></td>
                                 </tr>

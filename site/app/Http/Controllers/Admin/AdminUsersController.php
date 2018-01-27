@@ -54,7 +54,6 @@ class AdminusersController extends Controller
             
             $has_certificate = $request->input('has_certificate');
             $has_licence = $request->input('has_licence');
-
             DB::table('users')->where(['id' => $id])->update(
                 [
                     'name'                  => $request->input('name'),
@@ -65,6 +64,7 @@ class AdminusersController extends Controller
                     'phone'                 => $request->input('phone'),
                     'cellphone'             => $request->input('cellphone'),
                     'group_code'            => $request->input('group_code'),
+                    'status'                => $request->input('status'),
                     'updated_at'            => time()[0]
                 ]
             );

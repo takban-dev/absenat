@@ -77,23 +77,33 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6 col-sm-6 pull-right">
+                        <div class="col-md-4 col-sm-4 pull-right">
                             <div class="form-group label-floating rtl col-lg-12 col-md-12">
                                 <label class="control-label">شماره تماس ثابت</label>
                                 <input type="text" name="phone" value="{{isset($oldInputs)? $oldInputs['phone']: ''}}" class="form-control">
                             </div>
                         </div>
-                        <div class="col-md-6 col-sm-6 pull-right">
+                        <div class="col-md-4 col-sm-4 pull-right">
                             <div class="form-group label-floating rtl col-lg-12 col-md-12">
                                 <label class="control-label">تلفن همراه</label>
                                 <input type="text" name="cellphone" value="{{isset($oldInputs)? $oldInputs['cellphone']: ''}}" class="form-control">
                             </div>
                         </div>
-                    </div>
-                    
-                    <div class="row">
+                        <div class="col-md-4 col-sm-4 pull-right">
+                          <div class="col-md-6 col-sm-6">
+                            <select class="form-control" name="status" style="padding-top: 0px">
+                              <option value="1" {{isset($oldInputs)? ($oldInputs['status'] == 1? 'selected' : ''): ''}}>فعال</option>
+                              <option value="2" {{isset($oldInputs)? ($oldInputs['status'] == 2? 'selected' : ''): ''}}>غیرفعال</option>
+                            </select>
+                          </div>
+                          <div class="col-md-6 col-sm-6 text-center" style="margin-top: 30px;">
+                            <span>وضعیت</span>
+                          </div>
+                            </div>
+                          </div>
+                        <div class="row">
                         <div class="col-md-12">
-                            <button type="submit" class="btn btn-primary pull-right">ثبت تغییرات کاربر</button>
+                          <button type="submit" class="btn btn-primary pull-right">ثبت تغییرات کاربر</button>
                         </div>
                     </div>
                 </form>

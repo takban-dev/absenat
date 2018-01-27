@@ -120,7 +120,7 @@ class HomeController extends Controller
     }
 
     public function login(Request $request){
-        if (Auth::attempt(['name' => $request->input('name'), 'password' => $request->input('password')])) {
+        if (Auth::attempt(['name' => $request->input('name'), 'password' => $request->input('password'), 'status' => 1])) {
             return redirect()->intended('dashboard');
         }else{
             return redirect('/')->withErrors(array('auth-failed' => 'نام کاربری یا کلمه عبور اشتباه است'));;
