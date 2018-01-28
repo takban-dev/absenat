@@ -38,7 +38,7 @@
                                     <td>{{ $report->title }}</td>
                                     <td>{{ $types[$report->type] }}</td>
                                     <td><a href="{{ url( 'admin/report/' . $report->id) }}"><i class="fa fa-play" aria-hidden="true"></i></a></td>
-                                    <td><a href="{{ url( 'admin/report-remove/' . $report->id) }}"><i class="fa fa-file" aria-hidden="true"></i></a></td>
+                                    <td><a href="{{ url( 'admin/report-remove/' . $report->id) }}"><i class="fa fa-remove" aria-hidden="true"></i></a></td>
                                 </tr>
                             @endforeach
                         </tbody>

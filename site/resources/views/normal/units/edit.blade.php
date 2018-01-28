@@ -181,7 +181,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="checkbox pull-right">
-                                پروانه کسب دارد
+                                پروانه کسب / شماره ثبت
                                 <label>
                                     <input type="checkbox" name="has_licence" {{isset($oldInputs['has_licence']) && $oldInputs['has_licence'] == 1 ? 'checked': ''}}>
                                 </label>
