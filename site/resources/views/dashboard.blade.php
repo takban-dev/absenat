@@ -9,7 +9,7 @@
     <div class="col-lg-4 col-md-6 col-sm-6">
         <div class="card card-stats">
             <div class="card-header" data-background-color="orange">
-                <i class="material-icons">people</i>
+                <i class="fa fa-users" aria-hidden="true"></i>
             </div>
             <div class="card-content">
                 <p class="category">شاغلین</p>
@@ -20,7 +20,7 @@
     <div class="col-lg-4 col-md-6 col-sm-6">
         <div class="card card-stats">
             <div class="card-header" data-background-color="green">
-                <i class="material-icons">business_center</i>
+            <i class="fa fa-building-o" aria-hidden="true"></i>
             </div>
             <div class="card-content">
                 <p class="category">واحد ها</p>
@@ -32,7 +32,7 @@
         <div class="col-lg-4 col-md-6 col-sm-6">
             <div class="card card-stats">
                 <div class="card-header" data-background-color="blue">
-                    <i class="material-icons">person</i>
+                    <i class="fa fa-user" aria-hidden="true"></i>
                 </div>
                 <div class="card-content">
                     <p class="category">کاربران</p>
@@ -49,21 +49,21 @@
                 <ul class="nav">
                     <li>
                         <a href="{{url('admin/unit-new')}}">
-                            <i class="material-icons">add_box</i>
+                           <i class="fa fa-plus" aria-hidden="true"></i>
                             ساخت کارگاه جدید
                         </a>
                     </li>
                     @if($group_code == 1)
                     <li>
                         <a href="{{url('admin/user-new')}}">
-                            <i class="material-icons">add_box</i>
+                           <i class="fa fa-plus" aria-hidden="true"></i>
                             ساخت کاربر جدید
                         </a>
                     </li>
                     @endif
                     <li>
                         <a href="{{url('admin/employee-new')}}">
-                            <i class="material-icons">add_box</i>
+                           <i class="fa fa-plus" aria-hidden="true"></i>
                             ساخت شاغل جدید
                         </a>
                     </li>
@@ -85,7 +85,7 @@
                             @foreach ($reports as $report)
                                 <tr>
                                     <td>{{ $report->title }}</td>
-                                    <td><a href="{{ url( 'admin/report/' . $report->id) }}"><i class="material-icons">assignment_ind</i></a></td>
+                                    <td><a href="{{ url( 'admin/report/' . $report->id) }}"><i class="fa fa-file" aria-hidden="true"></i></a></td>
                                 </tr>
                             @endforeach
                         </tbody>

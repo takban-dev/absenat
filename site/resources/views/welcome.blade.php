@@ -61,11 +61,6 @@
                                                 ورود
                                             <div class="ripple-container"></div></a>
                                         </li>
-                                        <li class="{{$tab == 'register'? 'active' : ''}} pull-right">
-                                            <a href="#register" data-toggle="tab">
-                                                ثبت نام
-                                            <div class="ripple-container"></div></a>
-                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -73,72 +68,6 @@
 
                         <div class="card-content">
                             <div class="tab-content">
-                                <div class="tab-pane {{$tab == 'register'? 'active' : ''}}" id="register">
-                                    <form action="{{url('register')}}" method="post">
-                                        {{ csrf_field() }}
-                                        <div class="row">
-                                            <div class="col-md-6 pull-right">
-                                                <div class="form-group label-floating rtl col-lg-12 col-md-12">
-                                                    <label class="control-label">نام</label>
-                                                    <input type="text" value="{{isset($oldInputs)? $oldInputs['first_name']: ''}}" name="first_name" class="form-control">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6 pull-right">
-                                                <div class="form-group label-floating rtl col-lg-12 col-md-12">
-                                                    <label class="control-label">نام خانوادگی</label>
-                                                    <input type="text" value="{{isset($oldInputs)? $oldInputs['last_name']: ''}}" name="last_name" class="form-control">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6 pull-right">
-                                                <div class="form-group label-floating rtl col-lg-12 col-md-12">
-                                                    <label class="control-label">نام کاربری</label>
-                                                    <input type="text" value="{{isset($oldInputs)? $oldInputs['name']: ''}}" name="name" class="form-control">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6 pull-right">
-                                                <div class="form-group label-floating rtl col-lg-12 col-md-12">
-                                                    <label class="control-label">آدرس ایمیل</label>
-                                                    <input type="email" value="{{isset($oldInputs)? $oldInputs['email']: ''}}" name="email" class="form-control">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6 pull-right">
-                                                <div class="form-group label-floating rtl col-lg-12 col-md-12">
-                                                    <label class="control-label">کلمه عبور</label>
-                                                    <input type="password" value="{{isset($oldInputs)? $oldInputs['password']: ''}}" name="password" class="form-control">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6 pull-right">
-                                                <div class="form-group label-floating rtl col-lg-12 col-md-12">
-                                                    <label class="control-label">تکرار کلمه عبور</label>
-                                                    <input type="password" value="{{isset($oldInputs)? $oldInputs['password_conf']: ''}}" name="password_conf" class="form-control">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6 pull-right">
-                                                <div class="form-group label-floating rtl col-lg-12 col-md-12">
-                                                    <label class="control-label">شماره تماس ثابت</label>
-                                                    <input type="text" value="{{isset($oldInputs)? $oldInputs['phone']: ''}}" name="phone" class="form-control">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6 pull-right">
-                                                <div class="form-group label-floating rtl col-lg-12 col-md-12">
-                                                    <label class="control-label">شماره تلفن همراه</label>
-                                                    <input type="text" value="{{isset($oldInputs)? $oldInputs['cellphone']: ''}}" name="cellphone" class="form-control">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <button type="submit" class="btn btn-primary pull-right">ثبت نام</button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
                                 <div class="tab-pane {{$tab == 'login'? 'active' : ''}}" id="login">
                                     <form action="{{url('login')}}" method="post">
                                         {{ csrf_field() }}

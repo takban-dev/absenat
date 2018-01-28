@@ -7,7 +7,7 @@
 @section('back')
 <li>
     <a href="{{url('units')}}">
-        <i class="material-icons">keyboard_return</i>
+       <i class="fa fa-level-up" aria-hidden="true"></i>
     </a>
 </li>
 @endsection
@@ -28,13 +28,13 @@
             <div class="card-header rtl" data-background-color="purple">
                 <h4 class="title">{{$oldInputs['title']}}</h4>
                 <a href="{{url('unit-single-print/' . $oldInputs['id'])}}" data-toggle="tooltip" target="_blank" title="پرینت واحد">
-                    <i class="material-icons">print</i>
+                   <i class="fa fa-print" aria-hidden="true"></i>
                 </a>
                 <a href="{{url('unit-single-print/' . $oldInputs['id'] . '?showEmployees=true')}}" target="_blank" data-toggle="tooltip" title="پرینت واحد و لیست شاغلین">
-                    <i class="material-icons">print</i>
+                   <i class="fa fa-print" aria-hidden="true"></i>
                 </a>
                 <a href="{{url('unit-single-print/' . $oldInputs['id'] . '?showEmployees=true&complete=true')}}" target="_blank" data-toggle="tooltip" title="پرینت واحد و اطلاعات شاغلین">
-                    <i class="material-icons">print</i>
+                   <i class="fa fa-print" aria-hidden="true"></i>
                 </a>
             </div>
             <div class="card-content">
@@ -268,8 +268,8 @@
                                     <td>{{$employee->habitate}}</td>
                                     <td>{{$employee->field . ' - ' . $employee->degree}}</td>
                                     <td>{{$employee->unit}}</td>
-                                    <td><a href="{{ url( 'admin/employee/' . $employee->id) }}"><i class="material-icons">assignment_ind</i></a></td>
-                                    <td><a href="{{ url( 'admin/employee-remove/' . $employee->id) }}"><i class="material-icons">delete</i></a></td>
+                                    <td><a href="{{ url( 'admin/employee/' . $employee->id) }}"><i class="fa fa-file" aria-hidden="true"></i></a></td>
+                                    <td><a href="{{ url( 'admin/employee-remove/' . $employee->id) }}"><i class="fa fa-trash-o" aria-hidden="true"></i></a></td>
                                 </tr>
                             @endforeach
                         </tbody>

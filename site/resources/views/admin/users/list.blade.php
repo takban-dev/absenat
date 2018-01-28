@@ -6,9 +6,9 @@
 
 @section('back')
 <li>
-    <a href="{{url('dashboard')}}">
-        <i class="material-icons">keyboard_return</i>
-    </a>
+  <a href="{{url('dashboard')}}">
+   <i class="fa fa-level-up" aria-hidden="true"></i>
+  </a>
 </li>
 @endsection
 
@@ -41,8 +41,8 @@
                                     <td>{{ $user->first_name . ' ' . $user->last_name }}</td>
                                     <td>{{ $user->cellphone }}</td>
                                     <td>{{ $user->status == 1? 'فعال':'غیرفعال' }}</td>
-                                    <td><a href="{{ url( 'admin/user/' . $user->id) }}"><i class="material-icons">assignment_ind</i></a></td>
-                                    <td><a href="{{ url( 'admin/user-remove/' . $user->id) }}"><i class="material-icons">delete</i></a></td>
+                                    <td><a href="{{ url( 'admin/user/' . $user->id) }}"><i class="fa fa-file" aria-hidden="true"></i></a></td>
+                                    <td><a href="{{ url( 'admin/user-remove/' . $user->id) }}"><i class="fa fa-trash-o" aria-hidden="true"></i></a></td>
                                 </tr>
                             @endforeach
                         </tbody>

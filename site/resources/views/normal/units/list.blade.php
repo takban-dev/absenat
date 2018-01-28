@@ -7,7 +7,7 @@
 @section('back')
 <li>
     <a href="{{url('dashboard')}}">
-        <i class="material-icons">keyboard_return</i>
+       <i class="fa fa-level-up" aria-hidden="true"></i>
     </a>
 </li>
 @endsection
@@ -41,8 +41,8 @@
                                     <td>{{ $unit->title }}</td>
                                     <td>{{ $unit->manager_title }}</td>
                                     <td>{{ $unit->phone }}</td>
-                                    <td><a href="{{ url( 'unit/' . $unit->id) }}"><i class="material-icons">assignment_ind</i></a></td>
-                                    <td><a href="{{ url( 'unit-remove/' . $unit->id) }}"><i class="material-icons">delete</i></a></td>
+                                    <td><a href="{{ url( 'unit/' . $unit->id) }}"><i class="fa fa-file" aria-hidden="true"></i></a></td>
+                                    <td><a href="{{ url( 'unit-remove/' . $unit->id) }}"><i class="fa fa-trash-o" aria-hidden="true"></i></a></td>
                                 </tr>
                             @endforeach
                         </tbody>

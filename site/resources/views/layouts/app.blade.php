@@ -14,12 +14,11 @@
     <link href="{{ asset('css/material-dashboard.css') }}" rel="stylesheet"/>
     <link href="{{ asset('css/demo.css') }}" rel="stylesheet"/>
 
-    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
-    <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' rel='stylesheet'
-          type='text/css'>
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet"> -->
+    <!-- <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' rel='stylesheet' type='text/css'> -->
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <link href="https://fonts.googleapis.com/css?family=Lateef" rel="stylesheet">
-    
+    <!-- <link href="https://fonts.googleapis.com/css?family=Lateef" rel="stylesheet"> -->
+    <link rel="stylesheet" href="{{asset('css/font-awesome.min.css')}}">
     <script src="{{ asset('js/jquery-3.1.0.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/jquery.autocomplete.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/bootstrap.min.js') }}" type="text/javascript"></script>
@@ -55,12 +54,12 @@
                         @yield('back')
                         <li>
                             <a href="{{url('profile')}}">
-                                <i class="material-icons">person</i>
+                                <i class="fa fa-user" aria-hidden="true"></i>
                             </a>
                         </li>
                         <li>
                             <a href="{{url('logout')}}">
-                                <i class="material-icons">lock</i>
+                               <i class="fa fa-lock" aria-hidden="true"></i>
                             </a>
                         </li>
                     </ul>
@@ -96,7 +95,7 @@
                     <li>
                 @endif
                     <a href="{{url('dashboard')}}">
-                        <i class="material-icons">dashboard</i>
+                    <i class="fa fa-desktop" aria-hidden="true"></i>
                         <p>داشبورد</p>
                     </a>
                 </li>
@@ -107,7 +106,7 @@
                         <li>
                     @endif
                         <a href="{{url('admin/users')}}">
-                            <i class="material-icons">people</i>
+                            <i class="fa fa-users" aria-hidden="true"></i>
                             <p>کاربران</p>
                         </a>
                     </li>
@@ -117,7 +116,7 @@
                         <li>
                     @endif
                         <a href="{{url('admin/units')}}">
-                            <i class="material-icons">library_books</i>
+                        <i class="fa fa-building" aria-hidden="true"></i>
                             <p>کارگاه ها</p>
                         </a>
                     </li>
@@ -127,7 +126,7 @@
                         <li>
                     @endif
                         <a href="{{url('admin/employees')}}">
-                            <i class="material-icons">people_outline</i>
+                          <i class="fa fa-id-card" aria-hidden="true"></i>
                             <p>شاغلین</p>
                         </a>
                     </li>
@@ -137,7 +136,7 @@
                         <li>
                     @endif
                         <a href="{{url('admin/reports')}}">
-                            <i class="material-icons">show_chart</i>
+                        <i class="fa fa-bar-chart" aria-hidden="true"></i>
                             <p>آمار ها و گزارشات</p>
                         </a>
                     </li>
@@ -147,7 +146,7 @@
                         <li>
                     @endif
                         <a href="{{url('admin/backup')}}">
-                            <i class="material-icons">show_chart</i>
+                        <i class="fa fa-hdd-o" aria-hidden="true"></i>
                             <p>پشتیبان گیری</p>
                         </a>
                     </li>

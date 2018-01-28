@@ -7,7 +7,7 @@
 @section('back')
 <li>
     <a href="{{url('units')}}">
-        <i class="material-icons">keyboard_return</i>
+       <i class="fa fa-level-up" aria-hidden="true"></i>
     </a>
 </li>
 @endsection

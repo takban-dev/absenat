@@ -7,7 +7,7 @@
 @section('back')
 <li>
     <a href="{{url('admin/employees')}}">
-        <i class="material-icons">keyboard_return</i>
+       <i class="fa fa-level-up" aria-hidden="true"></i>
     </a>
 </li>
 @endsection
@@ -27,7 +27,7 @@
         <ul class="nav navbar-nav navbar-right">
             <li>
                 <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
-                    <i class="material-icons">person</i>
+                    <i class="fa fa-user" aria-hidden="true"></i>
                     <p class="hidden-lg hidden-md">Profile</p>
                 </a>
             </li>
@@ -60,7 +60,7 @@
             <div class="card-header rtl" data-background-color="purple">
                 <h4 class="title">{{$oldInputs['first_name'] . ' ' . $oldInputs['last_name']}}</h4>
                 <a href="{{url('admin/employee-single-print/' . $oldInputs['id'])}}" target="_blank">
-                    <i class="material-icons">print</i>
+                   <i class="fa fa-print" aria-hidden="true"></i>
                 </a>
                 <!-- <a href="{{url('admin/employee-remove-self/' . $oldInputs['id'])}}">
                     <i class="material-icons">close</i>

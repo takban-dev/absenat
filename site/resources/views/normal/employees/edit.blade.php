@@ -7,7 +7,7 @@
 @section('back')
 <li>
     <a href="{{url('employees')}}">
-        <i class="material-icons">keyboard_return</i>
+       <i class="fa fa-level-up" aria-hidden="true"></i>
     </a>
 </li>
 @endsection
@@ -28,7 +28,7 @@
             <div class="card-header rtl" data-background-color="purple">
                 <h4 class="title">{{$oldInputs['first_name'] . ' ' . $oldInputs['last_name']}}</h4>
                 <a href="{{url('employee-single-print/' . $oldInputs['id'])}}" target="_blank">
-                    <i class="material-icons">print</i>
+                   <i class="fa fa-print" aria-hidden="true"></i>
                 </a>
 
             </div>
