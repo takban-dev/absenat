@@ -147,7 +147,7 @@
                     @endif
                         <a href="{{url('admin/backup')}}">
                         <i class="fa fa-hdd-o" aria-hidden="true"></i>
-                            <p>پشتیبان گیری</p>
+                          <p>پشتیبان گیری</p>
                         </a>
                     </li>
                 @else
@@ -157,8 +157,8 @@
                         <li>
                     @endif
                         <a href="{{url('units')}}">
-                            <i class="material-icons">library_books</i>
-                            <p>کارگاه ها</p>
+                          <i class="fa fa-building" aria-hidden="true"></i>
+                          <p>کارگاه ها</p>
                         </a>
                     </li>
                     @if(Request::url() == url('employees'))
@@ -166,10 +166,10 @@
                     @else
                         <li>
                     @endif
-                        <a href="{{url('employees')}}">
-                            <i class="material-icons">people_outline</i>
-                            <p>شاغلین</p>
-                        </a>
+                      <a href="{{url('employees')}}">
+                        <i class="fa fa-id-card" aria-hidden="true"></i>
+                          <p>شاغلین</p>
+                      </a>
                     </li>
                 @endif
                 
