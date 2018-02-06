@@ -50,6 +50,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['aut
     /* single employees page for editing or viewing */
     Route::get('/employee/{employeeId}/{page?}/{size?}', 'AdminEmployeesController@editGet')->where('employeeId', '[0-9]+');
     Route::post('/employee/{employeeId}/{page?}/{size?}', 'AdminEmployeesController@editPost')->where('employeeId', '[0-9]+');
+    Route::get('/employee/tracks/remove/{id}', 'AdminEmployeesController@remove_track')->where('id', '[0-9]+');
     /* new employee page */
     Route::get('/employee-new/{unitId?}', 'AdminEmployeesController@newGet');
     Route::post('/employee-new', 'AdminEmployeesController@newPost');

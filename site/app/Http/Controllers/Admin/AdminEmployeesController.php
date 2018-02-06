@@ -53,8 +53,30 @@ class AdminEmployeesController extends Controller
             ]);
     }
 
+    public function remove_track($id){
+      DB::table('work_history')->where('id', $id)->delete();
+      return redirect()->back();
+    }
     public function editPost(Request $request, $id){
         $group_code = Auth::user()->group_code;
+        if($request->has('track')){
+          if($request->input('track') == 'new'){
+            DB::table('work_history')->insert([
+              'employee_id'     => $id,
+              'unit_id'         => DB::table('units')->where('title', '=', $request->input('unit_track_title'))->first()->id,
+              'duration'        => $request->input('duration'),
+            ]);
+            return redirect('admin/employee/' . $id);
+          }else if($request->input('track') == 'edit'){
+            DB::table('work_history')
+              ->where('id', $request->input('track_id'))
+              ->update([
+                'unit_id'         => DB::table('units')->where('title', '=', $request->input('unit_track_title_' . $request->input('track_id')))->first()->id,
+                'duration'        => $request->input('duration'),
+              ]);
+            return redirect('admin/employee/' . $id);
+          }
+        }
         $validator = $this->myValidate($request);
         if($validator->fails()){
             $oldInputs = $request->all();
@@ -116,6 +138,11 @@ class AdminEmployeesController extends Controller
 
         $employee['unit_title'] = DB::table('units')->where('id', '=', $employee['unit_id'])->first()->title;
         $employee['field_title'] = DB::table('study_fields')->where('id', '=', $employee['field'])->first()->title;
+        $employee['work_history'] = DB::table('work_history')
+          ->join('units', 'units.id', '=', 'work_history.unit_id')
+          ->select('work_history.*', 'units.title')
+          ->where('employee_id', '=', $employee['id'])
+          ->get();
 
         $birth_date = explode('-', $employee['birth_date']);
         $employee['birth_date_day']   = $birth_date[2];

@@ -142,7 +142,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="row">
                         <div class="col-md-4 col-sm-6 pull-right">
                             <div class="form-group label-floating rtl col-lg-12 col-md-12">
@@ -204,32 +203,32 @@
                                 <span>مدرک تحصیلی</span>
                             </div>
                         </div>
-                        <div class="col-md-6- col-sm-6">
-                            <div class="col-md-10 col-sm-10">
-                                <div class="form-group label-floating rtl col-lg-12 col-md-12">
-                                    <input type="text" id="field" name="field_title" value="{{isset($oldInputs)? $oldInputs['field_title']: ''}}" class="form-control">
-                                </div
->                            </div>
-                            <div class="col-md-2 col-sm-2 text-center" style="margin-top: 30px;">
-                                <span>رشته تحصیلی</span>
-                            </div>
-                            <script type="text/javascript">
-                                $( function() {
-                                    var url = "{{url('api/study_fields')}}";
-                                    $.get(url, function(data, status){
-                                        var jsonRes = JSON.parse(data);
-                                        console.log(jsonRes);
-                                        $("#field").autocomplete({
-                                            source: jsonRes,
-                                            change: function (event, ui) {
-                                                if(!ui.item){
-                                                    $("#field").val("");
-                                                }
-                                            }
-                                        });
-                                    });
-                                });
-                            </script>
+                        <div class="col-md-6- col-sm-6"
+                          <div class="col-md-10 col-sm-10">
+                              <div class="form-group label-floating rtl col-lg-12 col-md-12">
+                                  <input type="text" id="field" name="field_title" value="{{isset($oldInputs)? $oldInputs['field_title']: ''}}" class="form-control">
+                              </div>
+
+                          <div class="col-md-2 col-sm-2 text-center" style="margin-top: 30px;">
+                              <span>رشته تحصیلی</span>
+                          </div>
+                          <script type="text/javascript">
+                              $( function() {
+                                  var url = "{{url('api/study_fields')}}";
+                                  $.get(url, function(data, status){
+                                      var jsonRes = JSON.parse(data);
+                                      console.log(jsonRes);
+                                      $("#field").autocomplete({
+                                          source: jsonRes,
+                                          change: function (event, ui) {
+                                              if(!ui.item){
+                                                  $("#field").val("");
+                                              }
+                                          }
+                                      });
+                                  });
+                              });
+                          </script>
                         </div>
                     </div>
                     <div class="row">
@@ -283,8 +282,8 @@
                             <div class="col-md-10 col-sm-10">
                                 <div class="form-group label-floating rtl col-lg-12 col-md-12">
                                     <input type="text" id="unit" name="unit_title" readonly="readonly" value="{{isset($oldInputs)? $oldInputs['unit_title']: ''}}" class="form-control">
-                                </div
->                            </div>
+                                </div>
+                            </div>
                             <div class="col-md-2 col-sm-2 text-center" style="margin-top: 30px;">
                                 <span>کارگاه</span>
                             </div>
@@ -316,6 +315,106 @@
                         </div>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12 col-md-12">
+        <div class="card">
+            <div class="card-header rtl" data-background-color="purple">
+                <h4 class="title">سوابق کاری</h4>
+            </div>
+            <div class="card-content center">
+              @if(sizeof($oldInputs['work_history']))
+                @foreach($oldInputs['work_history'] as $track)
+                  <div class="row">
+                    <form method="POST">
+                      {{csrf_field()}}
+                      <input hidden name="track_id" value="{{$track->id}}" />
+                      <div class="col-md-4 col-sm-4">
+                        <a href="{{url('admin/employee/tracks/remove/' . $track->id)}}">
+                          <button type="button" style="margin-top: 15px" class="btn btn-primary pull-left">حذف</button>
+                        </a>
+                        <button type="submit" style="margin-top: 15px" name="track" value="edit" class="btn btn-primary pull-left">ثبت</button>
+                      </div>
+                      <div class="col-md-6 col-sm-12 pull-right">
+                          <div class="col-md-10 col-sm-10">
+                            <div class="form-group label-floating rtl col-lg-12 col-md-12">
+                              <input type="text" id="unit_track_{{$track->id}}" value="{{$track->title}}" name="unit_track_title_{{$track->id}}" class="form-control">
+                            </div>
+                          </div>
+                          <div class="col-md-2 col-sm-2 text-center" style="margin-top: 30px;">
+                            <span>کارگاه</span>
+                          </div>
+                          <script type="text/javascript">
+                            $( function() {
+                              var url = "{{url('api/units')}}";
+                              $.get(url, function(data, status){
+                                var jsonRes = JSON.parse(data);
+                                $("#unit_track_{{$track->id}}").autocomplete({
+                                  source: jsonRes,
+                                  change: function (event, ui) {
+                                    if(!ui.item){
+                                      $("#unit_track_{{$track->id}}").val("");
+                                    }
+                                  }
+                                });
+                              });
+                            });
+                          </script>
+                      </div>
+                      <div class="col-md-2 col-sm-8 pull-right">
+                          <div class="form-group label-floating rtl col-lg-12 col-md-12">
+                              <label class="control-label">مدت کار(ماه)</label>
+                              <input type="number" min="1" value="{{$track->duration}}" name="duration" class="form-control">
+                          </div>
+                      </div>
+                    </form>
+                  </div>
+                @endforeach
+              @else
+              @endif
+              <div class="row">
+                <form method="POST">
+                  {{csrf_field()}}
+                  <div class="col-md-1 col-sm-4">
+                    <button type="submit" style="margin-top: 15px" name="track" value="new" class="btn btn-primary pull-left">ثبت</button>
+                  </div>
+                  <div class="col-md-6 col-sm-12 pull-right">
+                      <div class="col-md-10 col-sm-10">
+                        <div class="form-group label-floating rtl col-lg-12 col-md-12">
+                          <input type="text" id="unit_track" name="unit_track_title" class="form-control">
+                        </div>
+                      </div>
+                      <div class="col-md-2 col-sm-2 text-center" style="margin-top: 30px;">
+                        <span>کارگاه</span>
+                      </div>
+                      <script type="text/javascript">
+                        $( function() {
+                          var url = "{{url('api/units')}}";
+                          $.get(url, function(data, status){
+                            var jsonRes = JSON.parse(data);
+                            $("#unit_track").autocomplete({
+                              source: jsonRes,
+                              change: function (event, ui) {
+                                if(!ui.item){
+                                  $("#unit_track").val("");
+                                }
+                              }
+                            });
+                          });
+                        });
+                      </script>
+                  </div>
+                  <div class="col-md-2 col-sm-8 pull-right">
+                      <div class="form-group label-floating rtl col-lg-12 col-md-12">
+                          <label class="control-label">مدت کار(ماه)</label>
+                          <input type="number" min="1" name="duration" class="form-control">
+                      </div>
+                  </div>
+                </form>
+              </div>
             </div>
         </div>
     </div>
