@@ -180,7 +180,7 @@
                                                         <i class="material-icons">edit</i>
                                                     </button>
                                                     <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
-                                                        <i class="material-icons">close</i>
+                                                        <i class="fa fa-times" aria-hidden="true"></i>
                                                     </button>
                                                 </td>
                                             </tr>
@@ -199,7 +199,7 @@
                                                         <i class="material-icons">edit</i>
                                                     </button>
                                                     <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
-                                                        <i class="material-icons">close</i>
+                                                        <i class="fa fa-times" aria-hidden="true"></i>
                                                     </button>
                                                 </td>
                                             </tr>
@@ -217,7 +217,7 @@
                                                         <i class="material-icons">edit</i>
                                                     </button>
                                                     <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
-                                                        <i class="material-icons">close</i>
+                                                        <i class="fa fa-times" aria-hidden="true"></i>
                                                     </button>
                                                 </td>
                                             </tr>

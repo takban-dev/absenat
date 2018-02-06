@@ -63,10 +63,10 @@
                    <i class="fa fa-print" aria-hidden="true"></i>
                 </a>
                 <!-- <a href="{{url('admin/employee-remove-self/' . $oldInputs['id'])}}">
-                    <i class="material-icons">close</i>
+                    <i class="fa fa-times" aria-hidden="true"></i>
                 </a> -->
                 <a onclick="remove({{$oldInputs['id']}}, '{{$oldInputs['first_name'] . ' ' . $oldInputs['last_name']}}')">
-                    <i class="material-icons">close</i>
+                    <i class="fa fa-times" aria-hidden="true"></i>
                 </a>
             </div>
             <div class="card-content">
