@@ -338,7 +338,7 @@
                         </a>
                         <button type="submit" style="margin-top: 15px" name="track" value="edit" class="btn btn-primary pull-left">ثبت</button>
                       </div>
-                      <div class="col-md-6 col-sm-12 pull-right">
+                      <div class="col-md-3 col-sm-12 pull-right">
                           <div class="col-md-10 col-sm-10">
                             <div class="form-group label-floating rtl col-lg-12 col-md-12">
                               <input type="text" id="unit_track_{{$track->id}}" value="{{$track->title}}" name="unit_track_title_{{$track->id}}" class="form-control">
@@ -364,11 +364,36 @@
                             });
                           </script>
                       </div>
+                      <div class="col-md-3 col-sm-8 pull-right">
+                        <div class="col-md-4">
+                          <select class="form-control" name="track_date_day_{{$track->id}}" style="padding-top: 0px">
+                              @for ($i=1; $i<=31; $i++)
+                                  <option value="{{$i}}" {{$track->time['mday'] == $i? 'selected': ''}}>{{$i}}</option>
+                              @endfor
+                          </select>
+                        </div>
+                        <div class="col-md-4">
+                            <select class="form-control" name="track_date_month_{{$track->id}}" style="padding-top: 0px">
+                                @foreach($months as $key => $val)
+                                    <option value="{{$key}}" {{$track->time['mon'] == $i? 'selected': ''}} >{{$val}}</option>    
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <select class="form-control" name="track_date_year_{{$track->id}}" style="padding-top: 0px">
+                                @for ($i=1390; $i<1400; $i++)
+                                    <option value="{{$i}}" {{$track->time['year'] == $i? 'selected': ''}}>{{$i}}</option>
+                                @endfor
+                            </select>
+                        </div>
+                      </div>
                       <div class="col-md-2 col-sm-8 pull-right">
-                          <div class="form-group label-floating rtl col-lg-12 col-md-12">
-                              <label class="control-label">مدت کار(ماه)</label>
-                              <input type="number" min="1" value="{{$track->duration}}" name="duration" class="form-control">
-                          </div>
+                        <div class="col-md-12">
+                          <select class="form-control" name="track_type_{{$track->id}}" style="padding-top: 0px">
+                            <option value="1" {{$track->type == 1?'selected': ''}}>ورود</option>
+                            <option value="2" {{$track->type == 2?'selected': ''}}>خروج</option>
+                          </select>
+                        </div>
                       </div>
                     </form>
                   </div>
@@ -381,7 +406,7 @@
                   <div class="col-md-1 col-sm-4">
                     <button type="submit" style="margin-top: 15px" name="track" value="new" class="btn btn-primary pull-left">ثبت</button>
                   </div>
-                  <div class="col-md-6 col-sm-12 pull-right">
+                  <div class="col-md-5 col-sm-12 pull-right">
                       <div class="col-md-10 col-sm-10">
                         <div class="form-group label-floating rtl col-lg-12 col-md-12">
                           <input type="text" id="unit_track" name="unit_track_title" class="form-control">
@@ -407,11 +432,36 @@
                         });
                       </script>
                   </div>
+                  <div class="col-md-4 col-sm-8 pull-right">
+                    <div class="col-md-4">
+                      <select class="form-control" name="track_date_day" style="padding-top: 0px">
+                          @for ($i=1; $i<=31; $i++)
+                            <option value="{{$i}}">{{$i}}</option>
+                          @endfor
+                      </select>
+                    </div>
+                    <div class="col-md-4">
+                      <select class="form-control" name="track_date_month" style="padding-top: 0px">
+                        @foreach($months as $key => $val)
+                          <option value="{{$key}}" >{{$val}}</option>    
+                        @endforeach
+                      </select>
+                    </div>
+                    <div class="col-md-4">
+                      <select class="form-control" name="track_date_year" style="padding-top: 0px">
+                        @for ($i=1390; $i<1400; $i++)
+                          <option value="{{$i}}">{{$i}}</option>
+                        @endfor
+                      </select>
+                    </div>
+                  </div>
                   <div class="col-md-2 col-sm-8 pull-right">
-                      <div class="form-group label-floating rtl col-lg-12 col-md-12">
-                          <label class="control-label">مدت کار(ماه)</label>
-                          <input type="number" min="1" name="duration" class="form-control">
-                      </div>
+                    <div class="col-md-12">
+                      <select class="form-control" name="track_type" style="padding-top: 0px">
+                        <option value="1">ورود</option>
+                        <option value="2">خروج</option>
+                      </select>
+                    </div>
                   </div>
                 </form>
               </div>

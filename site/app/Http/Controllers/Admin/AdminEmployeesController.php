@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
-
+use App\Time;
 class AdminEmployeesController extends Controller
 {
     public function list(Request $request, $page=0, $size=10)
@@ -61,18 +61,22 @@ class AdminEmployeesController extends Controller
         $group_code = Auth::user()->group_code;
         if($request->has('track')){
           if($request->input('track') == 'new'){
+            $time = Time::jmktime(12,12,12, $request->input('track_date_month'),$request->input('track_date_day'),$request->input('track_date_year'));
             DB::table('work_history')->insert([
               'employee_id'     => $id,
               'unit_id'         => DB::table('units')->where('title', '=', $request->input('unit_track_title'))->first()->id,
-              'duration'        => $request->input('duration'),
+              'time'            => $time,
+              'type'            => $request->input('track_type'),
             ]);
             return redirect('admin/employee/' . $id);
           }else if($request->input('track') == 'edit'){
+            $time = Time::jmktime(12,12,12, $request->input('track_date_month_' . $request->input('track_id')),$request->input('track_date_day_' . $request->input('track_id')),$request->input('track_date_year_' . $request->input('track_id')));
             DB::table('work_history')
               ->where('id', $request->input('track_id'))
               ->update([
                 'unit_id'         => DB::table('units')->where('title', '=', $request->input('unit_track_title_' . $request->input('track_id')))->first()->id,
-                'duration'        => $request->input('duration'),
+                'time'            => $time,
+                'type'            => $request->input('track_type_' . $request->input('track_id')),
               ]);
             return redirect('admin/employee/' . $id);
           }
@@ -143,7 +147,10 @@ class AdminEmployeesController extends Controller
           ->select('work_history.*', 'units.title')
           ->where('employee_id', '=', $employee['id'])
           ->get();
-
+        for($i=0; $i<sizeof($employee['work_history']); $i++){
+          $employee['work_history'][$i]->time = Time::jgetdate($employee['work_history'][$i]->time);
+        }
+        return json_encode($employee['work_history']);
         $birth_date = explode('-', $employee['birth_date']);
         $employee['birth_date_day']   = $birth_date[2];
         $employee['birth_date_month'] = $birth_date[1];
