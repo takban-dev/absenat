@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use App\Time;
 
 class NormalEmployeesController extends Controller
 {
@@ -44,11 +45,38 @@ class NormalEmployeesController extends Controller
             'pageSize'      => $size,
             'pagination'    => $this->generatePages($pageCount, $page),
             'pageCount'     => ceil($employeeCount / $size),
+            'sort'          => $request->has('sort')? ('?sort=' . $request->input('sort')) : '',
             ]);
     }
 
+    public function remove_track($id){
+      DB::table('work_history')->where('id', $id)->delete();
+      return redirect()->back();
+    }
     public function editPost(Request $request, $id){
         $group_code = Auth::user()->group_code;
+        if($request->has('track')){
+          if($request->input('track') == 'new'){
+            $time = Time::jmktime(12,12,12, $request->input('track_date_month'),$request->input('track_date_day'),$request->input('track_date_year'));
+            DB::table('work_history')->insert([
+              'employee_id'     => $id,
+              'unit_id'         => DB::table('units')->where('title', '=', $request->input('unit_track_title'))->first()->id,
+              'time'            => $time,
+              'type'            => $request->input('track_type'),
+            ]);
+            return redirect('employee/' . $id);
+          }else if($request->input('track') == 'edit'){
+            $time = Time::jmktime(12,12,12, $request->input('track_date_month_' . $request->input('track_id')),$request->input('track_date_day_' . $request->input('track_id')),$request->input('track_date_year_' . $request->input('track_id')));
+            DB::table('work_history')
+              ->where('id', $request->input('track_id'))
+              ->update([
+                'unit_id'         => DB::table('units')->where('title', '=', $request->input('unit_track_title_' . $request->input('track_id')))->first()->id,
+                'time'            => $time,
+                'type'            => $request->input('track_type_' . $request->input('track_id')),
+              ]);
+            return redirect('employee/' . $id);
+          }
+        }
         $validator = $this->myValidate($request);
         if($validator->fails()){
             $oldInputs = $request->all();
@@ -109,6 +137,14 @@ class NormalEmployeesController extends Controller
 
         $employee['unit_title'] = DB::table('units')->where('id', '=', $employee['unit_id'])->first()->title;
         $employee['field_title'] = DB::table('study_fields')->where('id', '=', $employee['field'])->first()->title;
+        $employee['work_history'] = DB::table('work_history')
+          ->join('units', 'units.id', '=', 'work_history.unit_id')
+          ->select('work_history.*', 'units.title')
+          ->where('employee_id', '=', $employee['id'])
+          ->get();
+        for($i=0; $i<sizeof($employee['work_history']); $i++){
+          $employee['work_history'][$i]->time = Time::jgetdate($employee['work_history'][$i]->time);
+        }
 
         $birth_date = explode('-', $employee['birth_date']);
         $employee['birth_date_day']   = $birth_date[2];

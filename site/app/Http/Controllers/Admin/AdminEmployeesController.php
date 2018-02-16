@@ -150,7 +150,7 @@ class AdminEmployeesController extends Controller
         for($i=0; $i<sizeof($employee['work_history']); $i++){
           $employee['work_history'][$i]->time = Time::jgetdate($employee['work_history'][$i]->time);
         }
-        return json_encode($employee['work_history']);
+        // return json_encode($employee['work_history']);
         $birth_date = explode('-', $employee['birth_date']);
         $employee['birth_date_day']   = $birth_date[2];
         $employee['birth_date_month'] = $birth_date[1];
