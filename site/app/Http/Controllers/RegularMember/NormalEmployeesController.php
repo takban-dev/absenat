@@ -58,22 +58,32 @@ class NormalEmployeesController extends Controller
         if($request->has('track')){
           if($request->input('track') == 'new'){
             $time = Time::jmktime(12,12,12, $request->input('track_date_month'),$request->input('track_date_day'),$request->input('track_date_year'));
+            $unitId = DB::table('units')->where('title', '=', $request->input('unit_track_title'))->first()->id;
             DB::table('work_history')->insert([
               'employee_id'     => $id,
-              'unit_id'         => DB::table('units')->where('title', '=', $request->input('unit_track_title'))->first()->id,
+              'unit_id'         => $unitId,
               'time'            => $time,
               'type'            => $request->input('track_type'),
             ]);
+            if($request->input('track_type') == 1)
+              DB::table('employees')->where(['id' => $id])
+                ->update(['unit_id' => $unitId]);
+
             return redirect('employee/' . $id);
           }else if($request->input('track') == 'edit'){
             $time = Time::jmktime(12,12,12, $request->input('track_date_month_' . $request->input('track_id')),$request->input('track_date_day_' . $request->input('track_id')),$request->input('track_date_year_' . $request->input('track_id')));
+            $unitId = DB::table('units')->where('title', '=', $request->input('unit_track_title_' . $request->input('track_id')))->first()->id;
             DB::table('work_history')
               ->where('id', $request->input('track_id'))
               ->update([
-                'unit_id'         => DB::table('units')->where('title', '=', $request->input('unit_track_title_' . $request->input('track_id')))->first()->id,
+                'unit_id'         => $unitId,
                 'time'            => $time,
                 'type'            => $request->input('track_type_' . $request->input('track_id')),
               ]);
+            if($request->input('track_type_' . $request->input('track_id')) == 1)
+              DB::table('employees')->where(['id' => $id])
+                ->update(['unit_id' => $unitId]);
+
             return redirect('employee/' . $id);
           }
         }
@@ -133,14 +143,17 @@ class NormalEmployeesController extends Controller
     }
     public function editGet(Request $request, $id){
         $group_code = Auth::user()->group_code;
-        $employee = get_object_vars(DB::table('employees')->where('id', '=', $id)->first());
-
+        $employee = DB::table('employees')->where(['id' => $id, 'user' => Auth::user()->name])->first();
+        if(!$employee)
+          return abort(404);
+        $employee = get_object_vars($employee);
+        
         $employee['unit_title'] = DB::table('units')->where('id', '=', $employee['unit_id'])->first()->title;
         $employee['field_title'] = DB::table('study_fields')->where('id', '=', $employee['field'])->first()->title;
         $employee['work_history'] = DB::table('work_history')
-          ->join('units', 'units.id', '=', 'work_history.unit_id')
+          ->join('units', ['units.id' => 'work_history.unit_id'])
           ->select('work_history.*', 'units.title')
-          ->where('employee_id', '=', $employee['id'])
+          ->where(['employee_id' => $employee['id'], 'units.user' => Auth::user()->name])
           ->get();
         for($i=0; $i<sizeof($employee['work_history']); $i++){
           $employee['work_history'][$i]->time = Time::jgetdate($employee['work_history'][$i]->time);
@@ -389,5 +402,40 @@ class NormalEmployeesController extends Controller
             'gender'            => $this->prettify(DB::table('genders')->get()),
             'unitTitle'         => $unitTitle,
             ])->render();
+    }
+
+    public function access(){
+      $group_code = Auth::user()->group_code;
+      return view('normal.access', [
+        'group_code' =>   $group_code,
+      ]);
+    }
+
+    public function exchange(Request $request){
+      $group_code = Auth::user()->group_code;
+      $employee = DB::table('employees')
+        ->where('id_number', $request->id_number)
+        ->join('units', 'units.id', '=', 'employees.unit_id')
+        ->select('employees.*')
+        ->first();
+      $unit = DB::table('units')
+        ->where('manager_id_number', $request->manager_id_number)
+        ->first();
+      // return json_encode($unit);
+      if(!$unit || !$employee)
+        return view('normal.access', [
+          'group_code' =>   $group_code,
+        ])->with(['error' => 'اطلاعات اشتباه است']);
+      
+      $unitId = DB::table('units')->where('title', '=', $request->input('unit_title'))->first()->id;
+      DB::table('employees')
+        ->where(['id' => $employee->id])
+        ->update(['user' => Auth::user()->name, 'unit_id' => $unitId]);
+      return view('normal.access', [
+        'group_code'  =>  $group_code,
+        'employee'    =>  $employee,
+        'oldInputs'   =>  $request->all(),
+        'success'     => 'شاغل مورد نظر اخذ شد',
+      ]);
     }
 }

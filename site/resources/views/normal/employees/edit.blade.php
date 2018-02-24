@@ -368,17 +368,13 @@
                       </div>
                       <script type="text/javascript">
                         $( function() {
-                          var url = "{{url('api/units')}}";
+                          var url = "{{url('api/units/' . Auth::user()->name)}}";
                           $.get(url, function(data, status){
-                            var jsonRes = JSON.parse(data);
-                            $("#unit_track").autocomplete({
-                              source: jsonRes,
-                              change: function (event, ui) {
-                                if(!ui.item){
-                                  $("#unit_track").val("");
-                                }
-                              }
-                            });
+                              var jsonRes = JSON.parse(data);
+                              console.log(jsonRes);
+                              $("#unit").autocomplete({
+                                  source: jsonRes
+                              });
                           });
                         });
                       </script>

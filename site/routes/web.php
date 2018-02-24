@@ -125,6 +125,10 @@ Route::group(['namespace' => 'RegularMember', 'middleware' => 'auth'], function 
     Route::get('/employee-remove/{employeeId}', 'NormalEmployeesController@remove');
     Route::get('/employee-remove-self/{employeeId}', 'NormalEmployeesController@removeSelf');
 
+    /* exchange employees */
+    Route::get('/employee-access', 'NormalEmployeesController@access');
+    Route::post('/employee-exchange', 'NormalEmployeesController@exchange');
+
     /* print routes */
     Route::get('/employee-list-print', 'NormalEmployeesController@listPrint');
     Route::get('/employee-single-print/{id}', 'NormalEmployeesController@singlePrint');
