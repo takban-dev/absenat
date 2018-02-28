@@ -50,13 +50,7 @@
                                 <input type="text" name="id_number" value="{{isset($oldInputs)? $oldInputs['id_number']: ''}}" class="form-control">
                             </div>
                         </div>
-                        <div class="col-md-4 col-sm-6 pull-right">
-                            <div class="form-group label-floating rtl col-lg-12 col-md-12">
-                                <label class="control-label">کد‌ملی مدیریت کارگاه</label>
-                                <input type="text" name="manager_id_number" value="{{isset($oldInputs)? $oldInputs['manager_id_number']: ''}}" class="form-control">
-                            </div>
-                        </div>
-                      <div class="col-md-4 col-sm-12 pull-right">
+                        <div class="col-md-4 col-sm-12 pull-right">
                           <div class="col-md-10 col-sm-10">
                             <div class="form-group label-floating rtl col-lg-12 col-md-12">
                               <input type="text" id="unit" name="unit_title" class="form-control" value="{{isset($oldInputs)? $oldInputs['unit_title']: ''}}">

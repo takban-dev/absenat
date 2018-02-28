@@ -418,24 +418,20 @@ class NormalEmployeesController extends Controller
         ->join('units', 'units.id', '=', 'employees.unit_id')
         ->select('employees.*')
         ->first();
-      $unit = DB::table('units')
-        ->where('manager_id_number', $request->manager_id_number)
-        ->first();
-      // return json_encode($unit);
-      if(!$unit || !$employee)
-        return view('normal.access', [
-          'group_code' =>   $group_code,
-        ])->with(['error' => 'اطلاعات اشتباه است']);
       
-      $unitId = DB::table('units')->where('title', '=', $request->input('unit_title'))->first()->id;
-      DB::table('employees')
-        ->where(['id' => $employee->id])
-        ->update(['user' => Auth::user()->name, 'unit_id' => $unitId]);
-      return view('normal.access', [
-        'group_code'  =>  $group_code,
-        'employee'    =>  $employee,
-        'oldInputs'   =>  $request->all(),
-        'success'     => 'شاغل مورد نظر اخذ شد',
-      ]);
+      if(!$employee)
+        return redirect('/employee-new');
+      
+      if($employee->user != Auth::user()->name){
+        $unitId = DB::table('units')->where('title', '=', $request->input('unit_title'))->first()->id;
+        
+        DB::table('employees')
+          ->where(['id' => $employee->id])
+          ->update(['user' => Auth::user()->name, 'unit_id' => $unitId]);
+        
+        return redirect('/employee/' . $employee->id);
+      }
+
+      return redirect('/employee/' . $employee->id);
     }
 }
