@@ -192,10 +192,13 @@ class NormalEmployeesController extends Controller
         $unitTitle = '';
         if($unitId != 0)
             $unitTitle = DB::table('units')->where('id', '=', $unitId)->first()->title;
+        
+        $unitTitle = $request->input('unit');
 
         return view('normal.employees.new', [
-            'unit_title'                => $unitTitle,
+            'unitTitle'                 => $unitTitle,
             'group_code'                => $group_code,
+            'id_number'                 => $request->input('id'),
             'username'                  => Auth::user()->name,
             'genders'                   => DB::table('genders')                     ->get(),
             'certificateTypes'          => DB::table('certificate_types')           ->get(),
@@ -420,7 +423,7 @@ class NormalEmployeesController extends Controller
         ->first();
       
       if(!$employee)
-        return redirect('/employee-new');
+        return redirect('/employee-new?id=' . $request->id_number . '&unit=' . $request->unit_title);
       
       if($employee->user != Auth::user()->name){
         $unitId = DB::table('units')->where('title', '=', $request->input('unit_title'))->first()->id;
@@ -431,7 +434,6 @@ class NormalEmployeesController extends Controller
         
         return redirect('/employee/' . $employee->id);
       }
-
       return redirect('/employee/' . $employee->id);
     }
 }

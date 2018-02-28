@@ -75,7 +75,7 @@
 </div>
 <div class="row">
     <div class="col-md-12">
-        <a href="{{url('employee-new')}}">
+        <a href="{{url('employee-access')}}">
             <button type="button" class="btn btn-primary pull-right">شاغل جدید</button>
         </a>
     </div>

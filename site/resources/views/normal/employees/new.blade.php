@@ -65,7 +65,7 @@
                         <div class="col-md-3 col-sm-4 pull-right">
                             <div class="form-group label-floating rtl col-lg-12 col-md-12">
                                 <label class="control-label">کد ملی</label>
-                                <input type="text" name="id_number" value="{{isset($oldInputs)? $oldInputs['id_number']: ''}}" class="form-control">
+                                <input type="text" name="id_number" value="{{isset($oldInputs)? $oldInputs['id_number']: (isset($id_number)? $id_number: '')}}" class="form-control">
                             </div>
                         </div>
                         <div class="col-md-3 col-sm-4 pull-right">
@@ -235,8 +235,8 @@
                         <div class="col-md-6- col-sm-6">
                             <div class="col-md-10 col-sm-10">
                                 <div class="form-group label-floating rtl col-lg-12 col-md-12">
-                                    <label class="control-label">مدت سابقه کار(ماه)</label>
-                                    <input type="text" id="unit" name="unit_title" value="{{isset($oldInputs)? $oldInputs['unit_title']: ''}}" class="form-control">
+                                    <label class="control-label">کارگاه</label>
+                                    <input type="text" id="unit" name="unit_title" value="{{isset($oldInputs)? $oldInputs['unit_title']: (isset($unitTitle)? $unitTitle: '')}}" class="form-control">
                                 </div
 >                            </div>
                             <div class="col-md-2 col-sm-2 text-center" style="margin-top: 30px;">
