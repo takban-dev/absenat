@@ -29,11 +29,11 @@
     <script src="{{ asset('js/reports.js') }}"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <link href='http://awebfont.ir/css?id=1920' rel='stylesheet' type='text/css'>
-    <script>
+    <style>
         body {
             font-family: '0 Roya', tahoma, Arial;
         }
-    </script>
+    </style>
 </head>
 <body>
 <div class="wrapper">
@@ -58,8 +58,8 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{url('logout')}}">
-                               <i class="fa fa-lock" aria-hidden="true"></i>
+                            <a href="{{url('logout')}}" style="padding-top: 20px; font-size: 20px">
+                               خروج
                             </a>
                         </li>
                     </ul>

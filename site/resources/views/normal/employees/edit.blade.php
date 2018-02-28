@@ -370,9 +370,10 @@
                         $( function() {
                           var url = "{{url('api/units/' . Auth::user()->name)}}";
                           $.get(url, function(data, status){
+                              console.log('testing')
                               var jsonRes = JSON.parse(data);
                               console.log(jsonRes);
-                              $("#unit").autocomplete({
+                              $("#unit_track").autocomplete({
                                   source: jsonRes
                               });
                           });
