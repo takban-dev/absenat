@@ -118,7 +118,7 @@ class AdminUnitsController extends Controller
             return redirect('admin/unit/' . $id);
         }
     }
-    public function editGet(Request $request, $id){
+    public function editGet(Request $request, $id, $page=0, $size=10){
         $group_code = Auth::user()->group_code;
         $unit = get_object_vars(DB::table('units')->where('id', '=', $id)->first());
 
@@ -143,8 +143,11 @@ class AdminUnitsController extends Controller
             ->join('units', 'employees.unit_id', '=', 'units.id')
             ->select(DB::raw("employees.id, employees.first_name, employees.last_name, degrees.title'degree', study_fields.title'field', units.title'unit', cities.title'habitate'"))
             ->where('employees.unit_id', '=', $id)
+            ->limit($size)
+            ->offset($size * $page)
             ->get();
         $employeeCount = DB::table('employees')->where('employees.unit_id', '=', $id)->count();
+        $pageCount = ceil($employeeCount / $size);
 
         return view('admin.units.edit', [
             'group_code'                => $group_code,
@@ -152,6 +155,10 @@ class AdminUnitsController extends Controller
 
             /* employees list */
             'employees'                 => $employees,
+            'pageCount'                 => $pageCount,
+            'currentPage'               => $page,
+            'pageSize'                  => $size,
+            'pagination'                => $this->generatePages($pageCount, $page),
 
             'genders'                   => DB::table('genders')                     ->get(),
             'cities'                    => DB::table('cities')                      ->get(),
@@ -359,5 +366,28 @@ class AdminUnitsController extends Controller
             'showEmployees'      => $request->has('showEmployees')? true : false,
             'complete'          => $request->has('complete')? true : false,
             ])->render();
+    }
+
+    function generatePages($total, $current){
+        if($total > 1){
+            $total=intval($total);
+
+            $output=[];
+            $current_page= (false == isset($current)) ? 0 : $current;
+            $lastPage = -1;
+            $lower = $current_page -3;
+            $upper = $current_page +3;
+            for($page=0;$page<$total;$page++){
+                if(($page > $lower && $page < $upper) || $page < 1 || $page > ($total-2)){
+                    if($lastPage + 1 != $page)
+                        array_push($output, '#');
+                    array_push($output, $page+1);
+                    $lastPage = $page;
+                }
+            }
+            return $output;
+        }else{
+            return [];
+        }
     }
 }

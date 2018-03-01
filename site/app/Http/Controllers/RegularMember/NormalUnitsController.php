@@ -169,7 +169,7 @@ class NormalUnitsController extends Controller
             'genders'                   => DB::table('genders')                     ->get(),
             'certificateTypes'          => DB::table('certificate_types')           ->get(),
             'business_license_sources'  => DB::table('business_license_sources')    ->get(),
-            'months'                     => config('constants.months')
+            'months'                    => config('constants.months')
             ]);
     }
 

@@ -296,5 +296,19 @@
         </div>
     </div>
 </div>
-
+<div class="row">
+    <div class="col-md-12" style="text-align: center;">
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+                @foreach ($pagination as $page)
+                    @if ($page == '#')
+                        <li class="page-item"><a class="page-link" href="#">...</a></li>
+                    @else
+                        <li class="page-item"><a class="page-link" href="{{url('admin/unit/' . $oldInputs['id'] . '/' . ($page-1) . '/' . $pageSize)}}">{{$page}}</a></li>
+                    @endif
+                @endforeach
+            </ul>
+        </nav>
+    </div>
+</div>
 @endsection

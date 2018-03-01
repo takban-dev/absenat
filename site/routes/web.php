@@ -73,24 +73,6 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['aut
     Route::get  ('/report-edit/{id}', 'Reports@editGet');
     Route::post ('/report-edut/{id}', 'Reports@editPost');
     Route::get ('/reports/{page?}/{size?}', 'Reports@list');
-    /*
-    Route::group(['namespace' => 'Report', 'prefix' => 'reports'], function () {
-        Route::get('/genders', 'Genders@all');
-        Route::get('/genders-list', 'Genders@allList');
-
-        Route::get('/genders-field', 'Genders@studyField');
-        Route::get('/genders-field-list', 'Genders@studyFieldList');
-
-        Route::get('/genders-degree', 'Genders@degree');
-        Route::get('/genders-degree-list', 'Genders@degreeList');
-
-        Route::get('/genders-habitate', 'Genders@habitate');
-        Route::get('/genders-habitate-list', 'Genders@habitateList');
-        
-        Route::get('/genders-job', 'Genders@job');
-        Route::get('/genders-job-list', 'Genders@jobList');
-    });
-    */
 });
 
 /* ====================  regular panels  =============================*/
