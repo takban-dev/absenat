@@ -47,26 +47,39 @@
         <div class="card rtl">
             <div class="card-content">
                 <ul class="nav">
+                    @if($group_code == 1)
                     <li>
                         <a href="{{url('admin/unit-new')}}">
                            <i class="fa fa-plus" aria-hidden="true"></i>
                             ساخت کارگاه جدید
                         </a>
                     </li>
-                    @if($group_code == 1)
                     <li>
                         <a href="{{url('admin/user-new')}}">
                            <i class="fa fa-plus" aria-hidden="true"></i>
                             ساخت کاربر جدید
                         </a>
                     </li>
-                    @endif
                     <li>
                         <a href="{{url('admin/employee-new')}}">
                            <i class="fa fa-plus" aria-hidden="true"></i>
                             ساخت شاغل جدید
                         </a>
                     </li>
+                    @else
+                    <li>
+                        <a href="{{url('unit-new')}}">
+                           <i class="fa fa-plus" aria-hidden="true"></i>
+                            ساخت کارگاه جدید
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{url('employee-new')}}">
+                           <i class="fa fa-plus" aria-hidden="true"></i>
+                            ساخت شاغل جدید
+                        </a>
+                    </li>
+                    @endif
                 </ul>   
             </div>
         </div>

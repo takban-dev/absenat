@@ -298,7 +298,7 @@
 </div>
 <div class="row">
     <div class="col-md-12">
-        <a href="{{url('admin/employee-new/' . $oldInputs['id'])}}">
+        <a href="{{url('employee-new/' . $oldInputs['id'])}}">
             <button type="button" class="btn btn-primary pull-right">شاغل جدید</button>
         </a>
     </div>
