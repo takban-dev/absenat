@@ -22,6 +22,12 @@
         </ul>
     </div>
 @endif
+
+@if ($fill == 'new')
+    <div class="alert alert-success rtl">
+        شاغل مورد نظر وجود ندارد. لطفا سایر اطلاعات را وارد کنید
+    </div>
+@endif
 <div class="row">
     <div class="col-lg-12 col-md-12">
         <div class="card">

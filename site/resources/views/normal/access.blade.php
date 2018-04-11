@@ -29,16 +29,10 @@
       {{$error}}
     </div>
   @endif
-  @if (isset($success))
-    <div class="alert alert-success rtl">
-        شاغل مورد نظر ثبت گردید.<br>
-        حال می‌توانید با رفتن به صفحه ویرایش شاغل اقدام به ثبت تاریخ ورود شاغل نمایید
-    </div>
-  @endif
     <div class="col-lg-12 col-md-12">
         <div class="card">
             <div class="card-header rtl" data-background-color="purple">
-                <h4 class="title">انتقال شاغل</h4>
+                <h4 class="title">جستجوی شاغل</h4>
             </div>
             <div class="card-content">
                 <form action="{{url('employee-exchange')}}" method="post">
@@ -78,7 +72,7 @@
                             @if(isset($success))
                               <a class="btn btn-primary" href="{{url('employee/' . $employee->id)}}">ویرایش {{$employee->first_name}} {{$employee->last_name}}</a>
                             @endif
-                            <button type="submit" class="btn btn-primary pull-right">انتقال</button>
+                            <button type="submit" class="btn btn-primary pull-right">بررسی</button>
                         </div>
                     </div>
                 </form>

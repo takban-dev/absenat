@@ -198,6 +198,7 @@ class NormalEmployeesController extends Controller
         return view('normal.employees.new', [
             'unitTitle'                 => $unitTitle,
             'group_code'                => $group_code,
+            'fill'                      => ($request->has('unit')? 'new': ''),
             'id_number'                 => $request->input('id'),
             'username'                  => Auth::user()->name,
             'genders'                   => DB::table('genders')                     ->get(),
