@@ -408,33 +408,42 @@ class NormalEmployeesController extends Controller
             ])->render();
     }
 
-    public function access(){
+    public function access(Request $request){
       $group_code = Auth::user()->group_code;
+      $error = 0;
+      switch($request->input('error', 0)){
+            case 1:
+                $error = 'کارگاه را وارد کنید';
+            break;
+      }
       return view('normal.access', [
-        'group_code' =>   $group_code,
+        'group_code'    =>   $group_code,
+        'error'         => $error,
       ]);
     }
 
     public function exchange(Request $request){
-      $group_code = Auth::user()->group_code;
-      $employee = DB::table('employees')
-        ->where('id_number', $request->id_number)
-        ->join('units', 'units.id', '=', 'employees.unit_id')
-        ->select('employees.*')
-        ->first();
-      
-      if(!$employee)
-        return redirect('/employee-new?id=' . $request->id_number . '&unit=' . $request->unit_title);
-      
-      if($employee->user != Auth::user()->name){
-        $unitId = DB::table('units')->where('title', '=', $request->input('unit_title'))->first()->id;
-        
-        DB::table('employees')
-          ->where(['id' => $employee->id])
-          ->update(['user' => Auth::user()->name, 'unit_id' => $unitId]);
-        
+        // $group_code = Auth::user()->group_code;
+        $employee = DB::table('employees')
+            ->where('id_number', $request->id_number)
+            ->join('units', 'units.id', '=', 'employees.unit_id')
+            ->select('employees.*')
+            ->first();
+        if(!$employee)
+            return redirect('/employee-new?id=' . $request->id_number . '&unit=' . $request->unit_title);
+        if($employee->user != Auth::user()->name){
+            $unitId = DB::table('units')->where('title', '=', $request->input('unit_title'))->first();
+            if($unitId){
+                $unitId = $unitId->id;
+                DB::table('employees')
+                    ->where(['id' => $employee->id])
+                    ->update(['user' => Auth::user()->name, 'unit_id' => $unitId]);
+                
+            }else{
+                return redirect('/employee-access?error=1');
+            }
+            return redirect('/employee/' . $employee->id);
+        }
         return redirect('/employee/' . $employee->id);
-      }
-      return redirect('/employee/' . $employee->id);
     }
 }
